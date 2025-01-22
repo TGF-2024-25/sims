@@ -50,7 +50,6 @@ public class UnityAndGeminiV2: MonoBehaviour
         apiKey = jsonApiKey.key;
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<Transform>();
-        StartCoroutine(SendRequestToGemini(prompt));
     }
 
     public IEnumerator SendRequestToGemini(string promptText)
@@ -122,26 +121,7 @@ public class UnityAndGeminiV2: MonoBehaviour
     
     void Update()
     {
-        if (transform.position.x > x)
-        {
-            transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
-        }
-        else if (transform.position.x < x)
-        {
-            transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
-        }
-        else
-        {
-            if (transform.position.y > y)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-            }
-            else if (transform.position.y < y)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            }
-        }
-
+       
     }
 
 }
