@@ -224,6 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 677945809}
   - component: {fileID: 677945808}
+  - component: {fileID: 677945810}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -298,6 +299,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &677945810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677945807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff8149e3ac941354a92b5e0947582e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jsonApi: {fileID: 4900000, guid: 3802bb66d82289f47809400f6733a649, type: 3}
+  prompt: "Soy un cocinero en una nave espacial. Tengo 80 de energ\xEDa, 13 unidades
+    de comida y la moral de la tripulaci\xF3n es 69. Puedo realizar las siguientes
+    acciones: investigar_recetas (Aumenta la variedad de platos en 1 punto. Gasta
+    1 de energ\xEDa.), cocinar_desayuno (Aumenta la moral en 5 puntos. Gasta 3 unidades
+    de comida y 2 de energ\xEDa.), cocinar_cena (Aumenta la moral en 5 puntos. Gasta
+    3 unidades de comida y 2 de energ\xEDa.), charlar_tripulacion (Aumenta la moral
+    en 3 puntos. Gasta 1 de energ\xEDa.), descansar (Recupera 5 de energ\xEDa. Gasta
+    1 unidad de comida.). Mi objetivo es mantener la moral de la tripulaci\xF3n alta
+    y tener suficiente comida para todos. \xBFQu\xE9 acci\xF3n deber\xEDa realizar
+    ahora? Responde solo con un JSON con el siguiente formato: {accion:< nombre_de_la_accion
+    > }"
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
