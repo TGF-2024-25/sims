@@ -11,6 +11,7 @@
 /[Uu]ser[Ss]ettings/
 
 /[Aa]ssets/[Rr]esources/key.json
+/[Aa]ssets/[Rr]esources/key.json.meta
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
