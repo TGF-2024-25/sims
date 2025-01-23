@@ -2,36 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-[System.Serializable]
-public class UnityAndGeminiKey
-{
-    public string key;
-}
-
-[System.Serializable]
-public class Response
-{
-    public Candidate[] candidates;
-}
-
-[System.Serializable]
-public class Candidate
-{
-    public Content content;
-}
-
-[System.Serializable]
-public class Content
-{
-    public Part[] parts;
-}
-
-[System.Serializable]
-public class Part
-{
-    public string text;
-}
-
 public class LLMManager : MonoBehaviour
 {
     public TextAsset jsonApi;
@@ -114,4 +84,34 @@ public class LLMManager : MonoBehaviour
 
         tripulante.UpdatePosition(newX, newY);
     }
+}
+
+[System.Serializable]
+public class UnityAndGeminiKey
+{
+    public string key;
+}
+
+[System.Serializable]
+public class Response
+{
+    public Candidate[] candidates;
+}
+
+[System.Serializable]
+public class Candidate
+{
+    public Content content;
+}
+
+[System.Serializable]
+public class Content
+{
+    public Part[] parts;
+}
+
+[System.Serializable]
+public class Part
+{
+    public string text;
 }

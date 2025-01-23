@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CMBehaviour : MonoBehaviour
 {
+    public string outerPrompt = "Cual es tu nombre?";
+
     private int x;
     private int y;
 
@@ -13,6 +15,9 @@ public class CMBehaviour : MonoBehaviour
     {
         llmManager = FindObjectOfType<LLMManager>();
         targetPosition = transform.position;
+
+        SendPromptToLLM(outerPrompt);
+
     }
 
     void Update()

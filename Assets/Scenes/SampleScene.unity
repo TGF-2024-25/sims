@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8149e3ac941354a92b5e0947582e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jsonApi: {fileID: 4900000, guid: 3802bb66d82289f47809400f6733a649, type: 3}
 --- !u!4 &204824854
 Transform:
   m_ObjectHideFlags: 0
@@ -281,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 411354018}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.52, y: 2.57, z: 0}
+  m_LocalPosition: {x: 3, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -403,6 +404,7 @@ GameObject:
   - component: {fileID: 941232131}
   - component: {fileID: 941232133}
   - component: {fileID: 941232134}
+  - component: {fileID: 941232135}
   m_Layer: 0
   m_Name: CrewMember
   m_TagString: Untagged
@@ -489,6 +491,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dd42c1a26b59943abf0a96f14dcbfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outerPrompt: "Soy un cocinero en una nave espacial. Tengo 80 de energ\xEDa, 13
+    unidades de comida y la moral de la tripulaci\xF3n es 69. Puedo realizar las
+    siguientes acciones: investigar_recetas (Aumenta la variedad de platos en 1 punto.
+    Gasta 1 de energ\xEDa.), cocinar_desayuno (Aumenta la moral en 5 puntos. Gasta
+    3 unidades de comida y 2 de energ\xEDa.), cocinar_cena (Aumenta la moral en 5
+    puntos. Gasta 3 unidades de comida y 2 de energ\xEDa.), charlar_tripulacion (Aumenta
+    la moral en 3 puntos. Gasta 1 de energ\xEDa.), descansar (Recupera 5 de energ\xEDa.
+    Gasta 1 unidad de comida.). Mi objetivo es mantener la moral de la tripulaci\xF3n
+    alta y tener suficiente comida para todos. \xBFQu\xE9 acci\xF3n deber\xEDa realizar
+    ahora? Responde solo con un JSON con el siguiente formato: {accion:< nombre_de_la_accion
+    > }"
 --- !u!61 &941232134
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -534,6 +547,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &941232135
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941232129}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
