@@ -32,96 +32,86 @@ public class Part
     public string text;
 }
 
-
-public class UnityAndGeminiV2: MonoBehaviour
+public class LLMManager : MonoBehaviour
 {
     public TextAsset jsonApi;
-    private string apiKey = ""; 
-    private string apiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"; // Edit it and choose your prefer model
-    public string prompt = "What is your name?";
-    private Rigidbody2D rb;
-    private Transform tr;
-    private int x;
-    private int y;
+    private string apiKey = "";
+    private string apiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
 
     void Start()
     {
         UnityAndGeminiKey jsonApiKey = JsonUtility.FromJson<UnityAndGeminiKey>(jsonApi.text);
         apiKey = jsonApiKey.key;
-        rb = GetComponent<Rigidbody2D>();
-        tr = GetComponent<Transform>();
     }
 
-    public IEnumerator SendRequestToGemini(string promptText)
+    public IEnumerator SendRequestToGemini(string promptText, CMBehaviour tripulante)
     {
-        // Create JSON data
-        
         string url = $"{apiEndpoint}?key={apiKey}";
-     
-        string jsonData = "{\"contents\": [{\"parts\": [{\"text\": \"{" + promptText + "}\"}]}]}";
+        string jsonData = "{\"contents\": [{\"parts\": [{\"text\": \"" + promptText + "\"}]}]}";
 
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
 
-        // Create a UnityWebRequest with the JSON data
-        using (UnityWebRequest www = new UnityWebRequest(url, "POST")){
+        using (UnityWebRequest www = new UnityWebRequest(url, "POST"))
+        {
             www.uploadHandler = new UploadHandlerRaw(jsonToSend);
             www.downloadHandler = new DownloadHandlerBuffer();
             www.SetRequestHeader("Content-Type", "application/json");
 
             yield return www.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success) {
+            if (www.result != UnityWebRequest.Result.Success)
+            {
                 Debug.LogError(www.error);
-            } else {
+            }
+            else
+            {
                 Debug.Log("Request complete!");
                 Response response = JsonUtility.FromJson<Response>(www.downloadHandler.text);
                 if (response.candidates.Length > 0 && response.candidates[0].content.parts.Length > 0)
                 {
                     string text = response.candidates[0].content.parts[0].text;
                     Debug.Log(text);
-                    parseOutput(text);
+                    ParseOutput(text, tripulante);
                 }
                 else
                 {
                     Debug.Log("No text found.");
                 }
-
-
             }
         }
     }
-    public void parseOutput(string output)
+
+    public void ParseOutput(string output, CMBehaviour tripulante)
     {
+        int newX = 0;
+        int newY = 0;
+
         if (output.Contains("investigar_recetas"))
         {
-            x = 6;
-            y = 4;
-        } 
+            newX = 6;
+            newY = 4;
+        }
         else if (output.Contains("cocinar_desayuno"))
         {
-            x = 6;
-            y = 4;
+            newX = 3;
+            newY = 5;
         }
         else if (output.Contains("cocinar_cena"))
         {
-            x = 6;
-            y = 4;
+            newX = 2;
+            newY = 7;
         }
         else if (output.Contains("charlar_tripulacion"))
         {
-            x = 6;
-            y = 4;
+            newX = 1;
+            newY = 1;
         }
         else if (output.Contains("descansar"))
         {
-            x = 6;
-            y = 4;
+            newX = 0;
+            newY = 0;
         }
-    }  
-    
-    void Update()
-    {
-       
-    }
 
+        tripulante.UpdatePosition(newX, newY);
+    }
 }
