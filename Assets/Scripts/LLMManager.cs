@@ -56,30 +56,15 @@ public class LLMManager : MonoBehaviour
         int newX = 0;
         int newY = 0;
 
-        if (output.Contains("investigar_recetas"))
+        if (output.Contains(EatAction.NAME))
         {
             newX = 6;
             newY = 4;
         }
-        else if (output.Contains("cocinar_desayuno"))
+        else if (output.Contains(RefillAction.NAME))
         {
             newX = 3;
             newY = 5;
-        }
-        else if (output.Contains("cocinar_cena"))
-        {
-            newX = 2;
-            newY = 7;
-        }
-        else if (output.Contains("charlar_tripulacion"))
-        {
-            newX = 1;
-            newY = 1;
-        }
-        else if (output.Contains("descansar"))
-        {
-            newX = 0;
-            newY = 0;
         }
 
         tripulante.UpdatePosition(newX, newY);

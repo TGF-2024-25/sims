@@ -16,7 +16,7 @@ public class EatAction : Action
         Debug.Log("Comiendo " + quantity + " raciones");
     }
 
-    public static void LoadParameterOptions()
+    public static void loadParameterOptions()
     {
         parametersOptions = new Dictionary<string, List<string>>();
         List<string> parameterData = new List<string>();

@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Action
+public abstract class Action : MonoBehaviour
 {
     protected int id;
     protected string name;
-    protected  static Dictionary<string, List<string>> parametersOptions;
+    protected static Dictionary<string, List<string>> parametersOptions;
+    protected bool ordered;
 
     public Action(string name)
     {
@@ -19,4 +20,5 @@ public abstract class Action
     {
         return this.id;
     }
+
 }

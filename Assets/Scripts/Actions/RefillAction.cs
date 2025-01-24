@@ -17,7 +17,7 @@ public class RefillAction : Action
         Debug.Log("Refileando " + percentage + " %");
     }
 
-    public static void LoadParameterOptions()
+    public static void loadParameterOptions()
     {
         parametersOptions = new Dictionary<string, List<string>>();
         List<string> parameterData = new List<string>();
