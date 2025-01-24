@@ -12,21 +12,27 @@ public class CMBehaviour : MonoBehaviour
 
     private Vector2 targetPosition;
 
-    void Start()
+    void Awake()
     {
         AM = ActionManagerObject.GetComponent<ActionManager>();
 
         targetPosition = transform.position;
+    }
 
-        //SendPromptToLLM(outerPrompt);
+    void Start()
+    {
+        simulateOrder();
 
-        string content = "I want you to fill up the engine about 10 percent of its capacity";
-        List<string> possibleActions = new List<string> { EatAction.NAME, RefillAction.NAME };
-        List<string> previousActions = new List<string> { "Eat 2 rations", "Refill 20%" };
-        string context = "I am a cook, with the next stats currently: 80 energy, 13 food, moral 69. And these are my characteristics: funny, brave";
+    }
 
-        AM.generateAction(content, possibleActions, previousActions, context, this);
+    public void simulateOrder()
+    {
+        //string content = "I want you to fill up the engine about 10 percent of its capacity";
+        //string content = "I want you to go to the bathroom";
+        string content = "I want you to eat 3 rations of food";
+        List<string> possibleActions = new List<string> { EatAction.NAME, RefillAction.NAME , "idle"};
 
+        AM.generateAction(content, possibleActions, this);
     }
 
     void Update()

@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -8,13 +10,18 @@ public class LLMManager : MonoBehaviour
     private string apiKey = "";
     private string apiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
 
-    void Start()
+    void Awake()
     {
         UnityAndGeminiKey jsonApiKey = JsonUtility.FromJson<UnityAndGeminiKey>(jsonApi.text);
         apiKey = jsonApiKey.key;
     }
 
-    public IEnumerator SendRequestToGemini(string promptText, CMBehaviour tripulante)
+    public void SendRequestToGemini(string promptText, Action<string> callback)
+    {
+        StartCoroutine(SendRequestCoroutine(promptText, callback));
+    }
+
+    public IEnumerator SendRequestCoroutine(string promptText, Action<string> callback)
     {
         string url = $"{apiEndpoint}?key={apiKey}";
         string jsonData = "{\"contents\": [{\"parts\": [{\"text\": \"" + promptText + "\"}]}]}";
@@ -35,17 +42,19 @@ public class LLMManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Request complete!");
+                Debug.Log("Request completed successfully!");
                 Response response = JsonUtility.FromJson<Response>(www.downloadHandler.text);
+
                 if (response.candidates.Length > 0 && response.candidates[0].content.parts.Length > 0)
                 {
                     string text = response.candidates[0].content.parts[0].text;
-                    Debug.Log(text);
-                    ParseOutput(text, tripulante);
+                    Debug.Log("Response text: " + text);
+                    callback(text);
                 }
                 else
                 {
-                    Debug.Log("No text found.");
+                    Debug.Log("No valid response text found.");
+                    callback("No text found.");
                 }
             }
         }

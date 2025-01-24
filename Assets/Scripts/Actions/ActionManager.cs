@@ -1,19 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionManager : MonoBehaviour
 {
-    public GameObject LLMManagerObject;
-    private LLMManager LLMM;
+    public GameObject PromptGeneratorObject;
+    private PromptGenerator PG;
 
     private List<string> actionList = new List<string> { EatAction.NAME, RefillAction.NAME };
 
-    void Start()
+    void Awake()
     {
-        LLMM = LLMManagerObject.GetComponent<LLMManager>();
+        PG = PromptGeneratorObject.GetComponent<PromptGenerator>();
+        loadParameterOptions();
     }
-
 
     public Action createActionByName(string name, Dictionary<string, string> parameters)
     {
@@ -34,36 +35,14 @@ public class ActionManager : MonoBehaviour
         RefillAction.loadParameterOptions();
     }
 
-    public Action generateAction(string content, List<string> possibleActions, List<string> previousActions, string context, CMBehaviour tripulante)
+    public void generateAction(string content, List<string> possibleActions, CMBehaviour crewMember)
     {
-        string petition = "I am a crew member on a space ship, my attributes are: " + context + ". The previous actions I have performed are: (";
-
-        foreach (string prevAction in previousActions)
+        PG.askOrderAction(content, possibleActions, response =>
         {
-            petition = petition + " " + prevAction + ",";
-        }
+            Debug.Log("Action generated: " + response);
 
-        petition = petition + "). According to this order given to me by my captain: " + content + ". Which one of these actions should I perform to fulfill the order: ";
-
-
-        foreach (string posAction in possibleActions)
-        {
-            petition = petition + " " + posAction + "," ;
-        }
-
-        petition = petition + ". Answer only with a JSON with this format: {action: <actionName>}";
-
-        Debug.Log(petition);
-
-        SendPromptToLLM(petition, tripulante);
-
-        return null;
-
+        });
     }
 
-    public void SendPromptToLLM(string prompt, CMBehaviour tripulante)
-    {
 
-        StartCoroutine(LLMM.SendRequestToGemini(prompt, tripulante));
-    }
 }
