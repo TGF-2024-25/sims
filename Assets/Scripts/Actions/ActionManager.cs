@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+using System.Xml;
+using Newtonsoft.Json;
+
 public class ActionManager : MonoBehaviour
 {
     public GameObject PromptGeneratorObject;
@@ -29,6 +34,19 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+    public Dictionary<string, List<string>> getActionParameterOptions(string name)
+    {
+        switch (name)
+        {
+            case EatAction.NAME:
+                return EatAction.parametersOptions;
+            case RefillAction.NAME:
+                return RefillAction.parametersOptions;
+            default:
+                return null;
+        }
+    }
+
     public void loadParameterOptions()
     {
         EatAction.loadParameterOptions();
@@ -39,9 +57,52 @@ public class ActionManager : MonoBehaviour
     {
         PG.askOrderAction(content, possibleActions, response =>
         {
-            Debug.Log("Action generated: " + response);
+            string cleanResponse = ExtractJson(response);
+            JObject jsonResponse = JObject.Parse(cleanResponse);
+            string action = jsonResponse["action"].ToString();
+
+            Debug.Log("Action: " + action);
+
+            Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
+
+            PG.askOrderParameters(content, action, parameterOptions, response2 =>
+            {
+                string cleanResponse2 = ExtractJson(response2);
+                //JObject jsonResponse = JObject.Parse(cleanResponse);
+
+                Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
+
+                foreach (var entry in parametersChosen)
+                {
+                    Debug.Log($"Key: {entry.Key}, Value: {entry.Value}");
+                }
+
+                Action newAction = createActionByName(action, parametersChosen);
+            });
+
 
         });
+    }
+
+
+
+
+
+
+
+
+
+    private string ExtractJson(string rawResponse)
+    {
+        var match = Regex.Match(rawResponse, @"\{(?:[^{}]|(?<Open>\{)|(?<-Open>\}))*\}");
+
+        if (match.Success)
+        {
+            return match.Value;
+        }
+
+        Debug.LogError("No valid JSON found in the response!");
+        return string.Empty;
     }
 
 

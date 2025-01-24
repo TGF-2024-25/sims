@@ -6,7 +6,6 @@ public abstract class Action : MonoBehaviour
 {
     protected int id;
     protected string name;
-    protected static Dictionary<string, List<string>> parametersOptions;
     protected bool ordered;
 
     public Action(string name)

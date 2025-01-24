@@ -29,7 +29,7 @@ public class CMBehaviour : MonoBehaviour
     {
         //string content = "I want you to fill up the engine about 10 percent of its capacity";
         //string content = "I want you to go to the bathroom";
-        string content = "I want you to eat 3 rations of food";
+        string content = "I want you to eat 2 rations of bad food";
         List<string> possibleActions = new List<string> { EatAction.NAME, RefillAction.NAME , "idle"};
 
         AM.generateAction(content, possibleActions, this);

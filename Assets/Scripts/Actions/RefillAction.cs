@@ -6,6 +6,7 @@ public class RefillAction : Action
 {
     int percentage;
     public const string NAME = "refill";
+    public static Dictionary<string, List<string>> parametersOptions;
 
     public RefillAction(Dictionary<string, string> parameters) : base(NAME)
     {
