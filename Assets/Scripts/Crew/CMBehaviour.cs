@@ -9,13 +9,10 @@ public class CMBehaviour : MonoBehaviour
 
     private List<GameAction> posibleActionsList;
 
-    private Vector2 targetPosition;
-
     void Awake()
     {
         AM = ActionManagerObject.GetComponent<ActionManager>();
         posibleActionsList = new List<GameAction>();
-        targetPosition = transform.position;
     }
 
     void Start()
@@ -32,7 +29,7 @@ public class CMBehaviour : MonoBehaviour
         string content = "I want you to eat 2 rations of bad food";
         List<string> possibleActions = new List<string> { EatAction.NAME, RefillAction.NAME , "idle"};
 
-        AM.generateAction(content, possibleActions, this);
+        AM.generateAction(content, possibleActions, gameObject);
     }
 
     void Update()
@@ -43,15 +40,6 @@ public class CMBehaviour : MonoBehaviour
             actionToDo.doAction();
             posibleActionsList.Remove(actionToDo);
         }
-        if ((Vector2)transform.position != targetPosition)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * 2f);
-        }
-    }
-
-    public void setTargetPosition(Vector2 position)
-    {
-        this.targetPosition = position;
     }
     
     public void updateActionList(GameAction action)

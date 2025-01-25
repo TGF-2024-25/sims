@@ -23,7 +23,7 @@ public class ActionManager : MonoBehaviour
         loadParameterOptions();
     }
 
-    public GameAction createActionByName(string name, Dictionary<string, string> parameters, CMBehaviour crewMember)
+    public GameAction createActionByName(string name, Dictionary<string, string> parameters, GameObject crewMember)
     {
         switch (name)
         {
@@ -57,18 +57,19 @@ public class ActionManager : MonoBehaviour
         RefillAction.loadParameterOptions();
     }
 
-    public void generateAction(string content, List<string> possibleActions, CMBehaviour crewMember)
+    public void generateAction(string content, List<string> possibleActions, GameObject crewMember)
     {
         generateAction(content, possibleActions, crewMember, 0);
     }
 
-    public void generateAction(string content, List<string> possibleActions, CMBehaviour crewMember, int retry)
+    public void generateAction(string content, List<string> possibleActions, GameObject crewMember, int retry)
     {
         generateActionCorutine(content, possibleActions, crewMember, response =>
         {
             if (response != null)
             {
-                crewMember.updateActionList(response);
+                CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
+                cmBehaviourScript.updateActionList(response);
             }
             if (response == null && retry < MAX_RETRY)
             {
@@ -78,7 +79,7 @@ public class ActionManager : MonoBehaviour
         
     }
 
-    public void generateActionCorutine(string content, List<string> possibleActions, CMBehaviour crewMember, Action<GameAction> callback)
+    public void generateActionCorutine(string content, List<string> possibleActions, GameObject crewMember, Action<GameAction> callback)
     {
         GameAction newAction = null;
    

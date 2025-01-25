@@ -7,9 +7,9 @@ public abstract class GameAction
     protected int id;
     protected string name;
     protected bool ordered;
-    protected CMBehaviour crewMember;
+    protected GameObject crewMember;
 
-    public GameAction(string name, CMBehaviour crewMember)
+    public GameAction(string name, GameObject crewMember)
     {
         this.name = name;
         this.crewMember = crewMember;

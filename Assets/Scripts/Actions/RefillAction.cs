@@ -8,7 +8,7 @@ public class RefillAction : GameAction
     public const string NAME = "refill";
     public static Dictionary<string, List<string>> parametersOptions;
 
-    public RefillAction(Dictionary<string, string> parameters, CMBehaviour crewMember) : base(NAME, crewMember)
+    public RefillAction(Dictionary<string, string> parameters, GameObject crewMember) : base(NAME, crewMember)
     {
         this.percentage = int.Parse(parameters["percentage"]);
     }
