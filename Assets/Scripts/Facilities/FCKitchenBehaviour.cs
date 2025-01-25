@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FCKitchenBehaviour : FCBehaviour
 {
+    public const string NAME = "Kitchen";
     // Start is called before the first frame update
     void Start()
     {

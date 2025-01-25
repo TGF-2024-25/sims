@@ -8,10 +8,8 @@ public class EatAction : GameAction
     private string quality;
     public const string NAME = "eat";
     public static Dictionary<string, List<string>> parametersOptions;
-    [SerializeField]
-    private GameObject kitchen;
 
-    public EatAction(Dictionary<string, string> parameters) : base(NAME)
+    public EatAction(Dictionary<string, string> parameters, CMBehaviour crewMember) : base(NAME,crewMember)
     {
         this.quantity = int.Parse(parameters["quantity"]);
         this.quality = parameters["quality"];
@@ -21,6 +19,9 @@ public class EatAction : GameAction
     public override void doAction()
     {
         Debug.Log("Comiendo " + quantity + " raciones");
+        GameObject kitchenObject = GameObject.Find(FCKitchenBehaviour.NAME);
+        FCKitchenBehaviour kitchenScript = kitchenObject.GetComponent<FCKitchenBehaviour>();
+        this.crewMember.setTargetPosition(new Vector2(kitchenObject.transform.position.x, kitchenObject.transform.position.y));
     }
 
     public static void loadParameterOptions()

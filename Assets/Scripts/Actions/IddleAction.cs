@@ -5,7 +5,7 @@ using UnityEngine;
 public class IddleAction : GameAction
 {
     public const string NAME = "iddle";
-    public IddleAction() : base(NAME)
+    public IddleAction(CMBehaviour crewMember) : base(NAME, crewMember)
     {
 
     }

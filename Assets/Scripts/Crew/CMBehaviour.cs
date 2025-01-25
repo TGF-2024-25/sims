@@ -39,12 +39,19 @@ public class CMBehaviour : MonoBehaviour
     {
         if(posibleActionsList.Count != 0)
         {
-            posibleActionsList[0].doAction();
+            GameAction actionToDo = posibleActionsList[0];
+            actionToDo.doAction();
+            posibleActionsList.Remove(actionToDo);
         }
         if ((Vector2)transform.position != targetPosition)
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * 2f);
         }
+    }
+
+    public void setTargetPosition(Vector2 position)
+    {
+        this.targetPosition = position;
     }
     
     public void updateActionList(GameAction action)

@@ -7,10 +7,12 @@ public abstract class GameAction
     protected int id;
     protected string name;
     protected bool ordered;
+    protected CMBehaviour crewMember;
 
-    public GameAction(string name)
+    public GameAction(string name, CMBehaviour crewMember)
     {
         this.name = name;
+        this.crewMember = crewMember;
     }
 
     public abstract void doAction();

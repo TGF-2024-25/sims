@@ -23,16 +23,16 @@ public class ActionManager : MonoBehaviour
         loadParameterOptions();
     }
 
-    public GameAction createActionByName(string name, Dictionary<string, string> parameters)
+    public GameAction createActionByName(string name, Dictionary<string, string> parameters, CMBehaviour crewMember)
     {
         switch (name)
         {
             case EatAction.NAME:
-                return new EatAction(parameters);
+                return new EatAction(parameters,crewMember);
             case RefillAction.NAME:
-                return new RefillAction(parameters);
+                return new RefillAction(parameters,crewMember);
             case IddleAction.NAME:
-                return new IddleAction();
+                return new IddleAction(crewMember);
             default:
                 return null;
         }
@@ -64,14 +64,16 @@ public class ActionManager : MonoBehaviour
 
     public void generateAction(string content, List<string> possibleActions, CMBehaviour crewMember, int retry)
     {
-        Debug.Log("Creating action");
         generateActionCorutine(content, possibleActions, crewMember, response =>
         {
+            if (response != null)
+            {
+                crewMember.updateActionList(response);
+            }
             if (response == null && retry < MAX_RETRY)
             {
                 generateAction(content, possibleActions, crewMember,retry+1);
             }
-
         });
         
     }
@@ -80,8 +82,6 @@ public class ActionManager : MonoBehaviour
     {
         GameAction newAction = null;
    
-        Debug.Log("?????????????????????????????????");
-
         PG.askOrderAction(content, possibleActions, response =>
         {
             string cleanResponse = ExtractJson(response);
@@ -101,7 +101,7 @@ public class ActionManager : MonoBehaviour
                     {
                         Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
 
-                        newAction = createActionByName(action, parametersChosen);
+                        newAction = createActionByName(action, parametersChosen,crewMember);
                         
                         callback?.Invoke(newAction);
                     }
