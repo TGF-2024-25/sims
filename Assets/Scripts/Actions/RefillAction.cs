@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RefillAction : Action
+public class RefillAction : GameAction
 {
     int percentage;
     public const string NAME = "refill";

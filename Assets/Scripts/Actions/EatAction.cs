@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EatAction : Action
+public class EatAction : GameAction
 {
     private int quantity;
     private string quality;

@@ -23,7 +23,7 @@ public class ActionManager : MonoBehaviour
         loadParameterOptions();
     }
 
-    public Action createActionByName(string name, Dictionary<string, string> parameters)
+    public GameAction createActionByName(string name, Dictionary<string, string> parameters)
     {
         switch (name)
         {
@@ -59,89 +59,68 @@ public class ActionManager : MonoBehaviour
 
     public void generateAction(string content, List<string> possibleActions, CMBehaviour crewMember)
     {
+        generateAction(content, possibleActions, crewMember, 0);
+    }
+
+    public void generateAction(string content, List<string> possibleActions, CMBehaviour crewMember, int retry)
+    {
         Debug.Log("Creating action");
-        StartCoroutine(generateActionCorutine(content, possibleActions, crewMember, 0, response =>
+        generateActionCorutine(content, possibleActions, crewMember, response =>
         {
-            if (response == null)
+            if (response == null && retry < MAX_RETRY)
             {
-                generateAction(content, possibleActions, crewMember);
+                generateAction(content, possibleActions, crewMember,retry+1);
             }
-        }));
-        
-    }
 
-    public IEnumerator generateActionCorutine(string content, List<string> possibleActions, CMBehaviour crewMember, int retryCount, Action<Action> callback)
-    {
-        Action newAction = null;
-        while(retryCount < MAX_RETRY && newAction == null)
-        {
-            Debug.Log("?????????????????????????????????");
-            yield return StartCoroutine(askForActionCorutine(content, possibleActions, response =>
-              {
-                  string cleanResponse = ExtractJson(response);
-                  JObject jsonResponse = JObject.Parse(cleanResponse);
-
-                  if (jsonResponse.ContainsKey("action"))
-                  {
-                      string action = jsonResponse["action"].ToString();
-
-                      Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
-
-                      StartCoroutine(askForParametersCorutine(content, action, parameterOptions, response2 =>
-                         {
-                             string cleanResponse2 = ExtractJson(response2);
-                             JObject jsonResponse2 = JObject.Parse(cleanResponse2);
-                             if (checkParametersJson(jsonResponse2, parameterOptions))
-                             {
-                                 Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
-
-                                 newAction = createActionByName(action, parametersChosen);
-                             }
-                             else
-                             {
-                                 Debug.Log("Not valid json format in parameters response");
-                             }
-
-                         }));
-                  }
-                  else
-                  {
-                      Debug.Log("Not valid json format in action response");
-                  }
-              }));
-           
-            retryCount++;
-        }
-        
-        if(newAction == null)
-        {
-            Debug.Log("Cagada");
-            newAction = createActionByName(IddleAction.NAME, null);
-        }
-        Debug.Log("Hola");
-        crewMember.updateActionList(newAction);
-    }
-
-
-    private IEnumerator askForActionCorutine(string content, List<string> possibleActions, Action<string> callback)
-    {
-        PG.askOrderAction(content, possibleActions, response =>
-         {
-            callback(response);
-         });
-        yield return null;
-    }
-    private IEnumerator askForParametersCorutine(string content, string action, Dictionary<string, List<string>> parameterOptions, Action<string> callback)
-    {
-        PG.askOrderParameters(content, action, parameterOptions, response =>
-        {
-            callback(response);
         });
-        yield return null;
+        
     }
 
+    public void generateActionCorutine(string content, List<string> possibleActions, CMBehaviour crewMember, Action<GameAction> callback)
+    {
+        GameAction newAction = null;
+   
+        Debug.Log("?????????????????????????????????");
 
+        PG.askOrderAction(content, possibleActions, response =>
+        {
+            string cleanResponse = ExtractJson(response);
+            JObject jsonResponse = JObject.Parse(cleanResponse);
 
+            if (jsonResponse.ContainsKey("action"))
+            {
+                string action = jsonResponse["action"].ToString();
+
+                Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
+
+                PG.askOrderParameters(content, action, parameterOptions, response2 =>
+                {
+                    string cleanResponse2 = ExtractJson(response2);
+                    JObject jsonResponse2 = JObject.Parse(cleanResponse2);
+                    if (checkParametersJson(jsonResponse2, parameterOptions))
+                    {
+                        Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
+
+                        newAction = createActionByName(action, parametersChosen);
+                        
+                        callback?.Invoke(newAction);
+                    }
+                    else
+                    {
+                        Debug.Log("Not valid json format in parameters response");
+                        callback?.Invoke(newAction);
+                    }
+                    
+                });
+            }
+            else
+            {
+                Debug.Log("Not valid json format in action response");
+                callback?.Invoke(newAction);
+            }
+        });
+    
+    }
 
     private bool checkParametersJson(JObject jsonResponse, Dictionary<string, List<string>> parameterOptions)
     {

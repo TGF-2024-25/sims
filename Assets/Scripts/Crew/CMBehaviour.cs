@@ -7,14 +7,14 @@ public class CMBehaviour : MonoBehaviour
     public GameObject ActionManagerObject;
     private ActionManager AM;
 
-    private List<Action> posibleActionsList;
+    private List<GameAction> posibleActionsList;
 
     private Vector2 targetPosition;
 
     void Awake()
     {
         AM = ActionManagerObject.GetComponent<ActionManager>();
-        posibleActionsList = new List<Action>();
+        posibleActionsList = new List<GameAction>();
         targetPosition = transform.position;
     }
 
@@ -47,7 +47,7 @@ public class CMBehaviour : MonoBehaviour
         }
     }
     
-    public void updateActionList(Action action)
+    public void updateActionList(GameAction action)
     {
         this.posibleActionsList.Add(action);
     }
