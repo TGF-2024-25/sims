@@ -31,22 +31,15 @@ public class CMMovement : MonoBehaviour
     {
          if ((Vector2)transform.position != targetPosition)
         {
-<<<<<<< Updated upstream
-            // Convertimos targetPosition a Vector3 para que coincida con transform.position
             Vector3 targetPos3D = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
-=======
-            agent.SetDestination(new Vector3(targetPosition.x,targetPosition.y,transform.position.z));
-        }
->>>>>>> Stashed changes
-
-            // Calculamos la dirección hacia la posición objetivo
+            
             Vector3 direction = (targetPos3D - transform.position).normalized;
 
-            // Movemos el objeto hacia la posición objetivo
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * 2f);
+           
+            agent.SetDestination(targetPos3D);
 
-            // Animamos el movimiento
-            AnimateMovement(direction);
+        // Animamos el movimiento
+        AnimateMovement(direction);
         }
         else
         {
