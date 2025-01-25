@@ -25,16 +25,8 @@ public class EatAction : GameAction
         cmMovementScript.setTargetPosition(new Vector2(kitchenObject.transform.position.x, kitchenObject.transform.position.y));
     }
 
-    public static void loadParameterOptions()
+    public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
     {
-        parametersOptions = new Dictionary<string, List<string>>();
-        List<string> parameterData1 = new List<string>();
-        parameterData1.Add("1");
-        parameterData1.Add("2");
-        parameterData1.Add("3");
-        parametersOptions.Add("quantity", parameterData1);
-
-        List<string> parameterData2 = new List<string> {"bad", "medium", "good"};
-        parametersOptions.Add("quality", parameterData2);
+        
     }
 }

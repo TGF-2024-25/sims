@@ -1,0 +1,19 @@
+{
+  "eat" : {
+    "quantity" : [1,2,3,4],
+    "fullness" : ["25%", "50%", "75%", "100%"]
+  },
+  "refill" : {
+    "precentage" : ["25%", "50%", "75%", "100%"],
+    "justEnough" : ["yes", "no"]
+  },
+  "research" : {
+    "hours" : [1,2,3,4,5,6,7,8]
+  },
+  "craft": {
+    "quantity" : [1,2,3,4],
+    "allPossible" : ["yes", "no"],
+    "material" : ["none"]
+  }
+}
+

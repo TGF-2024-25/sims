@@ -13,7 +13,13 @@ public class ActionManager : MonoBehaviour
     public GameObject PromptGeneratorObject;
     private PromptGenerator PG;
 
-    private List<string> actionList = new List<string> { EatAction.NAME, RefillAction.NAME, IddleAction.NAME };
+    private List<string> actionList = new List<string> {
+        EatAction.NAME,
+        RefillAction.NAME,
+        RefuseAction.NAME,
+        ResearchAction.NAME, 
+        CraftAction.NAME 
+    };
 
     private const int MAX_RETRY = 3;
 
@@ -31,8 +37,12 @@ public class ActionManager : MonoBehaviour
                 return new EatAction(parameters,crewMember);
             case RefillAction.NAME:
                 return new RefillAction(parameters,crewMember);
-            case IddleAction.NAME:
-                return new IddleAction(crewMember);
+            case RefuseAction.NAME:
+                return new RefuseAction(crewMember);
+            case ResearchAction.NAME:
+                return new ResearchAction(parameters, crewMember);
+            case CraftAction.NAME:
+                return new CraftAction(parameters, crewMember);
             default:
                 return null;
         }
@@ -46,6 +56,10 @@ public class ActionManager : MonoBehaviour
                 return EatAction.parametersOptions;
             case RefillAction.NAME:
                 return RefillAction.parametersOptions;
+            case ResearchAction.NAME:
+                return ResearchAction.parametersOptions;
+            case CraftAction.NAME:
+                return CraftAction.parametersOptions;
             default:
                 return null;
         }
@@ -53,8 +67,7 @@ public class ActionManager : MonoBehaviour
 
     public void loadParameterOptions()
     {
-        EatAction.loadParameterOptions();
-        RefillAction.loadParameterOptions();
+        
     }
 
     public void generateAction(string content, List<string> possibleActions, GameObject crewMember)

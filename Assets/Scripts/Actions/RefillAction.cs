@@ -18,14 +18,8 @@ public class RefillAction : GameAction
         Debug.Log("Refileando " + percentage + " %");
     }
 
-    public static void loadParameterOptions()
+    public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
     {
-        parametersOptions = new Dictionary<string, List<string>>();
-        List<string> parameterData = new List<string>();
-        parameterData.Add("25");
-        parameterData.Add("50");
-        parameterData.Add("75");
-        parameterData.Add("100");
-        parametersOptions.Add("percentage", parameterData);
+
     }
 }
