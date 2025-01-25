@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CMMovement : MonoBehaviour
 {
     public float speed;
 
     public Animator animator;
+    NavMeshAgent agent;
 
     private Vector2 targetPosition;
     // Start is called before the first frame update
@@ -14,6 +16,9 @@ public class CMMovement : MonoBehaviour
     void Awake()
     {
         targetPosition = transform.position;
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     void Start()
@@ -26,8 +31,13 @@ public class CMMovement : MonoBehaviour
     {
          if ((Vector2)transform.position != targetPosition)
         {
+<<<<<<< Updated upstream
             // Convertimos targetPosition a Vector3 para que coincida con transform.position
             Vector3 targetPos3D = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
+=======
+            agent.SetDestination(new Vector3(targetPosition.x,targetPosition.y,transform.position.z));
+        }
+>>>>>>> Stashed changes
 
             // Calculamos la dirección hacia la posición objetivo
             Vector3 direction = (targetPos3D - transform.position).normalized;
