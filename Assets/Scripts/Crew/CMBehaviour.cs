@@ -7,20 +7,20 @@ public class CMBehaviour : MonoBehaviour
     public GameObject ActionManagerObject;
     private ActionManager AM;
 
-    private int x;
-    private int y;
+    private List<Action> posibleActionsList;
 
     private Vector2 targetPosition;
 
     void Awake()
     {
         AM = ActionManagerObject.GetComponent<ActionManager>();
-
+        posibleActionsList = new List<Action>();
         targetPosition = transform.position;
     }
 
     void Start()
     {
+
         simulateOrder();
 
     }
@@ -37,16 +37,18 @@ public class CMBehaviour : MonoBehaviour
 
     void Update()
     {
+        if(posibleActionsList.Count != 0)
+        {
+            posibleActionsList[0].doAction();
+        }
         if ((Vector2)transform.position != targetPosition)
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * 2f);
         }
     }
-
-    public void UpdatePosition(int newX, int newY)
+    
+    public void updateActionList(Action action)
     {
-        x = newX;
-        y = newY;
-        targetPosition = new Vector2(x, y);
+        this.posibleActionsList.Add(action);
     }
 }

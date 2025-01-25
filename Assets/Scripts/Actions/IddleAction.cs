@@ -11,6 +11,6 @@ public class IddleAction : Action
     }
     public override void doAction()
     {
-        Debug.Log("Doing nothing zzz");
+        return;
     }
 }

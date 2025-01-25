@@ -42,13 +42,11 @@ public class LLMManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Request completed successfully!");
                 Response response = JsonUtility.FromJson<Response>(www.downloadHandler.text);
 
                 if (response.candidates.Length > 0 && response.candidates[0].content.parts.Length > 0)
                 {
                     string text = response.candidates[0].content.parts[0].text;
-                    Debug.Log("Response text: " + text);
                     callback(text);
                 }
                 else
@@ -58,25 +56,6 @@ public class LLMManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void ParseOutput(string output, CMBehaviour tripulante)
-    {
-        int newX = 0;
-        int newY = 0;
-
-        if (output.Contains(EatAction.NAME))
-        {
-            newX = 6;
-            newY = 4;
-        }
-        else if (output.Contains(RefillAction.NAME))
-        {
-            newX = 3;
-            newY = 5;
-        }
-
-        tripulante.UpdatePosition(newX, newY);
     }
 }
 

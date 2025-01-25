@@ -8,6 +8,8 @@ public class EatAction : Action
     private string quality;
     public const string NAME = "eat";
     public static Dictionary<string, List<string>> parametersOptions;
+    [SerializeField]
+    private GameObject kitchen;
 
     public EatAction(Dictionary<string, string> parameters) : base(NAME)
     {

@@ -7,7 +7,7 @@ public class FCKitchenBehaviour : FCBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Transform myTrans = transform;
+        Transform myTransform = transform;
         this.position = new Vector2(transform.position.x, transform.position.y);
     }
 
