@@ -9,10 +9,11 @@ public abstract class GameAction
     protected bool ordered;
     protected GameObject crewMember;
 
-    public GameAction(string name, GameObject crewMember)
+    public GameAction(string name, GameObject crewMember,bool ordered)
     {
         this.name = name;
         this.crewMember = crewMember;
+        this.ordered = ordered;
     }
 
     public abstract void doAction();

@@ -10,7 +10,7 @@ public class ResearchAction : GameAction
     public const string FACILITY = FCLabBehaviour.NAME;
     private int hours;
 
-    public ResearchAction(Dictionary<string, string> parameters, GameObject crewMember) : base(NAME, crewMember)
+    public ResearchAction(Dictionary<string, string> parameters, GameObject crewMember, bool ordered) : base(NAME, crewMember,ordered   )
     {
         this.hours = int.Parse(parameters["hours"]);
     }

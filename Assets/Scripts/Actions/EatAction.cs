@@ -11,7 +11,7 @@ public class EatAction : GameAction
     public static Dictionary<string, List<string>> parametersOptions;
     
 
-    public EatAction(Dictionary<string, string> parameters, GameObject crewMember) : base(NAME,crewMember)
+    public EatAction(Dictionary<string, string> parameters, GameObject crewMember, bool ordered) : base(NAME,crewMember,ordered)
     {
         this.quantity = int.Parse(parameters["quantity"]);
         this.fullness = parameters["fullness"];

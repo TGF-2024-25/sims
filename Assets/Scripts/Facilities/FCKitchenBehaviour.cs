@@ -16,4 +16,17 @@ public class FCKitchenBehaviour : FCBehaviour
     {
         
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GameObject crewMember = collision.gameObject;
+        CMBehaviour crewScript = crewMember.GetComponent<CMBehaviour>();
+        GameAction action = crewScript.getCurrentAction();
+
+        if (action.correctFacility(NAME))
+        {
+            crewScript.setDoingAction(false);
+        }
+
+    }
 }

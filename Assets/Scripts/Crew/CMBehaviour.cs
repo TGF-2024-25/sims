@@ -8,54 +8,71 @@ public class CMBehaviour : MonoBehaviour
     public GameObject ActionManagerObject;
     private ActionManager AM;
 
-    private List<GameAction> posibleActionsList;
+    private List<GameAction> orderedActionsList;
 
     private GameAction currentAction;
+    private bool doingAction;
 
     void Awake()
     {
         AM = ActionManagerObject.GetComponent<ActionManager>();
-        posibleActionsList = new List<GameAction>();
+        orderedActionsList = new List<GameAction>();
+        currentAction = null;
+        doingAction = false;
     }
 
     void Start()
     {
-
-        simulateOrder();
-
+        string content = "please put more fuel in the tank untill is 75% full";
+        simulateOrder(content);
+        string content2 = "go eat 2 racions";
+        simulateOrder(content2);
+        string content3 = "go investigate 4 hours";
+        simulateOrder(content3);
     }
 
-    public void simulateOrder()
+    public void simulateOrder(string order)
     {
         //string content = "I want you to fill up the engine about 10 percent of its capacity";
         //string content = "I want you to go to the bathroom";
-        string content = "please put more fuel in the tank untill is 75% full";
 
-        AM.generateAction(content, gameObject);
+        AM.generateAction(order, gameObject);
     }
 
     void Update()
     {
-        if(posibleActionsList.Count != 0)
+        
+        if(!doingAction)
         {
-            currentAction = posibleActionsList[0];
-            currentAction.doAction();
+            Debug.Log(doingAction);
+            doingAction = true;
+            AM.chooseNextAction(orderedActionsList, this);  
         }
     }
     
     public void updateActionList(GameAction action)
     {
-        this.posibleActionsList.Add(action);
+        this.orderedActionsList.Add(action);
     }
 
-    internal void orderDone(GameAction action)
+    internal void orderDone()
     {
         currentAction = null;
-        posibleActionsList.Remove(action);
     }
 
     public GameAction getCurrentAction()
     {
         return this.currentAction;
+    }
+    public void setCurrentAction(GameAction gameAction)
+    {
+        this.currentAction = gameAction;
+        orderedActionsList.Remove(gameAction);
+    }
+
+    public void setDoingAction(bool doingAction)
+    {
+        this.doingAction = doingAction;
+        Debug.Log("seteando" + doingAction);
     }
 }

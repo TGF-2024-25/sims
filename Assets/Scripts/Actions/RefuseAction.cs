@@ -9,7 +9,7 @@ public class RefuseAction : GameAction
     public const string FACILITY = "";
 
 
-    public RefuseAction(GameObject crewMember) : base(NAME, crewMember)
+    public RefuseAction(GameObject crewMember,bool ordered) : base(NAME, crewMember,ordered)
     {
 
     }

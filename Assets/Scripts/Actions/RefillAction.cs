@@ -10,7 +10,7 @@ public class RefillAction : GameAction
     public const string FACILITY = FCMotorBehaviour.NAME;
     public static Dictionary<string, List<string>> parametersOptions;
 
-    public RefillAction(Dictionary<string, string> parameters, GameObject crewMember) : base(NAME, crewMember)
+    public RefillAction(Dictionary<string, string> parameters, GameObject crewMember,bool ordered) : base(NAME, crewMember,ordered)
     {
         this.percentage = int.Parse(parameters["percentage"]);
         this.justEnough = parameters["justEnough"];

@@ -29,20 +29,20 @@ public class ActionManager : MonoBehaviour
         loadParameterOptions();
     }
 
-    public GameAction createActionByName(string name, Dictionary<string, string> parameters, GameObject crewMember)
+    public GameAction createActionByName(string name, Dictionary<string, string> parameters, GameObject crewMember, bool ordered)
     {
         switch (name)
         {
             case EatAction.NAME:
-                return new EatAction(parameters,crewMember);
+                return new EatAction(parameters,crewMember,ordered);
             case RefillAction.NAME:
-                return new RefillAction(parameters,crewMember);
+                return new RefillAction(parameters,crewMember,ordered);
             case RefuseAction.NAME:
-                return new RefuseAction(crewMember);
+                return new RefuseAction(crewMember,ordered);
             case ResearchAction.NAME:
-                return new ResearchAction(parameters, crewMember);
+                return new ResearchAction(parameters, crewMember,ordered);
             case CraftAction.NAME:
-                return new CraftAction(parameters, crewMember);
+                return new CraftAction(parameters, crewMember,ordered);
             default:
                 return null;
         }
@@ -121,7 +121,7 @@ public class ActionManager : MonoBehaviour
                     {
                         Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
 
-                        newAction = createActionByName(action, parametersChosen,crewMember);
+                        newAction = createActionByName(action, parametersChosen,crewMember,true);
                         
                         callback?.Invoke(newAction);
                     }
@@ -177,5 +177,24 @@ public class ActionManager : MonoBehaviour
         return string.Empty;
     }
 
+    public void chooseNextAction(List<GameAction> gameActions, CMBehaviour crewMember)
+    {
 
+        Debug.Log("aaaaaaaaaaaa");
+        
+        if(gameActions.Count != 0)
+        {
+            GameAction nextAction = gameActions[0];
+            crewMember.setCurrentAction(nextAction);
+            nextAction.doAction();
+        }
+        else
+        {
+            Debug.Log("bbbbbbbbbbbbb");
+            crewMember.setDoingAction(false);
+        }
+        
+    }
+
+    
 }

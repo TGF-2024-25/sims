@@ -20,6 +20,7 @@ public class FCMotorBehaviour : FCBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Filling to the top");
         GameObject crewMember = collision.gameObject;
         CMBehaviour crewScript = crewMember.GetComponent<CMBehaviour>();
         GameAction action = crewScript.getCurrentAction();
@@ -37,7 +38,8 @@ public class FCMotorBehaviour : FCBehaviour
             {
                 Debug.Log("Filling to " + percentage + "%");
             }
-            crewScript.orderDone(refillAction);
+            crewScript.orderDone();
+            crewScript.setDoingAction(false);
         }
 
     }

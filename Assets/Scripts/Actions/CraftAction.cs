@@ -9,13 +9,13 @@ public class CraftAction : GameAction
     public static Dictionary<string, List<string>> parametersOptions;
     public const string FACILITY = FCWorkshopBehaviour.NAME;
     private int quantity;
-    private string allPosisible;
+    private string allPossible;
     private string material;
 
-    public CraftAction(Dictionary<string, string> parameters, GameObject crewMember) : base(NAME, crewMember)
+    public CraftAction(Dictionary<string, string> parameters, GameObject crewMember, bool ordered) : base(NAME, crewMember,ordered)
     {
         this.quantity =int.Parse(parameters["quantity"]);
-        this.allPosisible = parameters["allPosisible"];
+        this.allPossible = parameters["allPossible"];
         this.material = parameters["material"];
 
 
@@ -29,9 +29,9 @@ public class CraftAction : GameAction
     {
         return this.quantity;
     }
-    public string getAllPosisible()
+    public string getAllPossible()
     {
-        return this.allPosisible;
+        return this.allPossible;
     }
     public string getMaterial()
     {
