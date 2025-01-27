@@ -67,12 +67,17 @@ public class ActionManager : MonoBehaviour
 
     public void loadParameterOptions()
     {
-        
+        string jsonFile = Resources.Load<TextAsset>("ActionData").ToString();
+        Dictionary<string, Dictionary<string, List<string>>> data = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(jsonFile);
+        EatAction.loadParameterOptions(data[EatAction.NAME]);
+        RefillAction.loadParameterOptions(data[RefillAction.NAME]);
+        ResearchAction.loadParameterOptions(data[ResearchAction.NAME]);
+        CraftAction.loadParameterOptions(data[CraftAction.NAME]);
     }
 
-    public void generateAction(string content, List<string> possibleActions, GameObject crewMember)
+    public void generateAction(string content,GameObject crewMember)
     {
-        generateAction(content, possibleActions, crewMember, 0);
+        generateAction(content, actionList, crewMember, 0);
     }
 
     public void generateAction(string content, List<string> possibleActions, GameObject crewMember, int retry)
@@ -104,12 +109,13 @@ public class ActionManager : MonoBehaviour
             if (jsonResponse.ContainsKey("action"))
             {
                 string action = jsonResponse["action"].ToString();
-
+                Debug.Log(action);
                 Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
 
                 PG.askOrderParameters(content, action, parameterOptions, response2 =>
                 {
                     string cleanResponse2 = ExtractJson(response2);
+                    Debug.Log(cleanResponse2);
                     JObject jsonResponse2 = JObject.Parse(cleanResponse2);
                     if (checkParametersJson(jsonResponse2, parameterOptions))
                     {

@@ -26,6 +26,8 @@ public class PromptGenerator : MonoBehaviour
 
         petition += ".If the other ones make no sense, choose idle. Answer only with a JSON with this format: {action: <actionName>}.";
 
+        Debug.Log(petition);
+
         // Llamada a la función de petición con corrutina
         LLMM.SendRequestToGemini(petition, response =>
         {

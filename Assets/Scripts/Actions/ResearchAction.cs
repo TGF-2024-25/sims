@@ -16,11 +16,14 @@ public class ResearchAction : GameAction
 
     public override void doAction()
     {
-        throw new System.NotImplementedException();
+        GameObject labObject = GameObject.Find(FCLabBehaviour.NAME);
+        FCLabBehaviour labScript = labObject.GetComponent<FCLabBehaviour>();
+        CMMovement cmMovementScript = this.crewMember.GetComponent<CMMovement>();
+        cmMovementScript.setTargetPosition(new Vector2(labObject.transform.position.x, labObject.transform.position.y));
     }
 
     public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
     {
-
+        parametersOptions = parameters;
     }
 }

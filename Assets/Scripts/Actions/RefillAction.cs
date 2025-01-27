@@ -15,11 +15,14 @@ public class RefillAction : GameAction
 
     public override void doAction()
     {
-        Debug.Log("Refileando " + percentage + " %");
+        GameObject motorObject = GameObject.Find(FCMotorBehaviour.NAME);
+        FCMotorBehaviour motorScript = motorObject.GetComponent<FCMotorBehaviour>();
+        CMMovement cmMovementScript = this.crewMember.GetComponent<CMMovement>();
+        cmMovementScript.setTargetPosition(new Vector2(motorObject.transform.position.x, motorObject.transform.position.y));
     }
 
     public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
     {
-
+        parametersOptions = parameters;
     }
 }

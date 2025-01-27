@@ -5,16 +5,16 @@ using UnityEngine;
 public class EatAction : GameAction
 {
     private int quantity;
-    private string quality;
+    private string fullness;
     public const string NAME = "eat";
     public static Dictionary<string, List<string>> parametersOptions;
 
     public EatAction(Dictionary<string, string> parameters, GameObject crewMember) : base(NAME,crewMember)
     {
         this.quantity = int.Parse(parameters["quantity"]);
-        this.quality = parameters["quality"];
+        this.fullness = parameters["fullness"];
 
-        Debug.Log("Accion creada: " + this.quantity + " " + this.quality);
+        
     }
     public override void doAction()
     {
@@ -27,6 +27,6 @@ public class EatAction : GameAction
 
     public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
     {
-        
+        parametersOptions = parameters;
     }
 }
