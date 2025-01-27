@@ -24,9 +24,10 @@ public class PromptGenerator : MonoBehaviour
             petition += " " + posAction + ",";
         }
 
-        petition += ".If the other ones make no sense, choose idle. Answer only with a JSON with this format: {action: <actionName>}.";
+        petition += ".If the other ones make no sense, choose idle. Answer only with a JSON with this format: {action: <actionName>}. " +
+            "Action and action name should always be between quotation marks as a string";
 
-        Debug.Log(petition);
+        Debug.Log(petition);    
 
         // Llamada a la función de petición con corrutina
         LLMM.SendRequestToGemini(petition, response =>
@@ -54,7 +55,8 @@ public class PromptGenerator : MonoBehaviour
             petition += ") ;";
         }
 
-        petition += ". Answer only with a JSON with this format, one key-value pair for each parameter: {parameterName: <optionChosen>}.";
+        petition += ". Answer only with a JSON with this format, one key-value pair for each parameter: {parameterName: <optionChosen>}. " +
+            "ParameterName and optionChosen should always be between quotation marks as a string";
 
         LLMM.SendRequestToGemini(petition, response =>
         {
