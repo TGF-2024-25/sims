@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class CMBehaviour : MonoBehaviour
     private ActionManager AM;
 
     private List<GameAction> posibleActionsList;
+
+    private GameAction currentAction;
 
     void Awake()
     {
@@ -35,14 +38,24 @@ public class CMBehaviour : MonoBehaviour
     {
         if(posibleActionsList.Count != 0)
         {
-            GameAction actionToDo = posibleActionsList[0];
-            actionToDo.doAction();
-            posibleActionsList.Remove(actionToDo);
+            currentAction = posibleActionsList[0];
+            currentAction.doAction();
         }
     }
     
     public void updateActionList(GameAction action)
     {
         this.posibleActionsList.Add(action);
+    }
+
+    internal void orderDone(GameAction action)
+    {
+        currentAction = null;
+        posibleActionsList.Remove(action);
+    }
+
+    public GameAction getCurrentAction()
+    {
+        return this.currentAction;
     }
 }

@@ -7,11 +7,12 @@ public class ResearchAction : GameAction
 
     public const string NAME = "research";
     public static Dictionary<string, List<string>> parametersOptions;
-
+    public const string FACILITY = FCLabBehaviour.NAME;
+    private int hours;
 
     public ResearchAction(Dictionary<string, string> parameters, GameObject crewMember) : base(NAME, crewMember)
     {
-
+        this.hours = int.Parse(parameters["hours"]);
     }
 
     public override void doAction()
@@ -25,5 +26,15 @@ public class ResearchAction : GameAction
     public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
     {
         parametersOptions = parameters;
+    }
+
+    public int getHours()
+    {
+        return this.hours;
+    }
+
+    public override bool correctFacility(string facility)
+    {
+        return facility == FACILITY;
     }
 }

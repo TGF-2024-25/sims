@@ -16,6 +16,7 @@ public abstract class GameAction
     }
 
     public abstract void doAction();
+    public abstract bool correctFacility(string facility);
 
     public int getId()
     {
