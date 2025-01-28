@@ -25,6 +25,20 @@ public class FCWorkshopBehaviour : FCBehaviour
 
         if (action.correctFacility(NAME))
         {
+            CraftAction craftAction = (CraftAction)crewScript.getCurrentAction();
+            int quantity = craftAction.getQuantity();
+            string allPossible = craftAction.getAllPossible();
+            string material = craftAction.getMaterial();
+            
+            if (allPossible.Equals("yes"))
+            {
+                Debug.Log("Crafting all possible of " + material);
+            }
+            else
+            {
+                Debug.Log("Crafting " + quantity + " of " + material);
+            }
+            crewScript.orderDone();
             crewScript.setDoingAction(false);
         }
 

@@ -58,6 +58,8 @@ public class PromptGenerator : MonoBehaviour
         petition += ". Answer only with a JSON with this format, one key-value pair for each parameter: {parameterName: <optionChosen>}. " +
             "ParameterName and optionChosen should always be between quotation marks as a string";
 
+        Debug.Log(petition);
+
         LLMM.SendRequestToGemini(petition, response =>
         {
             callback(response); // Llama al callback con la respuesta recibida

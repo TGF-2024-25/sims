@@ -41,10 +41,8 @@ public class CMBehaviour : MonoBehaviour
 
     void Update()
     {
-        
         if(!doingAction)
         {
-            Debug.Log(doingAction);
             doingAction = true;
             AM.chooseNextAction(orderedActionsList, this);  
         }
@@ -73,6 +71,5 @@ public class CMBehaviour : MonoBehaviour
     public void setDoingAction(bool doingAction)
     {
         this.doingAction = doingAction;
-        Debug.Log("seteando" + doingAction);
     }
 }

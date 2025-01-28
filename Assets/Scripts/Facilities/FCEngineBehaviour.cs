@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FCMotorBehaviour : FCBehaviour
+public class FCEngineBehaviour : FCBehaviour
 {
-    public const string NAME = "Motor";
+    public const string NAME = "Engine";
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,6 @@ public class FCMotorBehaviour : FCBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Filling to the top");
         GameObject crewMember = collision.gameObject;
         CMBehaviour crewScript = crewMember.GetComponent<CMBehaviour>();
         GameAction action = crewScript.getCurrentAction();
@@ -32,11 +31,11 @@ public class FCMotorBehaviour : FCBehaviour
             int percentage = refillAction.getPercentage();
             if (justEnough.Equals("yes"))
             {
-                Debug.Log("Filling to the top");
+                Debug.Log("Filling engine just enough");
             }
             else
             {
-                Debug.Log("Filling to " + percentage + "%");
+                Debug.Log("Filling engine to " + percentage + "%");
             }
             crewScript.orderDone();
             crewScript.setDoingAction(false);

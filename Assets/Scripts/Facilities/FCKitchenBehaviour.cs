@@ -25,6 +25,21 @@ public class FCKitchenBehaviour : FCBehaviour
 
         if (action.correctFacility(NAME))
         {
+            EatAction eatAction = (EatAction)crewScript.getCurrentAction();
+            string fullness = eatAction.getFullness();
+            int quantity = eatAction.getQuantity();
+            if (fullness.Equals("doesnt apply"))
+            {
+                Debug.Log("Eating " + quantity + " rations");
+            }
+            else
+            {
+                Debug.Log("Eating until I am " + fullness + "% full");
+            }
+            crewScript.orderDone();
+            crewScript.setDoingAction(false);
+
+
             crewScript.setDoingAction(false);
         }
 

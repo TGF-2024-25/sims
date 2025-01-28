@@ -105,18 +105,19 @@ public class ActionManager : MonoBehaviour
         {
             string cleanResponse = ExtractJson(response);
             JObject jsonResponse = JObject.Parse(cleanResponse);
+            Debug.Log(cleanResponse);
 
             if (jsonResponse.ContainsKey("action"))
             {
                 string action = jsonResponse["action"].ToString();
-                Debug.Log(action);
                 Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
 
                 PG.askOrderParameters(content, action, parameterOptions, response2 =>
                 {
                     string cleanResponse2 = ExtractJson(response2);
-                    Debug.Log(cleanResponse2);
                     JObject jsonResponse2 = JObject.Parse(cleanResponse2);
+                    Debug.Log(cleanResponse);
+
                     if (checkParametersJson(jsonResponse2, parameterOptions))
                     {
                         Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
@@ -178,10 +179,7 @@ public class ActionManager : MonoBehaviour
     }
 
     public void chooseNextAction(List<GameAction> gameActions, CMBehaviour crewMember)
-    {
-
-        Debug.Log("aaaaaaaaaaaa");
-        
+    {      
         if(gameActions.Count != 0)
         {
             GameAction nextAction = gameActions[0];
@@ -190,7 +188,6 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("bbbbbbbbbbbbb");
             crewMember.setDoingAction(false);
         }
         

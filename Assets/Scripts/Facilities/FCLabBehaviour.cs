@@ -25,6 +25,12 @@ public class FCLabBehaviour : FCBehaviour
 
         if (action.correctFacility(NAME))
         {
+            ResearchAction researchAction = (ResearchAction)crewScript.getCurrentAction();
+            int hours = researchAction.getHours();
+
+            Debug.Log("Researching for " + hours + " hours");
+
+            crewScript.orderDone();
             crewScript.setDoingAction(false);
         }
 
