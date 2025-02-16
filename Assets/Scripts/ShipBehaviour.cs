@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class ShipBehaviour : MonoBehaviour
@@ -16,15 +18,21 @@ public class ShipBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject EngineObject;
     private FCEngineBehaviour engineScript;
-    // Start is called before the first frame update
+
+
+    public Dictionary<Resource,int> inventoryResources;
+    public Dictionary<Material, int> inventoryMaterials;
+
 
     void Awake()
     {
+
         labScript = LabObject.GetComponent<FCLabBehaviour>();
         workshopScript = WorkshopObject.GetComponent<FCWorkshopBehaviour>();
         kitchenScript = KitchenObject.GetComponent<FCKitchenBehaviour>();
         engineScript = EngineObject.GetComponent<FCEngineBehaviour>();
     }
+
     void Start()
     {
         
@@ -34,5 +42,22 @@ public class ShipBehaviour : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void loadInventory(Dictionary<Resource, int> inventoryRes, Dictionary<Material, int> inventoryMat)
+    {
+        inventoryResources = inventoryRes;
+        inventoryMaterials = inventoryMat;
+    }
+
+    public string getContext()
+    {
+        string context = "In the ship ";
+        //context += engineScript.getContext();
+        //context += labScript.getContext();
+        //context += workshopScript.getContext();
+        //context += kitchenScript.getContext();
+
+        return context;
     }
 }
