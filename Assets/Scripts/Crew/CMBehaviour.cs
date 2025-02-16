@@ -9,34 +9,43 @@ public class CMBehaviour : MonoBehaviour
     private ActionManager AM;
 
     private List<GameAction> orderedActionsList;
+    private List<string> possibleActions;
+    private List<string> previousActions;
 
     private GameAction currentAction;
     private bool doingAction;
+
+    private int hunger;
+    private string job;
+    private string cmName;
+    private string personality;
+
 
     void Awake()
     {
         AM = ActionManagerObject.GetComponent<ActionManager>();
         orderedActionsList = new List<GameAction>();
+        possibleActions = new List<string>();
+        possibleActions.Add(EatAction.NAME);
+        possibleActions.Add(ResearchAction.NAME);
         currentAction = null;
         doingAction = false;
+        hunger = 100;
     }
 
     void Start()
     {
         string content = "please put more fuel in the tank untill is 75% full";
         simulateOrder(content);
-        string content2 = "go eat 2 racions";
-        simulateOrder(content2);
-        string content3 = "go investigate 4 hours";
-        simulateOrder(content3);
+        //string content2 = "go eat 2 racions";
+        //simulateOrder(content2);
+        //string content3 = "go investigate 4 hours";
+        //simulateOrder(content3);
     }
 
     public void simulateOrder(string order)
-    {
-        //string content = "I want you to fill up the engine about 10 percent of its capacity";
-        //string content = "I want you to go to the bathroom";
-
-        AM.generateAction(order, gameObject);
+    {   
+        AM.generateOrder(order, gameObject);
     }
 
     void Update()
@@ -44,7 +53,7 @@ public class CMBehaviour : MonoBehaviour
         if(!doingAction)
         {
             doingAction = true;
-            AM.chooseNextAction(orderedActionsList, this);  
+            AM.chooseNextAction(orderedActionsList, gameObject, possibleActions);  
         }
     }
     
@@ -71,5 +80,20 @@ public class CMBehaviour : MonoBehaviour
     public void setDoingAction(bool doingAction)
     {
         this.doingAction = doingAction;
+    }
+
+    public string getContext()
+    {
+        string context = "";
+        return context;
+    }
+
+    internal void addPreviousAction(GameAction action)
+    {
+        if(previousActions.Count == 10)
+        {
+            previousActions.RemoveAt(0);
+        }
+        previousActions.Add(action.ToString());
     }
 }

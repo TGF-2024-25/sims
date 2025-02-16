@@ -15,6 +15,10 @@ public class RefuseAction : GameAction
     }
     public override void doAction()
     {
+        while (true)
+        {
+            Debug.Log("im refusing");
+        }
         return;
     }
     public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
@@ -25,5 +29,9 @@ public class RefuseAction : GameAction
     public override bool correctFacility(string facility)
     {
         return facility == FACILITY;
+    }
+    public override string ToString()
+    {
+        return NAME;
     }
 }

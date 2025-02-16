@@ -43,4 +43,8 @@ public class EatAction : GameAction
     {
         return facility == FACILITY;
     }
+    public override string ToString()
+    {
+        return NAME;
+    }
 }

@@ -50,4 +50,9 @@ public class CraftAction : GameAction
     {
         return facility == FACILITY;
     }
+
+    public override string ToString()
+    {
+        return NAME;
+    }
 }

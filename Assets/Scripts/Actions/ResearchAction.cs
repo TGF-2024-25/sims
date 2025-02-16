@@ -37,4 +37,8 @@ public class ResearchAction : GameAction
     {
         return facility == FACILITY;
     }
+    public override string ToString()
+    {
+        return NAME;
+    }
 }

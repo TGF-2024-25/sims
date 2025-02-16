@@ -75,14 +75,14 @@ public class ActionManager : MonoBehaviour
         CraftAction.loadParameterOptions(data[CraftAction.NAME]);
     }
 
-    public void generateAction(string content,GameObject crewMember)
+    public void generateOrder(string content,GameObject crewMember)
     {
-        generateAction(content, actionList, crewMember, 0);
+        generateOrder(content, actionList, crewMember, 0);
     }
 
-    public void generateAction(string content, List<string> possibleActions, GameObject crewMember, int retry)
+    public void generateOrder(string content, List<string> possibleActions, GameObject crewMember, int retry)
     {
-        generateActionCorutine(content, possibleActions, crewMember, response =>
+        generateActionCorutine(true,content, possibleActions, crewMember, response =>
         {
             if (response != null)
             {
@@ -91,17 +91,41 @@ public class ActionManager : MonoBehaviour
             }
             if (response == null && retry < MAX_RETRY)
             {
-                generateAction(content, possibleActions, crewMember,retry+1);
+                generateOrder(content, possibleActions, crewMember,retry+1);
             }
         });
         
     }
 
-    public void generateActionCorutine(string content, List<string> possibleActions, GameObject crewMember, Action<GameAction> callback)
+    public void generateAction(string content, GameObject crewMember, List<string> possibleActions, Action<GameAction> callback)
+    {
+        generateAction(content, possibleActions, crewMember, 0, response =>
+        {
+            callback?.Invoke(response);
+        });
+    }
+
+    public void generateAction(string content, List<string> possibleActions, GameObject crewMember, int retry, Action<GameAction> callback)
+    {
+        generateActionCorutine(false,content, possibleActions, crewMember, response =>
+        {
+            if (response != null)
+            {
+                callback?.Invoke(response);
+            }
+            if (response == null && retry < MAX_RETRY)
+            {
+                generateOrder(content, possibleActions, crewMember, retry + 1);
+            }
+        });
+
+    }
+
+    public void generateActionCorutine(bool isOrder,string content, List<string> possibleActions, GameObject crewMember, Action<GameAction> callback)
     {
         GameAction newAction = null;
    
-        PG.askOrderAction(content, possibleActions, response =>
+        PG.askAction(isOrder,content, possibleActions, response =>
         {
             string cleanResponse = ExtractJson(response);
             JObject jsonResponse = JObject.Parse(cleanResponse);
@@ -112,7 +136,7 @@ public class ActionManager : MonoBehaviour
                 string action = jsonResponse["action"].ToString();
                 Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
 
-                PG.askOrderParameters(content, action, parameterOptions, response2 =>
+                PG.askParameters(isOrder,content, action, parameterOptions, response2 =>
                 {
                     string cleanResponse2 = ExtractJson(response2);
                     JObject jsonResponse2 = JObject.Parse(cleanResponse2);
@@ -178,17 +202,27 @@ public class ActionManager : MonoBehaviour
         return string.Empty;
     }
 
-    public void chooseNextAction(List<GameAction> gameActions, CMBehaviour crewMember)
-    {      
-        if(gameActions.Count != 0)
+    public void chooseNextAction(List<GameAction> gameActions, GameObject crewMember, List<string> possibleActions)
+    {
+
+        CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
+
+        if (gameActions.Count != 0)
         {
             GameAction nextAction = gameActions[0];
-            crewMember.setCurrentAction(nextAction);
+            cmBehaviourScript.setCurrentAction(nextAction);
             nextAction.doAction();
+            cmBehaviourScript.addPreviousAction(nextAction);
         }
         else
         {
-            crewMember.setDoingAction(false);
+            generateAction("I am Juan and my job is to research. My hunger level is at 24. This ship fuel is at 78 of 100 percent. The current research is at 35 of 100 percent", crewMember, possibleActions, response =>
+            {
+                cmBehaviourScript.setCurrentAction(response);
+                response.doAction();
+                cmBehaviourScript.addPreviousAction(response);
+
+            });
         }
         
     }

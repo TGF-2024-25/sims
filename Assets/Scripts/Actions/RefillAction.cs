@@ -42,4 +42,8 @@ public class RefillAction : GameAction
     {
         return facility == FACILITY;
     }
+    public override string ToString()
+    {
+        return NAME;
+    }
 }
