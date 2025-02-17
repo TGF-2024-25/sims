@@ -31,7 +31,7 @@ public class GameStarter : MonoBehaviour
     public void loadData()
     {
         loadActionParameterOptions();
-        loadInventoryData();
+        loadShipData();
     }
 
 
@@ -47,15 +47,15 @@ public class GameStarter : MonoBehaviour
         CraftAction.loadParameterOptions(data[CraftAction.NAME]);
     }
 
-    private void loadInventoryData()
+    private void loadShipData()
     {
         Dictionary<Resource, int> inventoryResources = new Dictionary<Resource, int>();
         Dictionary<Material, int> inventoryMaterials = new Dictionary<Material, int>();
 
-        string jsonFile = Resources.Load<TextAsset>("InventoryData").ToString();
-        Dictionary<string, Dictionary<string, List<string>>> data = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(jsonFile);
-        Dictionary<string, List<string>> resourcesData = data["resources"];
-        Dictionary<string, List<string>> materialsData = data["materials"];
+        string jsonFileInventory = Resources.Load<TextAsset>("InventoryData").ToString();
+        Dictionary<string, Dictionary<string, List<string>>> dataInventory = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<string>>>>(jsonFileInventory);
+        Dictionary<string, List<string>> resourcesData = dataInventory["resources"];
+        Dictionary<string, List<string>> materialsData = dataInventory["materials"];
 
         foreach (string level in resourcesData.Keys)
         {
@@ -74,6 +74,16 @@ public class GameStarter : MonoBehaviour
             }
         }
 
-        shipScript.loadInventory(inventoryResources, inventoryMaterials);
+        List<string> crewNameOptions = new List<string>();
+        List<string> crewPersonalityOptions = new List<string>();
+        List<string> crewJobOptions = new List<string>();
+
+        string jsonFileCM = Resources.Load<TextAsset>("CMData").ToString();
+        Dictionary<string, List<string>> dataCM = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(jsonFileCM);
+        List<string> nameOps = dataCM["names"];
+        List<string> personalityOps = dataCM["personalities"];
+        List<string> jobOps = dataCM["jobs"];
+
+        shipScript.loadData(inventoryResources, inventoryMaterials, nameOps, personalityOps, jobOps);
     }
 }

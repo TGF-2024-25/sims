@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CMBehaviour : MonoBehaviour
 {
-    public GameObject ActionManagerObject;
+    private GameObject ActionManagerObject;
     private ActionManager AM;
 
     private List<GameAction> orderedActionsList;
@@ -14,6 +14,7 @@ public class CMBehaviour : MonoBehaviour
 
     private GameAction currentAction;
     private bool doingAction;
+    private ShipBehaviour shipScript;
 
     private int hunger;
     private string job;
@@ -22,6 +23,7 @@ public class CMBehaviour : MonoBehaviour
 
     void Awake()
     {
+
         AM = ActionManagerObject.GetComponent<ActionManager>();
         orderedActionsList = new List<GameAction>();
         possibleActions = new List<string>();
@@ -46,11 +48,13 @@ public class CMBehaviour : MonoBehaviour
         //simulateOrder(content3);
     }
 
-    public void Initialize(string newName, string newPersonality, string newJob)
+    public void Initialize(string newName, string newPersonality, string newJob, ShipBehaviour newShipScript, GameObject AMObject)
     {
         cmName = newName;
         personality = newPersonality;
         job = newJob;
+        shipScript = newShipScript;
+        ActionManagerObject = AMObject;
     }
 
     public void simulateOrder(string order)

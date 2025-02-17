@@ -9,6 +9,9 @@ using UnityEngine.UIElements;
 public class ShipBehaviour : MonoBehaviour
 {
     [SerializeField]
+    private GameObject ActionManagerObject;
+
+    [SerializeField]
     private GameObject LabObject;
     private FCLabBehaviour labScript;
     [SerializeField]
@@ -22,16 +25,26 @@ public class ShipBehaviour : MonoBehaviour
     private FCEngineBehaviour engineScript;
 
     [SerializeField]
-    public GameObject crewMemberPrefab;
+    private GameObject crewMemberPrefab;
+
+    private List<string> crewNameOptions;
+    private List<string> crewPersonalityOptions;
+    private List<string> crewJobOptions;
+
 
     public Dictionary<Resource,int> inventoryResources;
     public Dictionary<Material, int> inventoryMaterials;
+
+    private List<GameObject> crewMembers;
+    private List<string> crewMembersNames;
 
 
 
 
     void Awake()
     {
+        crewMembers = new List<GameObject>();
+        crewMembersNames = new List<string>();
 
         labScript = LabObject.GetComponent<FCLabBehaviour>();
         workshopScript = WorkshopObject.GetComponent<FCWorkshopBehaviour>();
@@ -41,7 +54,7 @@ public class ShipBehaviour : MonoBehaviour
 
     void Start()
     {
-        
+        CreateCrewMember();
     }
 
     // Update is called once per frame
@@ -52,22 +65,36 @@ public class ShipBehaviour : MonoBehaviour
 
 
 
-    public void loadInventory(Dictionary<Resource, int> inventoryRes, Dictionary<Material, int> inventoryMat)
+    public void loadData(Dictionary<Resource, int> inventoryRes, Dictionary<Material, int> inventoryMat, List<string> nameOps, List<string> personalityOps, List<string> jobOps)
     {
         inventoryResources = inventoryRes;
         inventoryMaterials = inventoryMat;
-    }
+
+        crewNameOptions = nameOps;
+        crewPersonalityOptions = personalityOps;
+        crewJobOptions = jobOps;
+
+}
 
     public void CreateCrewMember()
     {
-        Vector3 position = new Vector3 (0, 0, 0);
-        GameObject newCrewMember = Object.Instantiate(crewMemberPrefab, position, Quaternion.identity);
+        Vector3 position = Vector3.zero;
 
-        string name;
-        string personality;
-        string job;
 
+        GameObject newCrewMember = Instantiate(crewMemberPrefab, position, Quaternion.identity);
+        CMBehaviour crewScript = newCrewMember.GetComponent<CMBehaviour>();
+
+        string name = crewNameOptions[Random.Range(0, crewNameOptions.Count())];
+        while (crewMembersNames.Contains(name))
+        {
+            name = crewNameOptions[Random.Range(0, crewNameOptions.Count())];
+        }
+        string personality = crewPersonalityOptions[Random.Range(0, crewPersonalityOptions.Count())];
+        string job = crewJobOptions[Random.Range(0, crewJobOptions.Count())];
         
+        crewScript.Initialize(name, personality, job, this, ActionManagerObject);
+        crewMembers.Add(newCrewMember);
+        crewMembersNames.Add(name);
     }
 
     public string getContext()
