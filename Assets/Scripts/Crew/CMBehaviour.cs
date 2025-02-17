@@ -20,6 +20,13 @@ public class CMBehaviour : MonoBehaviour
     private string cmName;
     private string personality;
 
+    public CMBehaviour(string newName, string newPersonality, string newJob)
+    {
+        cmName = newName;
+        personality = newPersonality;
+        job = newJob;
+    }
+
 
     void Awake()
     {

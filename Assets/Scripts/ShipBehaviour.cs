@@ -4,6 +4,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ShipBehaviour : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class ShipBehaviour : MonoBehaviour
     private GameObject EngineObject;
     private FCEngineBehaviour engineScript;
 
+    [SerializeField]
+    public GameObject crewMemberPrefab;
 
     public Dictionary<Resource,int> inventoryResources;
     public Dictionary<Material, int> inventoryMaterials;
@@ -45,10 +48,25 @@ public class ShipBehaviour : MonoBehaviour
         
     }
 
+
+
     public void loadInventory(Dictionary<Resource, int> inventoryRes, Dictionary<Material, int> inventoryMat)
     {
         inventoryResources = inventoryRes;
         inventoryMaterials = inventoryMat;
+    }
+
+    public void CreateCrewMember()
+    {
+        Vector3 position = new Vector3 (0, 0, 0);
+        GameObject newCrewMember = Object.Instantiate(crewMemberPrefab, position, Quaternion.identity);
+
+        string name;
+        string personality;
+        string job;
+
+        CMBehaviour crewScript = newCrewMember.GetComponent<CMBehaviour>();
+        crewScript.Initialize(name, personality, job);
     }
 
     public string getContext()
