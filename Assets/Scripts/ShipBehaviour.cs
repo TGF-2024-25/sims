@@ -55,6 +55,7 @@ public class ShipBehaviour : MonoBehaviour
     void Start()
     {
         CreateCrewMember();
+        CreateCrewMember();
     }
 
     // Update is called once per frame

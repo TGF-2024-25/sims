@@ -52,7 +52,7 @@ public class FCKitchenBehaviour : FCBehaviour
                     currentHunger += FOOD_RESTAURATION;
                 }
             }
-            Invoke(nameof(eat), 30f);
+            Invoke(nameof(eat), 5f);
         }
 
     }

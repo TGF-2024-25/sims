@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5452004086594975465}
   - component: {fileID: 5991720298373665761}
   - component: {fileID: 3089576807683671543}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 6546043738279754889}
   - component: {fileID: 6835930815235822679}
   - component: {fileID: 3766382990312125098}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CrewMember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dd42c1a26b59943abf0a96f14dcbfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionManagerObject: {fileID: 0}
 --- !u!61 &8758363061598928186
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -171,7 +170,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

@@ -56,6 +56,7 @@ public class CMBehaviour : MonoBehaviour
         ActionManagerObject = AMObject;
 
         AM = ActionManagerObject.GetComponent<ActionManager>();
+        Debug.Log(newName + " " + newPersonality + " " + job);
     }
 
     public void simulateOrder(string order)
@@ -68,6 +69,7 @@ public class CMBehaviour : MonoBehaviour
         if(!doingAction)
         {
             doingAction = true;
+            Debug.Log(orderedActionsList);
             AM.chooseNextAction(orderedActionsList, gameObject, possibleActions);  
         }
     }

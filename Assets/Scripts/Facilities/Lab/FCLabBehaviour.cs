@@ -30,11 +30,6 @@ public class FCLabBehaviour : FCBehaviour
             researchList.Add(new Research(research.Value["level"], new Material(research.Key), research.Value["duration"]));
         }
 
-        // Debugging: Print the loaded research items
-        foreach (var research in researchList)
-        {
-            Debug.Log($"Material: {research.getMaterial()}, Level: {research.getLevel()}, Duration: {research.getDuration()}");
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

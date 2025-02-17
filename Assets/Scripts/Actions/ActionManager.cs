@@ -140,7 +140,7 @@ public class ActionManager : MonoBehaviour
                 {
                     string cleanResponse2 = ExtractJson(response2);
                     JObject jsonResponse2 = JObject.Parse(cleanResponse2);
-                    Debug.Log(cleanResponse);
+                    Debug.Log(cleanResponse2);
 
                     if (checkParametersJson(jsonResponse2, parameterOptions))
                     {
