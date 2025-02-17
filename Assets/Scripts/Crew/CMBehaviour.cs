@@ -14,6 +14,7 @@ public class CMBehaviour : MonoBehaviour
 
     private GameAction currentAction;
     private bool doingAction;
+    private bool inFacility;
     private ShipBehaviour shipScript;
 
     private int hunger;
@@ -33,6 +34,7 @@ public class CMBehaviour : MonoBehaviour
 
         currentAction = null;
         doingAction = false;
+        inFacility = false;
         hunger = 50;
         InvokeRepeating(nameof(loseHunger), 10f, 10f);
     }
@@ -132,6 +134,15 @@ public class CMBehaviour : MonoBehaviour
     public void setHunger(int hunger)
     {
         this.hunger = hunger;
+    }
+
+    public void setInFacility(bool inFacility)
+    {
+        this.inFacility = inFacility;
+    }
+    public bool getInFacility()
+    {
+        return inFacility;
     }
 
     private void loseHunger()

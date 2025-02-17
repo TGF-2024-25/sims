@@ -9,4 +9,8 @@ public class Material
         this.name = name;
     }
     private string name;
+    public string getName()
+    {
+        return name;
+    }
 }
