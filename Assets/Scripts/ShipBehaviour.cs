@@ -28,6 +28,8 @@ public class ShipBehaviour : MonoBehaviour
     public Dictionary<Material, int> inventoryMaterials;
 
 
+
+
     void Awake()
     {
 

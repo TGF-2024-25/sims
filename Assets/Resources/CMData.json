@@ -1,0 +1,8 @@
+{
+  "name": {
+    "1": [ "wood", "stone", "coal" ]
+  },
+  "materials": {
+    "all": [ "carbonite", "timberite", "ferronite", "timbersteel", "cable", "cirquit", "powerCell, display, superComputer" ],
+  }
+}

@@ -20,14 +20,6 @@ public class CMBehaviour : MonoBehaviour
     private string cmName;
     private string personality;
 
-    public CMBehaviour(string newName, string newPersonality, string newJob)
-    {
-        cmName = newName;
-        personality = newPersonality;
-        job = newJob;
-    }
-
-
     void Awake()
     {
         AM = ActionManagerObject.GetComponent<ActionManager>();
@@ -48,6 +40,13 @@ public class CMBehaviour : MonoBehaviour
         //simulateOrder(content2);
         //string content3 = "go investigate 4 hours";
         //simulateOrder(content3);
+    }
+
+    public void Initialize(string newName, string newPersonality, string newJob)
+    {
+        cmName = newName;
+        personality = newPersonality;
+        job = newJob;
     }
 
     public void simulateOrder(string order)
