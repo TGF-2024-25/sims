@@ -6,6 +6,6 @@
     "4": [ "gold" ]
   },
   "materials": {
-    "all": [ "carbonite", "timberite", "ferronite", "timbersteel", "cable", "cirquit", "powerCell, display, superComputer" ],
+    "all": [ "carbonite", "timberite", "ferronite", "timbersteel", "cable", "cirquit", "powerCell, display, superComputer" ]
   }
 }

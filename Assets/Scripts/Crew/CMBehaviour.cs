@@ -25,11 +25,15 @@ public class CMBehaviour : MonoBehaviour
         AM = ActionManagerObject.GetComponent<ActionManager>();
         orderedActionsList = new List<GameAction>();
         possibleActions = new List<string>();
+        previousActions = new List<string>();
+
         possibleActions.Add(EatAction.NAME);
         possibleActions.Add(ResearchAction.NAME);
+
         currentAction = null;
         doingAction = false;
-        hunger = 100;
+        hunger = 23;
+        InvokeRepeating(nameof(loseHunger), 10f, 10f);
     }
 
     void Start()
@@ -101,5 +105,20 @@ public class CMBehaviour : MonoBehaviour
             previousActions.RemoveAt(0);
         }
         previousActions.Add(action.ToString());
+    }
+
+    public int getHunger()
+    {
+        return this.hunger;
+    }
+
+    public void setHunger(int hunger)
+    {
+        this.hunger = hunger;
+    }
+
+    private void loseHunger()
+    {
+        this.hunger -= 2;
     }
 }

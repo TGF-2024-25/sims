@@ -1,0 +1,40 @@
+{
+  "carbonite" : {
+    "level" : 1,
+    "duration" : 12
+  },
+  "timberite" : {
+    "level" : 1,
+    "duration" : 14
+  },
+  "ferronite" : {
+    "level" : 2,
+    "duration" : 14
+  },
+  "timbersteel" : {
+    "level" : 2,
+    "duration" : 16
+  },
+  "cable" : {
+    "level" : 3,
+    "duration" : 16
+  },
+  "circuit" : {
+    "level" : 3,
+    "duration" : 18
+  },
+  "power Cell" : {
+    "level" : 4,
+    "duration" : 18
+  },
+  "display" : {
+    "level" : 4,
+    "duration" : 20
+  },
+  "super Computer" : {
+    "level" : 4,
+    "duration" : 24
+  }
+  
+}
+

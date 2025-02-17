@@ -67,8 +67,7 @@ public class ShipBehaviour : MonoBehaviour
         string personality;
         string job;
 
-        CMBehaviour crewScript = newCrewMember.GetComponent<CMBehaviour>();
-        crewScript.Initialize(name, personality, job);
+        
     }
 
     public string getContext()
