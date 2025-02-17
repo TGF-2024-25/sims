@@ -129,7 +129,7 @@ public class ActionManager : MonoBehaviour
         {
             string cleanResponse = ExtractJson(response);
             JObject jsonResponse = JObject.Parse(cleanResponse);
-            Debug.Log(cleanResponse);
+            //Debug.Log(cleanResponse);
 
             if (jsonResponse.ContainsKey("action"))
             {
@@ -140,7 +140,7 @@ public class ActionManager : MonoBehaviour
                 {
                     string cleanResponse2 = ExtractJson(response2);
                     JObject jsonResponse2 = JObject.Parse(cleanResponse2);
-                    Debug.Log(cleanResponse2);
+                    //Debug.Log(cleanResponse2);
 
                     if (checkParametersJson(jsonResponse2, parameterOptions))
                     {
@@ -209,6 +209,7 @@ public class ActionManager : MonoBehaviour
 
         if (gameActions.Count != 0)
         {
+            Debug.Log(gameActions[0]);
             GameAction nextAction = gameActions[0];
             cmBehaviourScript.setCurrentAction(nextAction);
             nextAction.doAction();
@@ -216,9 +217,11 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            generateAction("I am Juan and my job is to research. My hunger level is at 24. This ship fuel is at 78 of 100 percent. The current research is at 35 of 100 percent", crewMember, possibleActions, response =>
+            string crewContext = cmBehaviourScript.getContext();
+            generateAction(crewContext + "This ship fuel is at 50 of 100 percent. The current research is at 35 of 100 percent", crewMember, possibleActions, response =>
             {
                 cmBehaviourScript.setCurrentAction(response);
+                Debug.Log(response);
                 response.doAction();
                 cmBehaviourScript.addPreviousAction(response);
 

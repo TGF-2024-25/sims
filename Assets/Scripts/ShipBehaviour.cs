@@ -56,6 +56,14 @@ public class ShipBehaviour : MonoBehaviour
     {
         CreateCrewMember();
         CreateCrewMember();
+
+        CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
+        CMBehaviour cm2script = crewMembers[1].GetComponent<CMBehaviour>();
+
+        string content = "please put more fuel in the tank untill is 75% full";
+        cm1script.simulateOrder(content);
+        string content2 = "go investigate 4 hours";
+        cm2script.simulateOrder(content2);
     }
 
     // Update is called once per frame

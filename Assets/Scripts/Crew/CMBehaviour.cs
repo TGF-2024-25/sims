@@ -33,18 +33,27 @@ public class CMBehaviour : MonoBehaviour
 
         currentAction = null;
         doingAction = false;
-        hunger = 23;
+        hunger = 50;
         InvokeRepeating(nameof(loseHunger), 10f, 10f);
     }
 
     void Start()
     {
-        string content = "please put more fuel in the tank untill is 75% full";
-        simulateOrder(content);
+        //string content = "please put more fuel in the tank untill is 75% full";
+        //simulateOrder(content);
         //string content2 = "go eat 2 racions";
         //simulateOrder(content2);
         //string content3 = "go investigate 4 hours";
         //simulateOrder(content3);
+    }
+
+    void Update()
+    {
+        if (!doingAction)
+        {
+            doingAction = true;
+            AM.chooseNextAction(orderedActionsList, gameObject, possibleActions);
+        }
     }
 
     public void Initialize(string newName, string newPersonality, string newJob, ShipBehaviour newShipScript, GameObject AMObject)
@@ -60,20 +69,10 @@ public class CMBehaviour : MonoBehaviour
     }
 
     public void simulateOrder(string order)
-    {   
+    {
         AM.generateOrder(order, gameObject);
     }
 
-    void Update()
-    {
-        if(!doingAction)
-        {
-            doingAction = true;
-            Debug.Log(orderedActionsList);
-            AM.chooseNextAction(orderedActionsList, gameObject, possibleActions);  
-        }
-    }
-    
     public void updateActionList(GameAction action)
     {
         this.orderedActionsList.Add(action);
@@ -94,14 +93,25 @@ public class CMBehaviour : MonoBehaviour
         orderedActionsList.Remove(gameAction);
     }
 
-    public void setDoingAction(bool doingAction)
+    public void setDoingAction(bool newDoingAction)
     {
-        this.doingAction = doingAction;
+        this.doingAction = newDoingAction;
     }
 
     public string getContext()
     {
-        string context = "";
+        string context = "I am ";
+        context += cmName;
+        context += ", my personality is ";
+        context += personality;
+        context += ", and my job is to ";
+        context += job;
+        context += ". My hunger level is at ";
+        context += hunger;
+        context += ".";
+
+        Debug.Log(context);
+
         return context;
     }
 

@@ -47,7 +47,7 @@ public class FCEngineBehaviour : FCBehaviour
             {
                 toInsert = percentage;
             }
-            Invoke(nameof(refillMotor), 30f);
+            Invoke(nameof(refillMotor), 5f);
             
         }
 
