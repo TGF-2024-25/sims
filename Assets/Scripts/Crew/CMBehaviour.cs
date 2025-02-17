@@ -23,8 +23,7 @@ public class CMBehaviour : MonoBehaviour
 
     void Awake()
     {
-
-        AM = ActionManagerObject.GetComponent<ActionManager>();
+      
         orderedActionsList = new List<GameAction>();
         possibleActions = new List<string>();
         previousActions = new List<string>();
@@ -55,6 +54,8 @@ public class CMBehaviour : MonoBehaviour
         job = newJob;
         shipScript = newShipScript;
         ActionManagerObject = AMObject;
+
+        AM = ActionManagerObject.GetComponent<ActionManager>();
     }
 
     public void simulateOrder(string order)
