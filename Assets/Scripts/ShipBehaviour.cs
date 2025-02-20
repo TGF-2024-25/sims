@@ -104,11 +104,11 @@ public class ShipBehaviour : MonoBehaviour
 
     public string getContext()
     {
-        string context = "In the ship ";
-        //context += engineScript.getContext();
-        //context += labScript.getContext();
-        //context += workshopScript.getContext();
-        //context += kitchenScript.getContext();
+        string context = "Within the ship ";
+        context += engineScript.getContext() + ", ";
+        context += labScript.getContext() + ", ";
+        //context += workshopScript.getContext() + ", ";
+        context += kitchenScript.getContext();
 
         return context;
     }

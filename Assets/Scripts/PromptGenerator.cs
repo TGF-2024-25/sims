@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PromptGenerator : MonoBehaviour
 {
@@ -14,23 +15,19 @@ public class PromptGenerator : MonoBehaviour
         LLMM = LLMManagerObject.GetComponent<LLMManager>();
     }
 
-    public void askAction(bool isOrder,string content, List<string> possibleActions, Action<string> callback)
+    public void askAction(bool isOrder,string content, string context, List<string> possibleActions, Action<string> callback)
     {
-        string petition = "";
+        string petition = "I am a crew member on a space ship and this is my context and the context of my ship: " + context;
         if (isOrder)
         {
-            petition = "I am a crew member on a space ship. According to this order given to me by my captain: " + content +
+            petition += " According to this order given to me by my captain: " + content +
            ". Which one of these actions should I perform to fulfill the order: ";
         }
         else
         {
-            petition = "I am a crew member on a space ship and this is my context and the context of my ship: " + content +
-                ". Which action should I do prioritazing eating if my hunger level is below 25 and if not, doing my assigned job." + 
+            petition += ". Which action should I do now considering that between 10:00 and 18:00 I should be 40% likely to do my job." + 
                 " This is the list of possible actions: ";
         }
-
-        //". Which action should I do prioritazing eating if my hunger level is below 25 and if not, doing my assigned job." + 
-        //" This is the list of possible actions: ";
 
 
         foreach (string posAction in possibleActions)
@@ -40,41 +37,37 @@ public class PromptGenerator : MonoBehaviour
 
         if (isOrder)
         {
-            petition += ".If the other ones make no sense, choose refuse. Answer only with a JSON with this format: {action: <actionName>}. " +
-            "Action and action name should always be between quotation marks as a string";
+            petition += ".If the other ones make no sense, choose refuse.";
         }
-        else
-        {
-            petition += ".Answer only with a JSON with this format: {action: <actionName>}. " + 
+
+        petition += ".Answer only with a JSON with this format: {action: <actionName>}. " +
             "Action and action name should always be between quotation marks as a string";
-        }
+
+
+
+        Debug.Log(petition);    
 
         
-
-        //Debug.Log(petition);    
-
-        // Llamada a la función de petición con corrutina
         LLMM.SendRequestToGemini(petition, response =>
         {
-            callback(response); // Llama al callback con la respuesta recibida
+            callback(response);
         });
     }
 
-    public void askParameters(bool isOrder,string content, string actionName, Dictionary<string, List<string>> parameterOptions, Action<string> callback)
+    public void askParameters(bool isOrder,string content, string context, string actionName, Dictionary<string, List<string>> parameterOptions, Action<string> callback)
     {
 
-        string petition = "";
+        string petition = "I am a crew member on a space ship and this is my context and the context of my ship: " + context;
         if (isOrder)
         {
-            petition = "I am a crew member on a space ship. According to this order given to me by my captain: " + content +
+            petition += ". According to this order given to me by my captain: " + content +
             ". You told me to perform the action " + actionName;
             petition += ". Now I have the following parameters each with their different options, regarding this action. " +
             "I need you to choose one option for each parameter, the one you think suits best the order given by my captain. Here are the parameters and their options:";
         }
         else
         {
-            petition = "I am a crew member on a space ship. According to this context: " + content +
-            ". You told me to perform the action " + actionName;
+            petition += ". You told me to perform the action " + actionName;
             petition += ". Now I have the following parameters each with their different options, regarding this action. " +
             "I need you to choose one option for each parameter, the one you think suits best the context given. Here are the parameters and their options:";
         } 
@@ -94,7 +87,7 @@ public class PromptGenerator : MonoBehaviour
         petition += ". Answer only with a JSON with this format, one key-value pair for each parameter: {parameterName: <optionChosen>}. " +
             "ParameterName and optionChosen should always be between quotation marks as a string";
 
-        //Debug.Log(petition);
+        Debug.Log(petition);
 
         LLMM.SendRequestToGemini(petition, response =>
         {

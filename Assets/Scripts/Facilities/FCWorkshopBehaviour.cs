@@ -44,4 +44,10 @@ public class FCWorkshopBehaviour : FCBehaviour
 
     }
 
+    public string getContext()
+    {
+        string context = "";
+        return context;
+    }
+
 }

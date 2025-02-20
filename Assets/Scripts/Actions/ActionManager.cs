@@ -75,14 +75,18 @@ public class ActionManager : MonoBehaviour
         CraftAction.loadParameterOptions(data[CraftAction.NAME]);
     }
 
-    public void generateOrder(string content,GameObject crewMember)
+    public void generateOrder(string content,GameObject crewMember, ShipBehaviour shipScript)
     {
-        generateOrder(content, actionList, crewMember, 0);
+        CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
+        string crewContext = cmBehaviourScript.getContext();
+        string shipContext = shipScript.getContext();
+
+        generateOrder(content, crewContext + shipContext, actionList, crewMember, 0);
     }
 
-    public void generateOrder(string content, List<string> possibleActions, GameObject crewMember, int retry)
+    public void generateOrder(string content, string context, List<string> possibleActions, GameObject crewMember, int retry)
     {
-        generateActionCorutine(true,content, possibleActions, crewMember, response =>
+        generateActionCorutine(true,content, context, possibleActions, crewMember, response =>
         {
             if (response != null)
             {
@@ -91,41 +95,44 @@ public class ActionManager : MonoBehaviour
             }
             if (response == null && retry < MAX_RETRY)
             {
-                generateOrder(content, possibleActions, crewMember,retry+1);
+                generateOrder(content, context, possibleActions, crewMember,retry+1);
             }
         });
         
     }
 
-    public void generateAction(string content, GameObject crewMember, List<string> possibleActions, Action<GameAction> callback)
+    public void generateAction(string context, GameObject crewMember, List<string> possibleActions)
     {
-        generateAction(content, possibleActions, crewMember, 0, response =>
-        {
-            callback?.Invoke(response);
-        });
+        generateAction("", context, possibleActions, crewMember, 0);
     }
 
-    public void generateAction(string content, List<string> possibleActions, GameObject crewMember, int retry, Action<GameAction> callback)
+    public void generateAction(string content, string context, List<string> possibleActions, GameObject crewMember, int retry)
     {
-        generateActionCorutine(false,content, possibleActions, crewMember, response =>
+        generateActionCorutine(false, content, context, possibleActions, crewMember, response =>
         {
             if (response != null)
             {
-                callback?.Invoke(response);
+                CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
+
+                cmBehaviourScript.setCurrentAction(response);
+                Debug.Log(response);
+                response.doAction();
+                cmBehaviourScript.addPreviousAction(response);
+
             }
             if (response == null && retry < MAX_RETRY)
             {
-                generateOrder(content, possibleActions, crewMember, retry + 1);
+                generateAction(content, context, possibleActions, crewMember, retry + 1);
             }
         });
 
     }
 
-    public void generateActionCorutine(bool isOrder,string content, List<string> possibleActions, GameObject crewMember, Action<GameAction> callback)
+    public void generateActionCorutine(bool isOrder, string content, string context, List<string> possibleActions, GameObject crewMember, Action<GameAction> callback)
     {
         GameAction newAction = null;
    
-        PG.askAction(isOrder,content, possibleActions, response =>
+        PG.askAction(isOrder,content, context, possibleActions, response =>
         {
             string cleanResponse = ExtractJson(response);
             JObject jsonResponse = JObject.Parse(cleanResponse);
@@ -136,7 +143,7 @@ public class ActionManager : MonoBehaviour
                 string action = jsonResponse["action"].ToString();
                 Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
 
-                PG.askParameters(isOrder,content, action, parameterOptions, response2 =>
+                PG.askParameters(isOrder,content, context, action, parameterOptions, response2 =>
                 {
                     string cleanResponse2 = ExtractJson(response2);
                     JObject jsonResponse2 = JObject.Parse(cleanResponse2);
@@ -204,7 +211,7 @@ public class ActionManager : MonoBehaviour
         return string.Empty;
     }
 
-    public void chooseNextAction(List<GameAction> gameActions, GameObject crewMember, List<string> possibleActions)
+    public void chooseNextAction(List<GameAction> gameActions, GameObject crewMember, List<string> possibleActions, ShipBehaviour shipScript)
     {
 
         CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
@@ -220,14 +227,8 @@ public class ActionManager : MonoBehaviour
         else
         {
             string crewContext = cmBehaviourScript.getContext();
-            generateAction(crewContext + "", crewMember, possibleActions, response =>
-            {
-                cmBehaviourScript.setCurrentAction(response);
-                Debug.Log(response);
-                response.doAction();
-                cmBehaviourScript.addPreviousAction(response);
-
-            });
+            string shipContext = shipScript.getContext();
+            generateAction(crewContext + shipContext, crewMember, possibleActions);
         }
         
     }

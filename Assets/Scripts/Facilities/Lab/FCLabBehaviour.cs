@@ -109,5 +109,11 @@ public class FCLabBehaviour : FCBehaviour
         }
     }
 
+    public string getContext()
+    {
+        string context = "In the lab, the current investigation is " + "Timberite" + ", sitting at " + "50" + " percent progress";
+        return context;
+    }
+
 
 }

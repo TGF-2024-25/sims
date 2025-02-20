@@ -65,4 +65,10 @@ public class FCEngineBehaviour : FCBehaviour
         crewScript.orderDone();
         crewScript.setDoingAction(false);
     }
+
+    public string getContext()
+    {
+        string context = "In the engine, the fuel level is at " + fuelLevel + " out of " + MAX_FUEL_LEVEL;
+        return context;
+    }
 }

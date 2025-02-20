@@ -54,7 +54,7 @@ public class CMBehaviour : MonoBehaviour
         if (!doingAction)
         {
             doingAction = true;
-            AM.chooseNextAction(orderedActionsList, gameObject, possibleActions);
+            AM.chooseNextAction(orderedActionsList, gameObject, possibleActions, shipScript);
         }
     }
 
@@ -72,7 +72,7 @@ public class CMBehaviour : MonoBehaviour
 
     public void simulateOrder(string order)
     {
-        AM.generateOrder(order, gameObject);
+        AM.generateOrder(order, gameObject, shipScript);
     }
 
     public void updateActionList(GameAction action)
@@ -110,9 +110,9 @@ public class CMBehaviour : MonoBehaviour
         context += job;
         context += ". My hunger level is at ";
         context += hunger;
-        context += ".";
+        context += ". ";
 
-        Debug.Log(context);
+        //Debug.Log(context);
 
         return context;
     }

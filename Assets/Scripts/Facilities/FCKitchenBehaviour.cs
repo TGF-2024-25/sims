@@ -63,4 +63,10 @@ public class FCKitchenBehaviour : FCBehaviour
         crewScript.orderDone();
         crewScript.setDoingAction(false);
     }
+
+    public string getContext()
+    {
+        string context = "In the kitchen, there are " + avaibleFood + " rations available, each one give " + FOOD_RESTAURATION + " food points";
+        return context;
+    }
 }
