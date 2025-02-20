@@ -49,7 +49,7 @@ public class FCLabBehaviour : FCBehaviour
         GameObject crewMember = collision.gameObject;
         crewScript = crewMember.GetComponent<CMBehaviour>();
         GameAction action = crewScript.getCurrentAction();
-        Debug.Log(crewScript.getInFacility());
+        //Debug.Log(crewScript.getInFacility());
         if (action.correctFacility(NAME) && !crewScript.getInFacility())
         {
             startResearch();

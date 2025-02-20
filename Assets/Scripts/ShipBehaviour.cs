@@ -58,8 +58,8 @@ public class ShipBehaviour : MonoBehaviour
 
         CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
 
-        string content = "go refill to full";
-        cm1script.simulateOrder(content);
+        //string content = "go refill to full";
+        //cm1script.simulateOrder(content);
     }
 
     // Update is called once per frame

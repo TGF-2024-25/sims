@@ -147,7 +147,9 @@ public class ActionManager : MonoBehaviour
                         Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
 
                         newAction = createActionByName(action, parametersChosen,crewMember,true);
-                        
+                        //Debug.Log(cleanResponse + cleanResponse2);
+                        //Debug.Log(cleanResponse + cleanResponse2);
+
                         callback?.Invoke(newAction);
                     }
                     else
@@ -218,7 +220,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             string crewContext = cmBehaviourScript.getContext();
-            generateAction(crewContext + "This ship fuel is at 50 of 100 percent. The current research is at 35 of 100 percent", crewMember, possibleActions, response =>
+            generateAction(crewContext + "", crewMember, possibleActions, response =>
             {
                 cmBehaviourScript.setCurrentAction(response);
                 Debug.Log(response);

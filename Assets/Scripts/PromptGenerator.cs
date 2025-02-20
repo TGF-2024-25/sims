@@ -28,15 +28,28 @@ public class PromptGenerator : MonoBehaviour
                 ". Which action should I do prioritazing eating if my hunger level is below 25 and if not, doing my assigned job." + 
                 " This is the list of possible actions: ";
         }
-       
+
+        //". Which action should I do prioritazing eating if my hunger level is below 25 and if not, doing my assigned job." + 
+        //" This is the list of possible actions: ";
+
 
         foreach (string posAction in possibleActions)
         {
             petition += " " + posAction + ",";
         }
 
-        petition += ".If the other ones make no sense, choose refuse. Answer only with a JSON with this format: {action: <actionName>}. " +
+        if (isOrder)
+        {
+            petition += ".If the other ones make no sense, choose refuse. Answer only with a JSON with this format: {action: <actionName>}. " +
             "Action and action name should always be between quotation marks as a string";
+        }
+        else
+        {
+            petition += ".Answer only with a JSON with this format: {action: <actionName>}. " + 
+            "Action and action name should always be between quotation marks as a string";
+        }
+
+        
 
         //Debug.Log(petition);    
 
