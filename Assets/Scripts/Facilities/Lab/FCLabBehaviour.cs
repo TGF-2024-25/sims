@@ -28,7 +28,7 @@ public class FCLabBehaviour : FCBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (colliding && crewScript.getInFacility() && crewScript.getCurrentAction() != null)
+        if (colliding && crewScript.getInFacility() && crewScript.getCurrentAction() != null && crewScript.getCurrentAction().correctFacility(NAME))
             startResearch();
             
     }

@@ -55,6 +55,7 @@ public class ShipBehaviour : MonoBehaviour
     void Start()
     {
         CreateCrewMember();
+        CreateCrewMember();
 
         CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
 
