@@ -9,18 +9,22 @@ public class FCEngineBehaviour : FCBehaviour
     private int fuelLevel;
     private int toInsert;
     private CMBehaviour crewScript;
+    private bool colliding;
+
     // Start is called before the first frame update
     void Start()
     {
         fuelLevel = 24;
         toInsert = 0;
+        colliding = false;
         InvokeRepeating(nameof(SubtractValue), 30f, 30f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (colliding && crewScript.getInFacility() && crewScript.getCurrentAction() != null)
+            startRefill();
     }
 
     void SubtractValue()
@@ -36,25 +40,36 @@ public class FCEngineBehaviour : FCBehaviour
 
         if (action.correctFacility(NAME))
         {
-            RefillAction refillAction = (RefillAction)crewScript.getCurrentAction();
-            string justEnough = refillAction.getJustEnough();
-            int percentage = refillAction.getPercentage();
-            if (justEnough.Equals("yes"))
-            {
-                toInsert = -1;
-            }
-            else
-            {
-                toInsert = percentage;
-            }
-            Invoke(nameof(refillMotor), 5f);
-            
+
+            colliding = true;
+            crewScript.setInFacility(true);
+
         }
+
+    }
+
+    void startRefill()
+    {
+        Debug.Log("started refill");
+        RefillAction refillAction = (RefillAction)crewScript.getCurrentAction();
+        string justEnough = refillAction.getJustEnough();
+        int percentage = refillAction.getPercentage();
+        if (justEnough.Equals("yes"))
+        {
+            toInsert = -1;
+        }
+        else
+        {
+            toInsert = percentage;
+        }
+        Invoke(nameof(refillMotor), 5f);
+        crewScript.setInFacility(false);
 
     }
     void refillMotor()
     {
-        if(toInsert >= 0)
+        Debug.Log("finish refill");
+        if (toInsert >= 0)
         {
             fuelLevel = toInsert;
         }
@@ -64,6 +79,8 @@ public class FCEngineBehaviour : FCBehaviour
         }
         crewScript.orderDone();
         crewScript.setDoingAction(false);
+        crewScript.setInFacility(true);
+
     }
 
     public string getContext()

@@ -9,16 +9,25 @@ public class FCKitchenBehaviour : FCBehaviour
     int avaibleFood;
     int foodEaten;
     CMBehaviour crewScript;
+    private bool colliding;
     // Start is called before the first frame update
     void Start()
     {
         avaibleFood = 123;
         foodEaten = 0;
+        colliding = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (colliding && crewScript.getInFacility() && crewScript.getCurrentAction() != null)
+            startEating();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        colliding = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,39 +38,52 @@ public class FCKitchenBehaviour : FCBehaviour
 
         if (action.correctFacility(NAME))
         {
-            EatAction eatAction = (EatAction)crewScript.getCurrentAction();
-            string fullness = eatAction.getFullness();
-            int quantity = eatAction.getQuantity();
-            foodEaten = 0;
-            if (fullness.Equals("doesnt apply"))
-            {
-                if(avaibleFood != 0)
-                {
-                    if(avaibleFood >= quantity)
-                    {
-                        foodEaten = quantity;
-                    }
-                }
-            }
-            else
-            {
-                int currentHunger = crewScript.getHunger();
-                while(currentHunger < int.Parse(fullness) && avaibleFood > 0)
-                {
-                    foodEaten += 1;
-                    currentHunger += FOOD_RESTAURATION;
-                }
-            }
-            Invoke(nameof(eat), 5f);
+            colliding = true;
+            crewScript.setInFacility(true);
+
         }
 
     }
 
+    public void startEating()
+    {
+        crewScript.setInFacility(false);
+        Debug.Log("started eating");
+        EatAction eatAction = (EatAction)crewScript.getCurrentAction();
+        string fullness = eatAction.getFullness();
+        int quantity = eatAction.getQuantity();
+        foodEaten = 0;
+        if (fullness.Equals("doesnt apply"))
+        {
+            if (avaibleFood != 0)
+            {
+                if (avaibleFood >= quantity)
+                {
+                    foodEaten = quantity;
+                }
+            }
+        }
+        else
+        {
+            int currentHunger = crewScript.getHunger();
+            while (currentHunger < int.Parse(fullness) && avaibleFood > 0)
+            {
+                foodEaten += 1;
+                currentHunger += FOOD_RESTAURATION;
+            }
+        }
+        Invoke(nameof(eat), 5f);
+    }
+
     private void eat()
     {
+        Debug.Log("finish eating " + foodEaten + ". Current Hunger: " + crewScript.getHunger());
         crewScript.setHunger(crewScript.getHunger() + foodEaten * FOOD_RESTAURATION < 100 ? crewScript.getHunger() + foodEaten * FOOD_RESTAURATION : 100);
+        avaibleFood -= foodEaten;
         crewScript.orderDone();
         crewScript.setDoingAction(false);
+        crewScript.setInFacility(true);
+
     }
 
     public string getContext()

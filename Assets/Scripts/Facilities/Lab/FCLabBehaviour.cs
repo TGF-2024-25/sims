@@ -13,7 +13,7 @@ public class FCLabBehaviour : FCBehaviour
     private int researchTime;
     private int currentResearch;
     CMBehaviour crewScript;
-    bool collinding;
+    bool colliding;
     void Start()
     {
         string jsonFile = Resources.Load<TextAsset>("ResearchData").ToString();
@@ -22,13 +22,13 @@ public class FCLabBehaviour : FCBehaviour
         currentProgressGoal = 0;
         researchTime = 0;
         currentResearch = 0;
-        collinding = false;
+        colliding = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (collinding && !crewScript.getInFacility() && crewScript.getCurrentAction() != null)
+        if (colliding && crewScript.getInFacility() && crewScript.getCurrentAction() != null)
             startResearch();
             
     }
@@ -44,7 +44,7 @@ public class FCLabBehaviour : FCBehaviour
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject crewMember = collision.gameObject;
         crewScript = crewMember.GetComponent<CMBehaviour>();
@@ -52,20 +52,19 @@ public class FCLabBehaviour : FCBehaviour
         //Debug.Log(crewScript.getInFacility());
         if (action.correctFacility(NAME) && !crewScript.getInFacility())
         {
-            startResearch();
-            collinding = true;
+            colliding = true;
+            crewScript.setInFacility(true);
         }
 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        collinding = false;
+        colliding = false;
     }
 
     private void startResearch()
     {
-        crewScript.setInFacility(true);
         ResearchAction researchAction = (ResearchAction)crewScript.getCurrentAction();
         researchTime = researchAction.getHours();
         bool notFound = true;
@@ -87,6 +86,7 @@ public class FCLabBehaviour : FCBehaviour
             progress = researchList[i].Item3;
             currentProgressGoal = researchList[i].Item1.getDuration();
             currentResearch = i;
+            crewScript.setInFacility(false);
             InvokeRepeating("research", 2f, 2f);
         }
 
@@ -96,15 +96,15 @@ public class FCLabBehaviour : FCBehaviour
     {
         progress += 1;
         researchTime -= 1;
-        Debug.Log("Current progress: " + progress + "in: " + researchList[currentResearch].Item1.getMaterial().getName());
-        Debug.Log("Current time left: " + researchTime);
+        //Debug.Log("Current progress: " + progress + "in: " + researchList[currentResearch].Item1.getMaterial().getName());
+        //Debug.Log("Current time left: " + researchTime);
 
         if (currentProgressGoal == progress || researchTime == 0)
         {
             researchList[currentResearch] = (researchList[currentResearch].Item1, researchList[currentResearch].Item2, progress);
             crewScript.orderDone();
             crewScript.setDoingAction(false);
-            crewScript.setInFacility(false);
+            crewScript.setInFacility(true);
             CancelInvoke("research");
         }
     }
