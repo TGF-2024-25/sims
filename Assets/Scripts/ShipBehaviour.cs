@@ -12,6 +12,9 @@ public class ShipBehaviour : MonoBehaviour
     private GameObject ActionManagerObject;
 
     [SerializeField]
+    private GameObject CMInfoCanvas;
+
+    [SerializeField]
     private GameObject LabObject;
     private FCLabBehaviour labScript;
     [SerializeField]
@@ -55,7 +58,7 @@ public class ShipBehaviour : MonoBehaviour
     void Start()
     {
         CreateCrewMember();
-        CreateCrewMember();
+        //CreateCrewMember();
 
         CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
 
@@ -98,7 +101,7 @@ public class ShipBehaviour : MonoBehaviour
         string personality = crewPersonalityOptions[Random.Range(0, crewPersonalityOptions.Count())];
         string job = crewJobOptions[Random.Range(0, crewJobOptions.Count())];
         
-        crewScript.Initialize(name, personality, job, this, ActionManagerObject);
+        crewScript.Initialize(name, personality, job, this, ActionManagerObject, CMInfoCanvas);
         crewMembers.Add(newCrewMember);
         crewMembersNames.Add(name);
     }

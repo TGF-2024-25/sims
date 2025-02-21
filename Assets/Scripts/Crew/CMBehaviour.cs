@@ -8,6 +8,8 @@ public class CMBehaviour : MonoBehaviour
     private GameObject ActionManagerObject;
     private ActionManager AM;
 
+    private GameObject CMInfoCanvas;
+
     private List<GameAction> orderedActionsList;
     private List<string> possibleActions;
     private List<string> previousActions;
@@ -58,13 +60,14 @@ public class CMBehaviour : MonoBehaviour
         }
     }
 
-    public void Initialize(string newName, string newPersonality, string newJob, ShipBehaviour newShipScript, GameObject AMObject)
+    public void Initialize(string newName, string newPersonality, string newJob, ShipBehaviour newShipScript, GameObject AMObject, GameObject cmInfoCanvas)
     {
         cmName = newName;
         personality = newPersonality;
         job = newJob;
         shipScript = newShipScript;
         ActionManagerObject = AMObject;
+        CMInfoCanvas = cmInfoCanvas;
 
         AM = ActionManagerObject.GetComponent<ActionManager>();
         Debug.Log(newName + " " + newPersonality + " " + job);
@@ -135,6 +138,18 @@ public class CMBehaviour : MonoBehaviour
     {
         this.hunger = hunger;
     }
+    public string getName()
+    {
+        return this.cmName;
+    }
+    public string getPersonality()
+    {
+        return this.personality;
+    }
+    public string getJob()
+    {
+        return this.job;
+    }
 
     public void setInFacility(bool inFacility)
     {
@@ -148,5 +163,12 @@ public class CMBehaviour : MonoBehaviour
     private void loseHunger()
     {
         this.hunger -= 2;
+    }
+
+    void OnMouseDown()
+    {
+        GameObject cmUIPanel = CMInfoCanvas.transform.Find("CMInfoPanel").gameObject;
+        CMInfoUI crewUI = cmUIPanel.GetComponent<CMInfoUI>();
+        crewUI.ShowCrewInfo(gameObject);
     }
 }
