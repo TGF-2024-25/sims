@@ -11,10 +11,13 @@ public class CMInfoUI : MonoBehaviour
     [SerializeField]
     private GameObject panel;
     [SerializeField]
+    private GameObject orderPanel;
+    [SerializeField]
     private TextMeshProUGUI hungerText;
     [SerializeField]
     private Image hungerBar;
 
+    private GameObject crewMember;
     private CMBehaviour cmScript;
 
     
@@ -46,6 +49,7 @@ public class CMInfoUI : MonoBehaviour
 
     public void ShowCrewInfo(GameObject crewMate)
     {
+        crewMember = crewMate;
         cmScript = crewMate.GetComponent<CMBehaviour>();
         cmName = cmScript.getName();
         job = cmScript.getJob();
@@ -63,5 +67,12 @@ public class CMInfoUI : MonoBehaviour
     public void CloseCrewInfo()
     {
         panel.SetActive(false);
+    }
+
+    public void OpenOrderUI()
+    {
+        OrderUI orderScript = orderPanel.GetComponent<OrderUI>();
+        orderScript.ShowOrderUI(crewMember);
+        CloseCrewInfo();
     }
 }
