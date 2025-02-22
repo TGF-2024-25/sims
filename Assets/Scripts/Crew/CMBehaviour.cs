@@ -33,6 +33,7 @@ public class CMBehaviour : MonoBehaviour
 
         possibleActions.Add(EatAction.NAME);
         possibleActions.Add(ResearchAction.NAME);
+        possibleActions.Add(RefillAction.NAME);
 
         currentAction = null;
         doingAction = false;
@@ -43,12 +44,7 @@ public class CMBehaviour : MonoBehaviour
 
     void Start()
     {
-        //string content = "please put more fuel in the tank untill is 75% full";
-        //simulateOrder(content);
-        //string content2 = "go eat 2 racions";
-        //simulateOrder(content2);
-        //string content3 = "go investigate 4 hours";
-        //simulateOrder(content3);
+
     }
 
     void Update()

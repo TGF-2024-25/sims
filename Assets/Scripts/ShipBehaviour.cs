@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -40,6 +41,7 @@ public class ShipBehaviour : MonoBehaviour
 
     private List<GameObject> crewMembers;
     private List<string> crewMembersNames;
+    private int level;
 
 
 
@@ -57,8 +59,10 @@ public class ShipBehaviour : MonoBehaviour
 
     void Start()
     {
+        level = 1;
+
         CreateCrewMember();
-        //CreateCrewMember();
+        
 
         CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
 
@@ -115,5 +119,15 @@ public class ShipBehaviour : MonoBehaviour
         context += kitchenScript.getContext();
 
         return context;
+    }
+
+    public int getLevel()
+    {
+        return level;
+    }
+
+    public void setLevel(int lvl)
+    {
+        level = lvl;
     }
 }

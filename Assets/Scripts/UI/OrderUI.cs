@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using TMPro;
 using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderUI : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class OrderUI : MonoBehaviour
         cmScript = crewMate.GetComponent<CMBehaviour>();
         string cmName = cmScript.getName();
         titleText.text = "Talking to " + cmName;
+        inputField.text = "";
         panel.SetActive(true);
     }
 

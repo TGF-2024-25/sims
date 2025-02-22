@@ -15,10 +15,8 @@ public class RefuseAction : GameAction
     }
     public override void doAction()
     {
-        while (true)
-        {
-            Debug.Log("im refusing");
-        }
+
+        Debug.Log("im refusing");
         return;
     }
     public static void loadParameterOptions(Dictionary<string, List<string>> parameters)

@@ -91,7 +91,16 @@ public class ActionManager : MonoBehaviour
             if (response != null)
             {
                 CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
-                cmBehaviourScript.updateActionList(response);
+
+                if (response.ToString() != RefuseAction.NAME)
+                {
+                    cmBehaviourScript.updateActionList(response);
+                }
+                else
+                {
+                    Debug.Log("Refuse to do that");
+                }
+
             }
             if (response == null && retry < MAX_RETRY)
             {
@@ -115,7 +124,7 @@ public class ActionManager : MonoBehaviour
                 CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
 
                 cmBehaviourScript.setCurrentAction(response);
-                Debug.Log(response);
+                //Debug.Log(response);
                 response.doAction();
                 cmBehaviourScript.addPreviousAction(response);
 
@@ -136,36 +145,43 @@ public class ActionManager : MonoBehaviour
         {
             string cleanResponse = ExtractJson(response);
             JObject jsonResponse = JObject.Parse(cleanResponse);
-            //Debug.Log(cleanResponse);
 
             if (jsonResponse.ContainsKey("action"))
             {
                 string action = jsonResponse["action"].ToString();
-                Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
 
-                PG.askParameters(isOrder,content, context, action, parameterOptions, response2 =>
+                if (action != RefuseAction.NAME)
                 {
-                    string cleanResponse2 = ExtractJson(response2);
-                    JObject jsonResponse2 = JObject.Parse(cleanResponse2);
-                    //Debug.Log(cleanResponse2);
+                    Dictionary<string, List<string>> parameterOptions = getActionParameterOptions(action);
 
-                    if (checkParametersJson(jsonResponse2, parameterOptions))
+                    PG.askParameters(isOrder, content, context, action, parameterOptions, response2 =>
                     {
-                        Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
+                        string cleanResponse2 = ExtractJson(response2);
+                        JObject jsonResponse2 = JObject.Parse(cleanResponse2);
 
-                        newAction = createActionByName(action, parametersChosen,crewMember,true);
-                        //Debug.Log(cleanResponse + cleanResponse2);
-                        //Debug.Log(cleanResponse + cleanResponse2);
+                        if (checkParametersJson(jsonResponse2, parameterOptions))
+                        {
+                            Dictionary<string, string> parametersChosen = JsonConvert.DeserializeObject<Dictionary<string, string>>(cleanResponse2);
 
-                        callback?.Invoke(newAction);
-                    }
-                    else
-                    {
-                        Debug.Log("Not valid json format in parameters response");
-                        callback?.Invoke(newAction);
-                    }
-                    
-                });
+                            newAction = createActionByName(action, parametersChosen, crewMember, true);
+
+                            Debug.Log(newAction);
+
+                            callback?.Invoke(newAction);
+                        }
+                        else
+                        {
+                            Debug.Log("Not valid json format in parameters response");
+                            callback?.Invoke(newAction);
+                        }
+
+                    });
+                }
+                else
+                {
+                    newAction = createActionByName(action, null, crewMember, true);
+                    callback?.Invoke(newAction);
+                }
             }
             else
             {
@@ -218,7 +234,7 @@ public class ActionManager : MonoBehaviour
 
         if (gameActions.Count != 0)
         {
-            Debug.Log(gameActions[0]);
+            Debug.Log("Gonna do the order: " + gameActions[0]);
             GameAction nextAction = gameActions[0];
             cmBehaviourScript.setCurrentAction(nextAction);
             nextAction.doAction();
