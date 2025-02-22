@@ -11,4 +11,12 @@ public class Resource
     }
     private string name;
     private int rarity;
+    public override string ToString()
+    {
+        return name;
+    }
+    public string getName()
+    {
+        return name;
+    }
 }

@@ -35,12 +35,12 @@ public class FCEngineBehaviour : FCBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject crewMember = collision.gameObject;
-        crewScript = crewMember.GetComponent<CMBehaviour>();
-        GameAction action = crewScript.getCurrentAction();
+        CMBehaviour crewScriptAux = crewMember.GetComponent<CMBehaviour>();
+        GameAction action = crewScriptAux.getCurrentAction();
 
         if (action.correctFacility(NAME))
         {
-
+            crewScript = crewScriptAux;
             colliding = true;
             crewScript.setInFacility(true);
 

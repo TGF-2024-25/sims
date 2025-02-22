@@ -13,4 +13,8 @@ public class Material
     {
         return name;
     }
+    public override string ToString()
+    {
+        return name;
+    }
 }

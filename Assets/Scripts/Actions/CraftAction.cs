@@ -25,6 +25,15 @@ public class CraftAction : GameAction
         parametersOptions = parameters;
     }
 
+    public static void addMaterial(Material material)
+    {
+        if (parametersOptions["material"].Contains("none"))
+        {
+            parametersOptions["material"].Remove("none");
+        }
+        parametersOptions["material"].Add(material.getName());
+    }
+
     public int getQuantity()
     {
         return this.quantity;

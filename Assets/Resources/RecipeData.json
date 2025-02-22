@@ -1,0 +1,40 @@
+{
+  "carbonite" : {
+    "materials" : ["stone", "coal"],
+    "resources" : []
+  },
+  "timberite" : {
+    "materials" : ["wood"],
+    "resources" : ["carbonite"]
+  },
+  "ferronite" : {
+    "materials" : ["iron"],
+    "resources" : ["carbonite"]
+  },
+  "timbersteel" : {
+    "materials" : ["iron"],
+    "resources" : ["timberite"]
+  },
+  "cable" : {
+    "materials" : ["copper"],
+    "resources" : ["ferronite"]
+  },
+  "circuit" : {
+    "materials" : ["copper"],
+    "resources" : ["timbersteel"]
+  },
+  "powerCell" : {
+    "materials" : ["gold"],
+    "resources" : ["cable"]
+  },
+  "display" : {
+    "materials" : ["gold"],
+    "resources" : ["circuit"]
+  },
+  "superComputer" : {
+    "materials" : [],
+    "resources" : ["circuit","display","powerCell","cable"]
+  }
+  
+}
+

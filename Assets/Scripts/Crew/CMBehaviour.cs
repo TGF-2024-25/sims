@@ -34,6 +34,7 @@ public class CMBehaviour : MonoBehaviour
         possibleActions.Add(EatAction.NAME);
         possibleActions.Add(ResearchAction.NAME);
         possibleActions.Add(RefillAction.NAME);
+        possibleActions.Add(CraftAction.NAME);
 
         currentAction = null;
         doingAction = false;

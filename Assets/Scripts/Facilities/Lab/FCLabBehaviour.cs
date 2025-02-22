@@ -11,9 +11,11 @@ public class FCLabBehaviour : FCBehaviour
     private int progress;
     private int currentProgressGoal;
     private int researchTime;
-    private int currentResearch;
-    CMBehaviour crewScript;
-    bool colliding;
+    private int currentResearchId;
+    private Research currentResearch;
+    private CMBehaviour crewScript;
+    private bool colliding;
+    private FCWorkshopBehaviour workshopScript;
     void Start()
     {
         string jsonFile = Resources.Load<TextAsset>("ResearchData").ToString();
@@ -21,7 +23,8 @@ public class FCLabBehaviour : FCBehaviour
         progress = 0;
         currentProgressGoal = 0;
         researchTime = 0;
-        currentResearch = 0;
+        currentResearch = researchList[0].Item1;
+        currentResearchId = 0;
         colliding = false;
     }
 
@@ -32,7 +35,10 @@ public class FCLabBehaviour : FCBehaviour
             startResearch();
             
     }
-
+    public void setWorkshop(FCWorkshopBehaviour fCWorkshopBehaviour)
+    {
+        workshopScript = fCWorkshopBehaviour;
+    }
     void LoadResearchFromJson(string json)
     {
         Dictionary<string, Dictionary<string, int>> researchDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>>(json);
@@ -44,14 +50,23 @@ public class FCLabBehaviour : FCBehaviour
 
     }
 
+    void unlockResearchLevel(int level)
+    {
+        for(int i = 0;i < researchList.Count; i++)
+        {
+            researchList[i] = (researchList[i].Item1, "unlocked", researchList[i].Item3);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject crewMember = collision.gameObject;
-        crewScript = crewMember.GetComponent<CMBehaviour>();
-        GameAction action = crewScript.getCurrentAction();
+        CMBehaviour crewScriptAux = crewMember.GetComponent<CMBehaviour>();
+        GameAction action = crewScriptAux.getCurrentAction();
         //Debug.Log(crewScript.getInFacility());
-        if (action.correctFacility(NAME) && !crewScript.getInFacility())
+        if (action.correctFacility(NAME))
         {
+            crewScript = crewScriptAux;
             colliding = true;
             crewScript.setInFacility(true);
         }
@@ -85,8 +100,9 @@ public class FCLabBehaviour : FCBehaviour
         {
             progress = researchList[i].Item3;
             currentProgressGoal = researchList[i].Item1.getDuration();
-            currentResearch = i;
+            currentResearchId = i;
             crewScript.setInFacility(false);
+            currentResearch = researchList[i].Item1;
             InvokeRepeating("research", 2f, 2f);
         }
 
@@ -96,22 +112,44 @@ public class FCLabBehaviour : FCBehaviour
     {
         progress += 1;
         researchTime -= 1;
-        //Debug.Log("Current progress: " + progress + "in: " + researchList[currentResearch].Item1.getMaterial().getName());
+        //Debug.Log("Current progress: " + progress + "in: " + researchList[currentResearchId].Item1.getMaterial().getName());
         //Debug.Log("Current time left: " + researchTime);
 
         if (currentProgressGoal == progress || researchTime == 0)
         {
-            researchList[currentResearch] = (researchList[currentResearch].Item1, researchList[currentResearch].Item2, progress);
+            researchList[currentResearchId] = (researchList[currentResearchId].Item1, researchList[currentResearchId].Item2, progress);
             crewScript.orderDone();
             crewScript.setDoingAction(false);
             crewScript.setInFacility(true);
+            if(currentProgressGoal == progress){
+                researchList[currentResearchId] = (researchList[currentResearchId].Item1, "finished", progress);
+                workshopScript.unlockRecipe(currentResearch.getMaterial());
+                currentResearch = researchList[currentResearchId + 1].Item2 == "unlocked" ? researchList[currentResearchId + 1].Item1 : null;
+                progress = 0;
+                currentProgressGoal = 0;
+            }
+            else
+            {
+                currentResearch = researchList[currentResearchId].Item1;
+            }
+           
             CancelInvoke("research");
         }
     }
 
     public string getContext()
     {
-        string context = "In the lab, the current investigation is " + "Timberite" + ", sitting at " + "50" + " percent progress";
+        float prog = currentProgressGoal == 0 ? 0 :  progress * 1f / currentProgressGoal;
+        string context = "";
+        if (currentResearch != null)
+        {
+            context += "In the lab, the current investigation is " + currentResearch.getMaterial().getName() + ", sitting at " + prog * 100 + " percent progress";
+        }
+        else
+        {
+            context += "In the lab, there are not avaible investigations the ship needs to be a higher level for more to be avaible.";
+        }
+        Debug.Log(context);
         return context;
     }
 

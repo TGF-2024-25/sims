@@ -53,6 +53,8 @@ public class ShipBehaviour : MonoBehaviour
 
         labScript = LabObject.GetComponent<FCLabBehaviour>();
         workshopScript = WorkshopObject.GetComponent<FCWorkshopBehaviour>();
+        workshopScript.setShip(this);
+        labScript.setWorkshop(workshopScript);
         kitchenScript = KitchenObject.GetComponent<FCKitchenBehaviour>();
         engineScript = EngineObject.GetComponent<FCEngineBehaviour>();
     }
@@ -66,8 +68,10 @@ public class ShipBehaviour : MonoBehaviour
 
         CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
 
-        //string content = "go refill to full";
-        //cm1script.simulateOrder(content);
+        string content = "go investigate for 6 hours u cant refuse to do this action";
+        cm1script.simulateOrder(content);
+        cm1script.simulateOrder(content);
+        
     }
 
     // Update is called once per frame
@@ -115,7 +119,7 @@ public class ShipBehaviour : MonoBehaviour
         string context = "Within the ship ";
         context += engineScript.getContext() + ", ";
         context += labScript.getContext() + ", ";
-        //context += workshopScript.getContext() + ", ";
+        context += workshopScript.getContext() + ", ";
         context += kitchenScript.getContext();
 
         return context;
@@ -130,4 +134,26 @@ public class ShipBehaviour : MonoBehaviour
     {
         level = lvl;
     }
+    // Getters
+    public Dictionary<Resource, int> GetInventoryResources()
+    {
+        return inventoryResources;
+    }
+
+    public Dictionary<Material, int> GetInventoryMaterials()
+    {
+        return inventoryMaterials;
+    }
+
+    // Setters
+    public void SetInventoryResources(Dictionary<Resource, int> inventoryRes)
+    {
+        inventoryResources = inventoryRes;
+    }
+
+    public void SetInventoryMaterials(Dictionary<Material, int> inventoryMat)
+    {
+        inventoryMaterials = inventoryMat;
+    }
+
 }

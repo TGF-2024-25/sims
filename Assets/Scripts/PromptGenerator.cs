@@ -37,7 +37,7 @@ public class PromptGenerator : MonoBehaviour
 
         if (isOrder)
         {
-            petition += ".If the other ones make no sense, choose refuse.";
+            //petition += ".If the other ones make no sense, choose refuse.";
         }
 
         petition += ".Answer only with a JSON with this format: {action: <actionName>}. " +

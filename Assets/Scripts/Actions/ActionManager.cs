@@ -16,7 +16,7 @@ public class ActionManager : MonoBehaviour
     private List<string> actionList = new List<string> {
         EatAction.NAME,
         RefillAction.NAME,
-        RefuseAction.NAME,
+        //RefuseAction.NAME,
         ResearchAction.NAME, 
         CraftAction.NAME 
     };
@@ -91,7 +91,7 @@ public class ActionManager : MonoBehaviour
             if (response != null)
             {
                 CMBehaviour cmBehaviourScript = crewMember.GetComponent<CMBehaviour>();
-
+                Debug.Log(response.ToString());
                 if (response.ToString() != RefuseAction.NAME)
                 {
                     cmBehaviourScript.updateActionList(response);
