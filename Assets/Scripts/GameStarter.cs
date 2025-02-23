@@ -62,7 +62,7 @@ public class GameStarter : MonoBehaviour
             foreach (string resource in resourcesData[level])
             {
                 Resource newResource = new Resource(resource, int.Parse(level));
-                inventoryResources.Add(newResource,0);
+                inventoryResources.Add(newResource,10);
             }
         }
         foreach (string level in materialsData.Keys)
@@ -70,7 +70,7 @@ public class GameStarter : MonoBehaviour
             foreach (string material in materialsData[level])
             {
                 Material newMaterial = new Material(material);
-                inventoryMaterials.Add(newMaterial, 0);
+                inventoryMaterials.Add(newMaterial, 10);
             }
         }
 

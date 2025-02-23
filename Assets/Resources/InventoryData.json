@@ -1,11 +1,11 @@
 {
   "resources": {
-    "1": [ "wood", "stone", "coal" ],
+    "1": [ "wood", "stone", "coal", "food" ],
     "2": [ "iron" ],
     "3": [ "copper" ],
     "4": [ "gold" ]
   },
   "materials": {
-    "all": [ "carbonite", "timberite", "ferronite", "timbersteel", "cable", "circuit", "powerCell, display, superComputer" ]
+    "all": [ "carbonite", "timberite", "ferronite", "timbersteel", "cable", "circuit", "powerCell", "display", "superComputer" ]
   }
 }
