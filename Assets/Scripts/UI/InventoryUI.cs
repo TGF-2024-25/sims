@@ -29,7 +29,7 @@ public class InventoryUI : MonoBehaviour
 
         
         UpdateInventoryUI();
-        panel.SetActive(true);
+        panel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class InventoryUI : MonoBehaviour
         
     }
 
-    public void ShowInventoryUI(GameObject crewMate)
+    public void ShowInventoryUI()
     {
         panel.SetActive(true);
     }
