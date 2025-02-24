@@ -1,0 +1,26 @@
+{
+  "resources": {
+    "1": ["wood", "stone", "coal"],
+    "2": ["iron"],
+    "3": ["copper"],
+    "4": ["gold"]
+  },
+  "quantity": {
+    "1": ["0", "100"],
+    "2": ["0", "100"],
+    "3": ["0", "100"],
+    "4": ["0", "100"],
+    "food": ["5", "100"]
+  },
+  "names": ["Arkanis", "Vortara", "Zyphos", "Eldoria", "Noverra", "Thaloria", "Dravonis", "Quorath", "Velmara", "Orinthal",
+    "Cyndros", "Ravara", "Xantheon", "Lumaris", "Phorath", "Tarnis", "Zephyra", "Gravion", "Iskarn", "Nytherra",
+    "Solara", "Crython", "Varnath", "Orris", "Lunareth", "Zorathis", "Farnis", "Tyvora", "Mordalis", "Kryntos",
+    "Jovara", "Xeraphis", "Thandros", "Quinthal", "Eryndor", "Galtheron", "Pyrralis", "Vorath", "Syrith", "Darnoth",
+    "Aureth", "Kylos", "Itharis", "Zenithra", "Baros", "Cytherion", "Rhalion", "Voradros", "Yllara", "Nalthor",
+    "Draxion", "Phantos", "Korvath", "Zynthera", "Ultheris", "Vyndros", "Orpheon", "Tyrranis", "Glython", "Heliora",
+    "Sarnith", "Xyloth", "Vorthys", "Lorrath", "Maldrin", "Bravion", "Tarnisca", "Quassira", "Ferros", "Myrath",
+    "Korthon", "Ytheris", "Sylvara", "Endrion", "Valthera", "Zenthra", "Orionis", "Grathion", "Ralvora", "Xandris",
+    "Therion", "Nivara", "Vandros", "Syrinth", "Ionos", "Kravith", "Velrion", "Davoris", "Lyrithos", "Phandor",
+    "Zyrion", "Erythros", "Morthis", "Ravion", "Tylorath", "Farnith", "Bravara", "Corthos", "Nyxara", "Zolthera"]
+}
+

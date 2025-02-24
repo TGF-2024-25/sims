@@ -27,6 +27,9 @@ public class ShipBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject EngineObject;
     private FCEngineBehaviour engineScript;
+    [SerializeField]
+    private GameObject NavigationObject;
+    private FCNavigation navigationScript;
 
     [SerializeField]
     private GameObject crewMemberPrefab;
@@ -48,11 +51,14 @@ public class ShipBehaviour : MonoBehaviour
 
     void Awake()
     {
+        level = 1;
         crewMembers = new List<GameObject>();
         crewMembersNames = new List<string>();
 
         labScript = LabObject.GetComponent<FCLabBehaviour>();
         workshopScript = WorkshopObject.GetComponent<FCWorkshopBehaviour>();
+        navigationScript = NavigationObject.GetComponent<FCNavigation>();
+        navigationScript.setShip(this);
         workshopScript.setShip(this);
         labScript.setWorkshop(workshopScript);
         kitchenScript = KitchenObject.GetComponent<FCKitchenBehaviour>();
@@ -61,7 +67,7 @@ public class ShipBehaviour : MonoBehaviour
 
     void Start()
     {
-        level = 1;
+        
 
         CreateCrewMember();
         

@@ -16,9 +16,9 @@ public class ActionManager : MonoBehaviour
     private List<string> actionList = new List<string> {
         EatAction.NAME,
         RefillAction.NAME,
-        //RefuseAction.NAME,
+        RefuseAction.NAME,
         ResearchAction.NAME, 
-        CraftAction.NAME 
+        CraftAction.NAME
     };
 
     private const int MAX_RETRY = 3;
@@ -43,6 +43,8 @@ public class ActionManager : MonoBehaviour
                 return new ResearchAction(parameters, crewMember,ordered);
             case CraftAction.NAME:
                 return new CraftAction(parameters, crewMember,ordered);
+            case ExploreAction.NAME:
+                return new ExploreAction(parameters, crewMember, ordered);
             default:
                 return null;
         }
