@@ -1,39 +1,39 @@
 {
   "carbonite" : {
-    "materials" : ["stone", "coal"],
-    "resources" : []
+    "resources" : ["stone", "coal"],
+    "materials" : []
   },
   "timberite" : {
-    "materials" : ["wood"],
-    "resources" : ["carbonite"]
+    "resources" : ["wood"],
+    "materials" : ["carbonite"]
   },
   "ferronite" : {
-    "materials" : ["iron"],
-    "resources" : ["carbonite"]
+    "resources" : ["iron"],
+    "materials" : ["carbonite"]
   },
   "timbersteel" : {
-    "materials" : ["iron"],
-    "resources" : ["timberite"]
+    "resources" : ["iron"],
+    "materials" : ["timberite"]
   },
   "cable" : {
-    "materials" : ["copper"],
-    "resources" : ["ferronite"]
+    "resources" : ["copper"],
+    "materials" : ["ferronite"]
   },
   "circuit" : {
-    "materials" : ["copper"],
-    "resources" : ["timbersteel"]
+    "resources" : ["copper"],
+    "materials" : ["timbersteel"]
   },
   "powerCell" : {
-    "materials" : ["gold"],
-    "resources" : ["cable"]
+    "resources" : ["gold"],
+    "materials" : ["cable"]
   },
   "display" : {
-    "materials" : ["gold"],
-    "resources" : ["circuit"]
+    "resources" : ["gold"],
+    "materials" : ["circuit"]
   },
   "superComputer" : {
-    "materials" : [],
-    "resources" : ["circuit","display","powerCell","cable"]
+    "resources" : [],
+    "materials" : ["circuit","display","powerCell","cable"]
   }
   
 }

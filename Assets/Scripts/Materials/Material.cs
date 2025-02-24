@@ -17,4 +17,13 @@ public class Material
     {
         return name;
     }
+
+    public override bool Equals(object obj)
+    {
+        return this.ToString() == obj.ToString();
+    }
+    public override int GetHashCode()
+    {
+        return name.GetHashCode();
+    }
 }

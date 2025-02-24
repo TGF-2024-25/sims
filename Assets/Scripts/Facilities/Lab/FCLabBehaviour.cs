@@ -103,7 +103,7 @@ public class FCLabBehaviour : FCBehaviour
             currentResearchId = i;
             crewScript.setInFacility(false);
             currentResearch = researchList[i].Item1;
-            InvokeRepeating("research", 2f, 2f);
+            InvokeRepeating("research", 1f, 1f);
         }
 
     }

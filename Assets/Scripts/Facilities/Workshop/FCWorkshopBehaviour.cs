@@ -131,31 +131,17 @@ public class FCWorkshopBehaviour : FCBehaviour
     {
         Debug.Log("Crafting " + currentRecipe.GetCraftedMaterial().getName());
         Dictionary<Material,int> materials = shipScript.GetInventoryMaterials();
-        foreach (var key in materials.Keys)
+        
+        materials[currentRecipe.GetCraftedMaterial()] = materials[currentRecipe.GetCraftedMaterial()] + 1;
+        foreach (var material in currentRecipe.GetMaterialsNeeded())
         {
-            if (key.getName() == currentRecipe.GetCraftedMaterial().getName())
-            {
-                materials[key] += 1;
-            }
-            foreach(var material in currentRecipe.GetMaterialsNeeded())
-            {
-                if(material.getName() == key.getName())
-                {
-                    materials[key] -= 1;
-                }
-            }
+            materials[material] = materials[material] - 1;
         }
 
         Dictionary<Resource, int> resources = shipScript.GetInventoryResources();
-        foreach (var key in resources.Keys)
+        foreach (var resource in currentRecipe.GetResourcesNeeded())
         {
-            foreach (var resource in currentRecipe.GetResourcesNeeded())
-            {
-                if (resource.getName() == key.getName())
-                {
-                    resources[key] -= 1;
-                }
-            }
+            resources[resource] = resources[resource] - 1;
         }
         crewScript.orderDone();
         crewScript.setDoingAction(false);
