@@ -22,13 +22,17 @@ public class InventoryUI : MonoBehaviour
     private Dictionary<Resource, int> inventoryResources;
     private Dictionary<Material, int> inventoryMaterials;
 
+    private Dictionary<Resource, GameObject> resourceItems;
+    private Dictionary<Material, GameObject> materialItems;
+
     // Start is called before the first frame update
     void Start()
     {
         shipScript = ship.GetComponent<ShipBehaviour>();
 
-        
-        UpdateInventoryUI();
+        resourceItems = new Dictionary<Resource, GameObject>();
+        materialItems = new Dictionary<Material, GameObject>();
+
         panel.SetActive(false);
     }
 
@@ -40,11 +44,15 @@ public class InventoryUI : MonoBehaviour
 
     public void ShowInventoryUI()
     {
+        UpdateInventoryUI();
         panel.SetActive(true);
+
+        InvokeRepeating("UpdateInventoryUI", 0f, 1f);
     }
     public void CloseInventoryUI()
     {
         panel.SetActive(false);
+        CancelInvoke("UpdateInventoryUI");
     }
 
     public void UpdateInventoryUI()
@@ -57,60 +65,40 @@ public class InventoryUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var item in inventoryResources)
-        {
-            if (item.Value > 0)
-            {
-                GameObject newItem = Instantiate(itemPrefab, gridContent);
-
-                string name = Regex.Replace(item.Key.ToString(), "(?<!^)([A-Z])", " $1");
-                name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
-
-                newItem.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = name;
-                newItem.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = "x" + item.Value.ToString();
-
-                // Cargar el sprite
-                Image icon = newItem.transform.Find("Icon").GetComponent<Image>();
-                Sprite resourceSprite = Resources.Load<Sprite>("Sprites/InventoryIcons/" + item.Key.getName());
-
-                if (resourceSprite != null)
-                {
-                    icon.sprite = resourceSprite;
-                }
-                else
-                {
-                    Debug.Log("No se encontró el sprite para " + item.Key);
-                }
-            }
-        }
-
-        foreach (var item in inventoryMaterials)
-        {
-            if (item.Value > 0)
-            {
-                GameObject newItem = Instantiate(itemPrefab, gridContent);
-
-                string name = Regex.Replace(item.Key.ToString(), "(?<!^)([A-Z])", " $1");
-                name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
-
-                newItem.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = name;
-                newItem.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = "x" + item.Value.ToString();
-
-                // Cargar el sprite
-                Image icon = newItem.transform.Find("Icon").GetComponent<Image>();
-                Sprite resourceSprite = Resources.Load<Sprite>("Sprites/InventoryIcons/" + item.Key.getName());
-
-                if (resourceSprite != null)
-                {
-                    icon.sprite = resourceSprite;
-                }
-                else
-                {
-                    Debug.Log("No se encontró el sprite para " + item.Key);
-                }
-            }
-        }
+        load(inventoryResources);
+        load(inventoryMaterials);
 
     }
+
+    private void load<TKey>(Dictionary<TKey, int> dict)
+    {
+        foreach (var item in dict)
+        {
+            if (item.Value > 0)
+            {
+                GameObject newItem = Instantiate(itemPrefab, gridContent);
+
+                string name = Regex.Replace(item.Key.ToString(), "(?<!^)([A-Z])", " $1");
+                name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name.ToLower());
+
+                newItem.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = name;
+                newItem.transform.Find("Quantity").GetComponent<TextMeshProUGUI>().text = "x" + item.Value.ToString();
+
+                // Cargar el sprite
+                Image icon = newItem.transform.Find("Icon").GetComponent<Image>();
+                Sprite resourceSprite = Resources.Load<Sprite>("Sprites/InventoryIcons/" + item.Key.ToString());
+
+                if (resourceSprite != null)
+                {
+                    icon.sprite = resourceSprite;
+                }
+                else
+                {
+                    Debug.Log("No se encontró el sprite para " + item.Key);
+                }
+            }
+        }
+    }
+
 
 }
