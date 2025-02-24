@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -85,6 +86,11 @@ public class FCKitchenBehaviour : FCBehaviour
         crewScript.setDoingAction(false);
         crewScript.setInFacility(true);
 
+    }
+
+    internal void addFood(int foodReward)
+    {
+        avaibleFood += foodReward;
     }
 
     public string getContext()

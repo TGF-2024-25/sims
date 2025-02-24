@@ -42,11 +42,19 @@ public class Planet
                     int minQuantity = int.Parse(resourceRange[0]);
                     int maxQuantity = int.Parse(resourceRange[1]);
                     int generatedAmount = Random.Range(minQuantity, maxQuantity);
-                    obtainableResources[resource] = generatedAmount;
+                    if(generatedAmount > (maxQuantity - minQuantity) / 2)
+                    {
+                        obtainableResources[resource] = generatedAmount;
+                    }
 
                 }
             }
         }
+    }
+
+    internal void setExplored(bool investigated)
+    {
+        this.investigated = investigated;
     }
 
     public string GetName()

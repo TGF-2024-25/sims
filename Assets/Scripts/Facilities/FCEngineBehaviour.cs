@@ -14,7 +14,7 @@ public class FCEngineBehaviour : FCBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fuelLevel = 24;
+        fuelLevel = MAX_FUEL_LEVEL;
         toInsert = 0;
         colliding = false;
         InvokeRepeating(nameof(SubtractValue), 30f, 30f);
@@ -87,5 +87,19 @@ public class FCEngineBehaviour : FCBehaviour
     {
         string context = "In the engine, the fuel level is at " + fuelLevel + " out of " + MAX_FUEL_LEVEL;
         return context;
+    }
+
+    public bool reduceFuel(int reduction)
+    {
+        if(reduction < fuelLevel)
+        {
+            fuelLevel -= reduction;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }

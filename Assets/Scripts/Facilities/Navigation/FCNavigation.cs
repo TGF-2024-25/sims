@@ -7,6 +7,7 @@ public class FCNavigation : FCBehaviour
 {
     public const string NAME = "Navigation";
     private ShipBehaviour shipScript;
+    private FCEngineBehaviour engineScript;
     private Planet currentPlanet;
 
     // Start is called before the first frame update
@@ -23,13 +24,28 @@ public class FCNavigation : FCBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("click");
-        currentPlanet = new Planet(shipScript.getLevel());
-        Debug.Log(currentPlanet);
+        if (engineScript.reduceFuel(25))
+        {
+            currentPlanet = new Planet(shipScript.getLevel());
+        }
+        else
+        {
+            Debug.Log("NOT FUEL TO GOOOO");
+        }
+       
     }
 
     public void setShip(ShipBehaviour shipBehaviour)
     {
         shipScript = shipBehaviour;
+    }
+    public void setEngine(FCEngineBehaviour engineScript)
+    {
+        this.engineScript = engineScript;
+    }
+
+    public Planet getCurrentPlanet()
+    {
+        return currentPlanet;
     }
 }
