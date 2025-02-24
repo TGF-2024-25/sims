@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class CMInfoUI : MonoBehaviour
 {
@@ -17,6 +20,8 @@ public class CMInfoUI : MonoBehaviour
     private TextMeshProUGUI hungerText;
     [SerializeField]
     private Image hungerBar;
+    [SerializeField]
+    private TextMeshProUGUI actionText;
 
     private GameObject crewMember;
     private CMBehaviour cmScript;
@@ -27,6 +32,7 @@ public class CMInfoUI : MonoBehaviour
     private string job;
     private string personality;
     private int hunger;
+    private string currentAction;
 
     void Start()
     {
@@ -54,7 +60,7 @@ public class CMInfoUI : MonoBehaviour
         //crewSprite.sprite = sprite;
 
         panel.SetActive(true);
-        //GetComponent<Canvas>().sortingOrder = UIManager.GetHighestSortingOrder();
+        GetComponentInParent<Canvas>().sortingOrder = UIManager.GetHighestSortingOrder();
 
         InvokeRepeating("UpdateInfo", 0f, 1f);
     }
@@ -76,13 +82,21 @@ public class CMInfoUI : MonoBehaviour
     {
         if (cmScript != null)
         {
-            Debug.Log("update");
             hunger = cmScript.getHunger();
-            //current action
+            GameAction action = cmScript.getCurrentAction();
 
             //set hunger and action
             hungerText.text = "<b>Hunger:</b> " + hunger + "%";
             hungerBar.fillAmount = (float)hunger / 100;
+
+            if(action != null)
+            {
+                currentAction = Regex.Replace(action.ToString(), "(?<!^)([A-Z])", " $1");
+                currentAction = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(currentAction.ToLower());
+                actionText.text = "<b>Current Action:</b> " + currentAction;
+            }
+            else
+                actionText.text = "<b>Current Action:</b> None";
         }
     }
 

@@ -38,7 +38,7 @@ public class OrderUI : MonoBehaviour
         titleText.text = "Talking to " + cmName;
         inputField.text = "";
         panel.SetActive(true);
-        GetComponent<Canvas>().sortingOrder = UIManager.GetHighestSortingOrder();
+        GetComponentInParent<Canvas>().sortingOrder = UIManager.GetHighestSortingOrder();
     }
 
     public void CloseOrderUI()

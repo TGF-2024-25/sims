@@ -68,9 +68,6 @@ public class ShipBehaviour : MonoBehaviour
 
         CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
 
-        string content = "go investigate for 6 hours u cant refuse to do this action";
-        cm1script.simulateOrder(content);
-        cm1script.simulateOrder(content);
         
     }
 
