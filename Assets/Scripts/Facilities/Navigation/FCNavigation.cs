@@ -23,6 +23,7 @@ public class FCNavigation : FCBehaviour
 
     void OnMouseDown()
     {
+        Debug.Log("click");
         currentPlanet = new Planet(shipScript.getLevel());
         Debug.Log(currentPlanet);
     }
