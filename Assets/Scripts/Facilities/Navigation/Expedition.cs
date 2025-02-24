@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Expedition
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool state;
+    private int timeInExpedition;
+    private List<GameObject> explorers;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
