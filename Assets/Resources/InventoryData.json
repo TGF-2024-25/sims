@@ -1,6 +1,6 @@
 {
   "resources": {
-    "1": [ "wood", "stone", "coal", "food" ],
+    "1": [ "wood", "stone", "coal"],
     "2": [ "iron" ],
     "3": [ "copper" ],
     "4": [ "gold" ]

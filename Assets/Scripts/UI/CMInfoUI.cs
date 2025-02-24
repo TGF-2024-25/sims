@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -35,15 +36,6 @@ public class CMInfoUI : MonoBehaviour
 
     void Update()
     {
-        if(cmScript != null)
-        {
-            hunger = cmScript.getHunger();
-            //current action
-
-            //set hunger and action
-            hungerText.text = "<b>Hunger:</b> " + hunger + "%";
-            hungerBar.fillAmount = (float)hunger / 100;
-        }
         
     }
 
@@ -62,11 +54,15 @@ public class CMInfoUI : MonoBehaviour
         //crewSprite.sprite = sprite;
 
         panel.SetActive(true);
+        //GetComponent<Canvas>().sortingOrder = UIManager.GetHighestSortingOrder();
+
+        InvokeRepeating("UpdateInfo", 0f, 1f);
     }
 
     public void CloseCrewInfo()
     {
         panel.SetActive(false);
+        CancelInvoke("UpdateInfo");
     }
 
     public void OpenOrderUI()
@@ -75,4 +71,19 @@ public class CMInfoUI : MonoBehaviour
         orderScript.ShowOrderUI(crewMember);
         CloseCrewInfo();
     }
+
+    private void UpdateInfo()
+    {
+        if (cmScript != null)
+        {
+            Debug.Log("update");
+            hunger = cmScript.getHunger();
+            //current action
+
+            //set hunger and action
+            hungerText.text = "<b>Hunger:</b> " + hunger + "%";
+            hungerBar.fillAmount = (float)hunger / 100;
+        }
+    }
+
 }

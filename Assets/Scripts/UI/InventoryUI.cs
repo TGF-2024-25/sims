@@ -46,6 +46,7 @@ public class InventoryUI : MonoBehaviour
     {
         UpdateInventoryUI();
         panel.SetActive(true);
+        GetComponent<Canvas>().sortingOrder = UIManager.GetHighestSortingOrder();
 
         InvokeRepeating("UpdateInventoryUI", 0f, 1f);
     }
