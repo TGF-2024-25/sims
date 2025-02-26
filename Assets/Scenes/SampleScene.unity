@@ -8109,6 +8109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit
       objectReference: {fileID: 0}
+    - target: {fileID: 1164741713328121212, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4560890119215346912, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -9382,6 +9386,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lab
       objectReference: {fileID: 0}
+    - target: {fileID: 1164741713328121212, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4560890119215346912, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.5
@@ -10493,13 +10501,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1063722263}
+  - component: {fileID: 1063722264}
   m_Layer: 0
   m_Name: ClickManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1063722263
 Transform:
   m_ObjectHideFlags: 0
@@ -10515,6 +10524,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 713024564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1063722264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063722262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4779a782473dea149ac04d0f75ea2558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crewLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  facilityLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1112958688
 GameObject:
   m_ObjectHideFlags: 0
@@ -12195,6 +12222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workshop
       objectReference: {fileID: 0}
+    - target: {fileID: 1164741713328121212, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4560890119215346912, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.53
@@ -13190,6 +13221,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Engine
       objectReference: {fileID: 0}
+    - target: {fileID: 1164741713328121212, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4560890119215346912, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.53
@@ -13511,6 +13546,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Navigation
       objectReference: {fileID: 0}
+    - target: {fileID: 1164741713328121212, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4560890119215346912, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22
@@ -13550,6 +13589,14 @@ PrefabInstance:
     - target: {fileID: 4560890119215346912, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219112080540333565, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219112080540333565, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -2039923185
       objectReference: {fileID: 0}
     - target: {fileID: 6984463254721231066, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_IsTrigger
@@ -13984,6 +14031,10 @@ PrefabInstance:
     - target: {fileID: 1164741713328121212, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_Name
       value: Kitchen
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164741713328121212, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4560890119215346912, guid: 4589e0296924ac94ba25a8ef3e0f04c6, type: 3}
       propertyPath: m_LocalScale.x

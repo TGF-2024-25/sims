@@ -162,10 +162,11 @@ public class CMBehaviour : MonoBehaviour
         this.hunger -= 2;
     }
 
-    void OnMouseDown()
+    public void OnClick()
     {
         GameObject cmUIPanel = CMInfoCanvas.transform.Find("CMInfoPanel").gameObject;
         CMInfoUI crewUI = cmUIPanel.GetComponent<CMInfoUI>();
         crewUI.ShowCrewInfo(gameObject);
     }
+
 }

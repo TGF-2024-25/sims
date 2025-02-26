@@ -20,5 +20,9 @@ public class FCBehaviour : MonoBehaviour
     {
     }
 
-    
+    public void OnClick()
+    {
+        Debug.Log("Facility seleccionada!");
+    }
+
 }
