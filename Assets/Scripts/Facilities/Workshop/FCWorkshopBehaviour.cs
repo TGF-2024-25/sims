@@ -154,4 +154,9 @@ public class FCWorkshopBehaviour : FCBehaviour
         return context;
     }
 
+    public override void OnClick()
+    {
+        Debug.Log("Click on Workshop");
+    }
+
 }

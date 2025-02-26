@@ -81,8 +81,10 @@ public class FCExit : FCBehaviour
         kitchenScript.addFood(foodReward);
     }
 
-    void OnMouseDown()
+    public override void OnClick()
     {
+        Debug.Log("Click on Exit");
+
         if (exploring)
         {
             exploring = false;
@@ -90,12 +92,13 @@ public class FCExit : FCBehaviour
         }
         else
         {
-            if (!navigationScript.getCurrentPlanet().IsInvestigated()){
+            if (!navigationScript.getCurrentPlanet().IsInvestigated())
+            {
                 exploring = true;
                 timeInCurrentExpedition = 0;
                 goExplore();
             }
-            
+
         }
     }
 

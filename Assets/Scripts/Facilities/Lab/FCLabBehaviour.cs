@@ -153,5 +153,10 @@ public class FCLabBehaviour : FCBehaviour
         return context;
     }
 
+    public override void OnClick()
+    {
+        Debug.Log("Click on Lab");
+    }
+
 
 }

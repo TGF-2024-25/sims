@@ -22,8 +22,10 @@ public class FCNavigation : FCBehaviour
         
     }
 
-    void OnMouseDown()
+    public override void OnClick()
     {
+        Debug.Log("Click on Navigation");
+
         if (engineScript.reduceFuel(25))
         {
             currentPlanet = new Planet(shipScript.getLevel());
@@ -32,7 +34,6 @@ public class FCNavigation : FCBehaviour
         {
             Debug.Log("NOT FUEL TO GOOOO");
         }
-       
     }
 
     public void setShip(ShipBehaviour shipBehaviour)

@@ -102,4 +102,9 @@ public class FCEngineBehaviour : FCBehaviour
         }
 
     }
+
+    public override void OnClick()
+    {
+        Debug.Log("Click on Engine");
+    }
 }

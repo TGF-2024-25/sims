@@ -98,4 +98,9 @@ public class FCKitchenBehaviour : FCBehaviour
         string context = "In the kitchen, there are " + avaibleFood + " rations available, each one give " + FOOD_RESTAURATION + " food points";
         return context;
     }
+
+    public override void OnClick()
+    {
+        Debug.Log("Click on Kitchen");
+    }
 }
