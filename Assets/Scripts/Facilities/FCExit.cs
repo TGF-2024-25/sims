@@ -79,6 +79,16 @@ public class FCExit : FCBehaviour
         }
         int foodReward = (int)(currentPlanet.GetFoodAvailable() * percentageOfReward);
         kitchenScript.addFood(foodReward);
+        foreach(var crewMember in crewMembers)
+        {
+            int rand = Random.Range(0, 100);
+            int succes = timeInCurrentExpedition;
+            if(rand < succes)
+            {
+                crewMembers.Remove(crewMember);
+                Destroy(crewMember);
+            }
+        }
     }
 
     public override void OnClick()
