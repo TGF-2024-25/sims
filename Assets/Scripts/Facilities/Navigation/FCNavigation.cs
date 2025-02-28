@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class FCNavigation : FCBehaviour
 {
+    [SerializeField]
+    private GameObject recruitmentPanel;
+
     public const string NAME = "Navigation";
     private ShipBehaviour shipScript;
     private FCEngineBehaviour engineScript;
@@ -25,6 +28,8 @@ public class FCNavigation : FCBehaviour
     public override void OnClick()
     {
         Debug.Log("Click on Navigation");
+
+        recruitmentPanel.GetComponent<RecruitmentUI>().ShowRecruitmentUI();
 
         if (engineScript.reduceFuel(25))
         {

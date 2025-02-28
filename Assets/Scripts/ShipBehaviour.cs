@@ -78,7 +78,7 @@ public class ShipBehaviour : MonoBehaviour
         
 
         CreateCrewMember();
-        
+
 
         CMBehaviour cm1script = crewMembers[0].GetComponent<CMBehaviour>();
 
@@ -165,6 +165,11 @@ public class ShipBehaviour : MonoBehaviour
     public void SetInventoryMaterials(Dictionary<Material, int> inventoryMat)
     {
         inventoryMaterials = inventoryMat;
+    }
+
+    public List<GameObject> getCrewMembers()
+    {
+        return crewMembers;
     }
 
 }

@@ -126,6 +126,11 @@ public class CMBehaviour : MonoBehaviour
         previousActions.Add(action.ToString());
     }
 
+    public void explore()
+    {
+        Debug.Log(cmName + " going to explore");
+    }
+
     public int getHunger()
     {
         return this.hunger;

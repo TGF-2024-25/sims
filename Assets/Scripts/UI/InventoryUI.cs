@@ -22,16 +22,10 @@ public class InventoryUI : MonoBehaviour
     private Dictionary<Resource, int> inventoryResources;
     private Dictionary<Material, int> inventoryMaterials;
 
-    private Dictionary<Resource, GameObject> resourceItems;
-    private Dictionary<Material, GameObject> materialItems;
-
     // Start is called before the first frame update
     void Start()
     {
         shipScript = ship.GetComponent<ShipBehaviour>();
-
-        resourceItems = new Dictionary<Resource, GameObject>();
-        materialItems = new Dictionary<Material, GameObject>();
 
         panel.SetActive(false);
     }
