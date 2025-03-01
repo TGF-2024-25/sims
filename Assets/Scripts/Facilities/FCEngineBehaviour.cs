@@ -5,7 +5,7 @@ using UnityEngine;
 public class FCEngineBehaviour : FCBehaviour
 {
     public const string NAME = "Engine";
-    private const int MAX_FUEL_LEVEL = 100;
+    private const int MAX_FUEL_LEVEL = 150;
     private int fuelLevel;
     private int toInsert;
     private CMBehaviour crewScript;
@@ -106,5 +106,10 @@ public class FCEngineBehaviour : FCBehaviour
     public override void OnClick()
     {
         Debug.Log("Click on Engine");
+    }
+
+    public int getFuel()
+    {
+        return fuelLevel;
     }
 }

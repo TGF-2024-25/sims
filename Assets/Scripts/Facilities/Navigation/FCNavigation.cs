@@ -6,7 +6,7 @@ using UnityEngine;
 public class FCNavigation : FCBehaviour
 {
     [SerializeField]
-    private GameObject recruitmentPanel;
+    private GameObject navigationPanel;
 
     public const string NAME = "Navigation";
     private ShipBehaviour shipScript;
@@ -27,18 +27,22 @@ public class FCNavigation : FCBehaviour
 
     public override void OnClick()
     {
-        Debug.Log("Click on Navigation");
+        navigationPanel.GetComponent<NavigationUI>().ShowNavigationUI();
+    }
 
-        recruitmentPanel.GetComponent<RecruitmentUI>().ShowRecruitmentUI();
-
-        if (engineScript.reduceFuel(25))
+    public Planet generatePlanet()
+    {
+        if (engineScript.reduceFuel(50))
         {
             currentPlanet = new Planet(shipScript.getLevel());
+            return currentPlanet;
         }
         else
         {
             Debug.Log("NOT FUEL TO GOOOO");
+            return null;
         }
+
     }
 
     public void setShip(ShipBehaviour shipBehaviour)

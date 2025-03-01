@@ -6,9 +6,9 @@ using UnityEngine;
 public class Planet
 {
     private string name;
-    private bool investigated;
     private int foodAvaible;
     private Dictionary<Resource, int> obtainableResources;
+    private int planetModel;
     public Planet(int shipLevel)
     {
         string jsonFile = Resources.Load<TextAsset>("PlanetData").ToString();
@@ -22,7 +22,9 @@ public class Planet
         int randomNameIndex = Random.Range(0, namesData.Count);
         name = namesData[randomNameIndex];
 
-        investigated = false;
+        int model = Random.Range(0, 26);
+        planetModel = model;
+
         obtainableResources = new Dictionary<Resource, int>();
 
         List<string> foodRange = quantityData["food"];
@@ -52,19 +54,10 @@ public class Planet
         }
     }
 
-    internal void setExplored(bool investigated)
-    {
-        this.investigated = investigated;
-    }
 
     public string GetName()
     {
         return name;
-    }
-
-    public bool IsInvestigated()
-    {
-        return investigated;
     }
 
     public int GetFoodAvailable()
@@ -75,6 +68,11 @@ public class Planet
     public Dictionary<Resource, int> GetObtainableResources()
     {
         return obtainableResources;
+    }
+
+    public int getModel()
+    {
+        return planetModel;
     }
 
 }

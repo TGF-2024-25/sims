@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -13,23 +14,30 @@ public class RecruitmentUI : MonoBehaviour
     [SerializeField]
     private GameObject panel;
     [SerializeField]
+    private GameObject navigationPanel;
+    [SerializeField]
     private GameObject cmPrefab;
     [SerializeField]
     private Transform gridContent;
     [SerializeField]
     private GameObject ship;
 
+    private NavigationUI navigationUIScript;
     private ShipBehaviour shipScript;
     private List<GameObject> crewMembers;
     private Dictionary<GameObject, GameObject> cmObjects;
     private List<GameObject> cmItemsSelected;
+
+    private int maxRecruits = 3;
 
     private Color normalColor;
     private Color selectedColor;
 
     void Start()
     {
+
         shipScript = ship.GetComponent<ShipBehaviour>();
+        navigationUIScript = navigationPanel.GetComponent<NavigationUI>();
 
         cmObjects = new Dictionary<GameObject, GameObject>();
         cmItemsSelected = new List<GameObject>();
@@ -42,14 +50,18 @@ public class RecruitmentUI : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void ShowRecruitmentUI()
     {
-        load();
         panel.SetActive(true);
+        cmObjects = new Dictionary<GameObject, GameObject>();
+        cmItemsSelected = new List<GameObject>();
+
+        load();
         GetComponentInParent<Canvas>().sortingOrder = UIManager.GetHighestSortingOrder();
+
     }
 
     public void CloseRecruitmentUI()
@@ -85,7 +97,6 @@ public class RecruitmentUI : MonoBehaviour
 
     public void recruitCrew()
     {
-        //lista para pasarla mas adelante a quien sea que maneje los tripulantes y quien muere y todo eso
         List<GameObject> cmObjectsSelected = new List<GameObject>();
 
         foreach(GameObject cmItem in cmItemsSelected)
@@ -96,26 +107,29 @@ public class RecruitmentUI : MonoBehaviour
 
         }
 
-        //enviar tripulantes seleccionados a navegación
+        navigationUIScript.addRecruitedCM(cmObjectsSelected);
         panel.SetActive(false);
     }
 
     public void addCrew(GameObject item)
     {
-        
-
         if (!cmItemsSelected.Contains(item))
         {
-            item.GetComponent<Image>().color = selectedColor;
-            cmItemsSelected.Add(item);
+            if(cmItemsSelected.Count < maxRecruits)
+            {
+                item.GetComponent<Image>().color = selectedColor;
+                cmItemsSelected.Add(item);
+            }
         }
         else
         {
             item.GetComponent<Image>().color = normalColor;
             cmItemsSelected.Remove(item);
         }
-        Debug.Log(cmItemsSelected.Count);
     }
 
-    
+    public int getMaxRecruits()
+    {
+        return maxRecruits;
+    }
 }

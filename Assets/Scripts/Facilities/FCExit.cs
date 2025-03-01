@@ -43,16 +43,20 @@ public class FCExit : FCBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject crewMember = collision.gameObject;
-        crewMembers.Add(crewMember);
-        CMBehaviour crewScriptAux = crewMember.GetComponent<CMBehaviour>();
-        GameAction action = crewScriptAux.getCurrentAction();
-        crewScriptAux.setInFacility(true);
+        CMBehaviour crewScript = crewMember.GetComponent<CMBehaviour>();
+        GameAction action = crewScript.getCurrentAction();
+        if (exploring)
+        {
+            crewMembers.Add(crewMember);
+        }
+        else
+        {
+            crewScript.orderDone();
+            crewScript.setDoingAction(false);
+        }
+        
+        
 
-    }
-
-    public void goExplore()
-    {
-        InvokeRepeating("explore", 1f, 1f);
     }
 
     private void explore()
@@ -62,8 +66,8 @@ public class FCExit : FCBehaviour
 
     private void claimRewards()
     {
+        exploring = false;
         Planet currentPlanet = navigationScript.getCurrentPlanet();
-        currentPlanet.setExplored(true);
         float percentageOfRewardMax = (timeInCurrentExpedition * 1f) / 10 < 1 ? (timeInCurrentExpedition * 1f) / 10 : 1;
         float percentageOfRewardMin = percentageOfRewardMax - 0.3f > 0 ? percentageOfRewardMax - 0.3f : 0;
 
@@ -81,7 +85,8 @@ public class FCExit : FCBehaviour
         kitchenScript.addFood(foodReward);
         foreach(var crewMember in crewMembers)
         {
-            int rand = Random.Range(0, 100);
+            //int rand = Random.Range(0, 100);
+            int rand = 0;
             int succes = timeInCurrentExpedition;
             if(rand < succes)
             {
@@ -89,27 +94,16 @@ public class FCExit : FCBehaviour
                 Destroy(crewMember);
             }
         }
+        CancelInvoke("explore");
     }
 
-    public override void OnClick()
+    public void startExpedition()
     {
-        Debug.Log("Click on Exit");
+        exploring = true;
+        timeInCurrentExpedition = 0;
+        InvokeRepeating("explore", 1f, 1f);
 
-        if (exploring)
-        {
-            exploring = false;
-            claimRewards();
-        }
-        else
-        {
-            if (!navigationScript.getCurrentPlanet().IsInvestigated())
-            {
-                exploring = true;
-                timeInCurrentExpedition = 0;
-                goExplore();
-            }
-
-        }
+        Invoke("claimRewards", 10f);
     }
 
     public string getContext()
