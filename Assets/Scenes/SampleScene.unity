@@ -15085,6 +15085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86cadb9cf7e62724e99e2fc204d6cd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionManager: {fileID: 1721476547}
   panel: {fileID: 1418535775}
   recruitmentPanel: {fileID: 112400291}
   planetImage: {fileID: 1005981470}
