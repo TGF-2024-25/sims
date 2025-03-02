@@ -103,7 +103,7 @@ public class FCExit : FCBehaviour
         timeInCurrentExpedition = 0;
         InvokeRepeating("explore", 1f, 1f);
 
-        Invoke("claimRewards", 10f);
+        Invoke("claimRewards", 30f);
     }
 
     public string getContext()
