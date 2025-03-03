@@ -134,7 +134,6 @@ public class ShipBehaviour : MonoBehaviour
         context += labScript.getContext() + ", ";
         context += workshopScript.getContext() + ", ";
         context += kitchenScript.getContext();
-
         return context;
     }
 

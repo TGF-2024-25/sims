@@ -18,7 +18,8 @@ public class ActionManager : MonoBehaviour
         RefillAction.NAME,
         RefuseAction.NAME,
         ResearchAction.NAME, 
-        CraftAction.NAME
+        CraftAction.NAME,
+        LevelShipAction.NAME
     };
 
     private const int MAX_RETRY = 3;
@@ -45,6 +46,8 @@ public class ActionManager : MonoBehaviour
                 return new CraftAction(parameters, crewMember,ordered);
             case ExploreAction.NAME:
                 return new ExploreAction(parameters, crewMember, ordered);
+            case LevelShipAction.NAME:
+                return new LevelShipAction(parameters, crewMember, ordered);
             default:
                 return null;
         }
