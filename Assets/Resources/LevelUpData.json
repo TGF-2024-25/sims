@@ -1,0 +1,19 @@
+{
+  "1" : {
+    "carbonite" : 5,
+    "timberite" : 5
+  },
+  "2" : {
+    "ferronite" : 5,
+    "timbersteel" : 5
+  },
+  "3" : {
+    "cable" : 5,
+    "circuit" : 5
+  },
+  "4" : {
+    "superComputer" : 3
+  }
+  
+}
+

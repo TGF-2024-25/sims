@@ -52,16 +52,10 @@ public class FCEngineBehaviour : FCBehaviour
     {
         Debug.Log("started refill");
         RefillAction refillAction = (RefillAction)crewScript.getCurrentAction();
-        string justEnough = refillAction.getJustEnough();
         int percentage = refillAction.getPercentage();
-        if (justEnough.Equals("yes"))
-        {
-            toInsert = -1;
-        }
-        else
-        {
-            toInsert = percentage;
-        }
+
+        toInsert = percentage;
+
         Invoke(nameof(refillMotor), 5f);
         crewScript.setInFacility(false);
 
@@ -72,10 +66,6 @@ public class FCEngineBehaviour : FCBehaviour
         if (toInsert >= 0)
         {
             fuelLevel = toInsert;
-        }
-        else
-        {
-            fuelLevel = MAX_FUEL_LEVEL;
         }
         crewScript.orderDone();
         crewScript.setDoingAction(false);

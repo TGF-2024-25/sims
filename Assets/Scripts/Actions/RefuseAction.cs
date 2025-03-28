@@ -32,4 +32,14 @@ public class RefuseAction : GameAction
     {
         return NAME;
     }
+
+    public static string getContext()
+    {
+        string context = "";
+
+
+
+
+        return context;
+    }
 }

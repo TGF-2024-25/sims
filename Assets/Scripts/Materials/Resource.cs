@@ -20,6 +20,11 @@ public class Resource
         return name;
     }
 
+    public int getRarity()
+    {
+        return rarity;
+    }
+
     public override bool Equals(object obj)
     {
         return this.ToString() == obj.ToString();

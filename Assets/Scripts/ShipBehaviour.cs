@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -78,7 +79,6 @@ public class ShipBehaviour : MonoBehaviour
         
 
         CreateCrewMember();
-        CreateCrewMember();
 
 
 
@@ -133,8 +133,45 @@ public class ShipBehaviour : MonoBehaviour
         context += engineScript.getContext() + ", ";
         context += labScript.getContext() + ", ";
         context += workshopScript.getContext() + ", ";
-        context += kitchenScript.getContext();
+        context += kitchenScript.getContext() + ", ";
+        context += GetInventoryContext() + ", ";
+        context += navigationScript.getContext();
         return context;
+    }
+
+    public string GetInventoryContext()
+    {
+        StringBuilder context = new StringBuilder("Ship Inventory:\n");
+
+        // Materials
+        context.Append("Materials:\n");
+        if (inventoryMaterials.Count > 0)
+        {
+            foreach (var entry in inventoryMaterials)
+            {
+                context.Append($"- {entry.Key.getName()}: {entry.Value}\n");
+            }
+        }
+        else
+        {
+            context.Append("- None\n");
+        }
+
+        // Resources
+        context.Append("Resources:\n");
+        if (inventoryResources.Count > 0)
+        {
+            foreach (var entry in inventoryResources)
+            {
+                context.Append($"- {entry.Key.getName()} (Rarity {entry.Key.getRarity()}): {entry.Value}\n");
+            }
+        }
+        else
+        {
+            context.Append("- None\n");
+        }
+
+        return context.ToString();
     }
 
     public int getLevel()

@@ -47,4 +47,14 @@ public class EatAction : GameAction
     {
         return NAME;
     }
+
+    public static string getContext()
+    {
+        string context = "This action increseas the fullness of the crew member if the hunger reaches 0 that crew member will die";
+
+
+
+
+        return context;
+    }
 }

@@ -111,8 +111,14 @@ public class CMBehaviour : MonoBehaviour
         context += ". My hunger level is at ";
         context += hunger;
         context += ". ";
+        context += "My previous actions are: ";
+        foreach(var action in previousActions)
+        {
+            context += action;
+            context += ", ";
+        }
+        context += ". ";
 
-        //Debug.Log(context);
 
         return context;
     }

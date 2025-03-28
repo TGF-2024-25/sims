@@ -5,7 +5,6 @@ using UnityEngine;
 public class RefillAction : GameAction
 {
     private int percentage;
-    private string justEnough;
     public const string NAME = "refill";
     public const string FACILITY = FCEngineBehaviour.NAME;
     public static Dictionary<string, List<string>> parametersOptions;
@@ -13,7 +12,6 @@ public class RefillAction : GameAction
     public RefillAction(Dictionary<string, string> parameters, GameObject crewMember,bool ordered) : base(NAME, crewMember,ordered)
     {
         this.percentage = int.Parse(parameters["percentage"]);
-        this.justEnough = parameters["justEnough"];
     }
 
     public override void doAction()
@@ -29,11 +27,6 @@ public class RefillAction : GameAction
         parametersOptions = parameters;
     }
 
-    public string getJustEnough()
-    {
-        return this.justEnough;
-    }
-
     public int getPercentage()
     {
         return this.percentage;
@@ -45,5 +38,15 @@ public class RefillAction : GameAction
     public override string ToString()
     {
         return NAME;
+    }
+
+    public static string getContext()
+    {
+        string context = "This actions is used to increaase the fuel of the ship so you can reach new planets to gain more resources to craft new materials.";
+
+
+
+
+        return context;
     }
 }

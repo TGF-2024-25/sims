@@ -66,7 +66,7 @@ public class ActionManager : MonoBehaviour
             case CraftAction.NAME:
                 return CraftAction.parametersOptions;
             default:
-                return null;
+                return new Dictionary<string, List<string>>();
         }
     }
 

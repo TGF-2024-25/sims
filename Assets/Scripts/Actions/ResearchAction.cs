@@ -41,4 +41,14 @@ public class ResearchAction : GameAction
     {
         return NAME;
     }
+
+    public static string getContext()
+    {
+        string context = "This actions is used to unlock new recipies in the workshop so that you can craft new materials to upgrade the ship to the next level.";
+
+
+
+
+        return context;
+    }
 }

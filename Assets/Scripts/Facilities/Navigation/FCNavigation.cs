@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,12 +15,15 @@ public class FCNavigation : FCBehaviour
     private Planet currentPlanet;
     private bool colliding;
     private CMBehaviour crewScript;
+    private Dictionary<int, Dictionary<Material, int>> levelUpRequirements = new Dictionary<int, Dictionary<Material, int>>();
 
 
     // Start is called before the first frame update
     void Start()
     {
         colliding = false;
+        string jsonFile = Resources.Load<TextAsset>("LevelUpData").ToString();
+        LoadLevelUpRequirementsFromJson(jsonFile);
     }
 
     // Update is called once per frame
@@ -32,6 +36,32 @@ public class FCNavigation : FCBehaviour
     private void startLevelUp()
     {
         Invoke("levelUp",5f);
+    }
+
+
+
+   
+
+    void LoadLevelUpRequirementsFromJson(string json)
+    {
+        Dictionary<string, Dictionary<string, int>> rawData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>>(json);
+
+        levelUpRequirements.Clear();
+
+        foreach (var levelEntry in rawData)
+        {
+            int level = int.Parse(levelEntry.Key); // Convertir clave de nivel a int
+            Dictionary<Material, int> materialsNeeded = new Dictionary<Material, int>();
+
+            foreach (var materialEntry in levelEntry.Value)
+            {
+                string materialName = materialEntry.Key;
+                int quantity = materialEntry.Value;
+                materialsNeeded[new Material(materialName)] = quantity; // Crear Material y asignar cantidad
+            }
+
+            levelUpRequirements[level] = materialsNeeded;
+        }
     }
 
     private void levelUp()
@@ -94,5 +124,24 @@ public class FCNavigation : FCBehaviour
     public Planet getCurrentPlanet()
     {
         return currentPlanet;
+    }
+
+    public string getContext()
+    {
+        System.Text.StringBuilder context = new System.Text.StringBuilder();
+        context.Append("Level Up Requirements:\n");
+
+        foreach (var level in levelUpRequirements)
+        {
+            context.Append($"Level {level.Key} requires:\n");
+            foreach (var material in level.Value)
+            {
+                context.Append($"- {material.Key.getName()}: {material.Value}\n");
+            }
+        }
+
+        return context.ToString();
+
+
     }
 }

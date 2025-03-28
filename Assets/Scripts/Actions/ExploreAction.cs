@@ -25,4 +25,14 @@ public class ExploreAction : GameAction
         CMMovement cmMovementScript = this.crewMember.GetComponent<CMMovement>();
         cmMovementScript.setTargetPosition(new Vector2(exitObject.transform.position.x, exitObject.transform.position.y));
     }
+
+    public static string getContext()
+    {
+        string context = "";
+
+
+
+
+        return context;
+    }
 }

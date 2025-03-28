@@ -9,13 +9,11 @@ public class CraftAction : GameAction
     public static Dictionary<string, List<string>> parametersOptions;
     public const string FACILITY = FCWorkshopBehaviour.NAME;
     private int quantity;
-    private string allPossible;
     private string material;
 
     public CraftAction(Dictionary<string, string> parameters, GameObject crewMember, bool ordered) : base(NAME, crewMember,ordered)
     {
         this.quantity =int.Parse(parameters["quantity"]);
-        this.allPossible = parameters["allPossible"];
         this.material = parameters["material"];
 
 
@@ -38,10 +36,6 @@ public class CraftAction : GameAction
     {
         return this.quantity;
     }
-    public string getAllPossible()
-    {
-        return this.allPossible;
-    }
     public string getMaterial()
     {
         return this.material;
@@ -63,5 +57,15 @@ public class CraftAction : GameAction
     public override string ToString()
     {
         return NAME;
+    }
+
+    public static string getContext()
+    {
+        string context = "This actions is used to craft materials to upgrade the ship";
+
+
+
+
+        return context;
     }
 }

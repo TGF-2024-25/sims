@@ -88,7 +88,6 @@ public class FCWorkshopBehaviour : FCBehaviour
     {
         CraftAction craftAction = (CraftAction)crewScript.getCurrentAction();
         int quantity = craftAction.getQuantity();
-        string allPossible = craftAction.getAllPossible();
         string material = craftAction.getMaterial();
 
         currentRecipe = null;
@@ -111,17 +110,15 @@ public class FCWorkshopBehaviour : FCBehaviour
 
         if (canCraft)
         {
-            if (allPossible.Equals("yes"))
-            {
-
-
-            }
-            else
-            {
-
-            }
             crewScript.setInFacility(false);
             Invoke("craft", 5f);
+        }
+        else
+        {
+            Debug.Log("not enough resources");
+            crewScript.orderDone();
+            crewScript.setDoingAction(false);
+            crewScript.setInFacility(true);
         }
         
        

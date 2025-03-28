@@ -24,4 +24,14 @@ public class LevelShipAction : GameAction
         CMMovement cmMovementScript = this.crewMember.GetComponent<CMMovement>();
         cmMovementScript.setTargetPosition(new Vector2(navigationObject.transform.position.x, navigationObject.transform.position.y));
     }
+
+    public static string getContext()
+    {
+        string context = "This action upgrades the ship to unlock new researches and new resources";
+
+
+
+
+        return context;
+    }
 }
