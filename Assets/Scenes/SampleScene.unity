@@ -9280,7 +9280,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1418535777}
         m_TargetAssemblyTypeName: NavigationUI, Assembly-CSharp
-        m_MethodName: startExpedition
+        m_MethodName: clickExpedition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15100,8 +15100,10 @@ MonoBehaviour:
   fuelText: {fileID: 610156178}
   fuelBar: {fileID: 1336362285}
   backgroundPlanet: {fileID: 880308609}
+  travelButton: {fileID: 471589672}
   recruitButton: {fileID: 990911979}
   startButton: {fileID: 384060227}
+  startButtonText: {fileID: 227133651}
   recruitmentStateImage: {fileID: 2075392078}
 --- !u!114 &1418535778
 MonoBehaviour:
@@ -15423,7 +15425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8149e3ac941354a92b5e0947582e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonApi: {fileID: 4900000, guid: 6438f97760a56cd48a3bde98957538d8, type: 3}
+  jsonApi: {fileID: 4900000, guid: 3802bb66d82289f47809400f6733a649, type: 3}
 --- !u!4 &1499961660
 Transform:
   m_ObjectHideFlags: 0
@@ -16122,7 +16124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1603579167}
   m_Layer: 0
-  m_Name: Navigation
+  m_Name: NavigationFolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

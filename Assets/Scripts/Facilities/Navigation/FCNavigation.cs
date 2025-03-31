@@ -122,6 +122,11 @@ public class FCNavigation : FCBehaviour
         return currentPlanet;
     }
 
+    public void setExpeditionStarted()
+    {
+        navigationPanel.GetComponent<NavigationUI>().changeExpeditionState("exploring");
+    }
+
     public string getContext()
     {
         System.Text.StringBuilder context = new System.Text.StringBuilder();

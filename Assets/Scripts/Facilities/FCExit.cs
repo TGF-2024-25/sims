@@ -49,9 +49,11 @@ public class FCExit : FCBehaviour
         {
             crewMembers.Add(crewMember);
             timeInCurrentExpedition = 0;
+
+            navigationScript.setExpeditionStarted();
+
             InvokeRepeating("explore", 1f, 1f);
 
-            Invoke("claimRewards", 30f);
         }
         else
         {
@@ -68,7 +70,7 @@ public class FCExit : FCBehaviour
         timeInCurrentExpedition += 1;
     }
 
-    private void claimRewards()
+    public void claimRewards()
     {
         exploring = false;
         Planet currentPlanet = navigationScript.getCurrentPlanet();
@@ -121,6 +123,11 @@ public class FCExit : FCBehaviour
     {
         exploring = true;
         
+    }
+
+    public int getTime()
+    {
+        return timeInCurrentExpedition;
     }
 
     public string getContext()

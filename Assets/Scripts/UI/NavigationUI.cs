@@ -41,9 +41,13 @@ public class NavigationUI : MonoBehaviour
     [SerializeField]
     private GameObject backgroundPlanet;
     [SerializeField]
+    private Button travelButton;
+    [SerializeField]
     private Button recruitButton;
     [SerializeField]
     private Button startButton;
+    [SerializeField]
+    private TextMeshProUGUI startButtonText;
     [SerializeField]
     private GameObject recruitmentStateImage;
 
@@ -56,12 +60,10 @@ public class NavigationUI : MonoBehaviour
     private Animator animatorPlanetBG;
     private Planet currentPlanet;
     private int fuelLevel;
+    private int timeExpedition;
     private List<GameObject> recruits;
 
-    private bool recruited = false;
-    private bool enoughRecruited = false;
-    private bool expeditionStarted = false;
-    private bool explored = false;
+    private bool exploring = false;
 
 
     // Start is called before the first frame update
@@ -139,12 +141,10 @@ public class NavigationUI : MonoBehaviour
             updateFuel();
 
             //reset expeditions
-            recruited = false;
-            recruits = null;
-            enoughRecruited = false;
             recruitButton.GetComponent<Button>().interactable = true;
             startButton.GetComponent<Button>().interactable = false;
             changeRecruitmentState("empty");
+            changeExpeditionState("not");
             recruitsRequiredText.text = "Must recruit crew mates before starting an expedition";
 
         }
@@ -166,6 +166,12 @@ public class NavigationUI : MonoBehaviour
         fuelText.text = "<b>Fuel: </b> " + fuelLevel + "%";
         fuelBar.fillAmount = (float)fuelLevel / 100;
     }
+
+    private void updateExpeditionState()
+    {
+        timeExpedition = exitScript.getTime();
+        recruitsRequiredText.text = "Exploring: " + timeExpedition + "s";
+    }
     private void changeRecruitmentState(string option)
     {
         Image stateIcon = recruitmentStateImage.GetComponent<Image>();
@@ -173,15 +179,47 @@ public class NavigationUI : MonoBehaviour
         stateIcon.sprite = resourceSprite;
     }
 
+    public void changeExpeditionState(string state)
+    {
+        Image startButtonIcon = startButton.GetComponent<Image>();
+        if (state == "not")
+        {
+            startButton.GetComponent<Button>().interactable = true;
+            Sprite startButtonSprite = Resources.Load<Sprite>("Sprites/UI/button6");
+            startButtonIcon.sprite = startButtonSprite;
+            startButtonText.text = "Start Expedition";
+        }
+        else if(state == "before")
+        {
+            recruitsRequiredText.text = "Waiting for crew to start expedition";
+            travelButton.GetComponent<Button>().interactable = false;
+            startButton.GetComponent<Button>().interactable = false;
+            Sprite startButtonSprite = Resources.Load<Sprite>("Sprites/UI/button7");
+            startButtonIcon.sprite = startButtonSprite;
+            startButtonText.text = "Waiting for crew";
+        }
+        else if (state == "exploring")
+        {
+            InvokeRepeating("updateExpeditionState", 0f, 1f);
+            startButton.GetComponent<Button>().interactable = true;
+            startButtonText.text = "Finish Expedition";
+        }
+        else
+        {
+            CancelInvoke("updateExpeditionState");
+            recruitsRequiredText.text = "Planet already explored";
+            travelButton.GetComponent<Button>().interactable = true;
+            startButton.GetComponent<Button>().interactable = false;
+            startButtonText.text = "Explored";
+        }
+    }
+
     public void addRecruitedCM(List<GameObject> newRecruits)
     {
-        recruited = true;
         recruits = newRecruits;
         recruitButton.GetComponent<Button>().interactable = false;
         if (recruits.Count > 0)
         {
-            enoughRecruited = true;
-
             changeRecruitmentState("yes");
             recruitsRequiredText.text = recruits.Count + "/" + recruitmentUIScript.getMaxRecruits() + " recruited";
             startButton.GetComponent<Button>().interactable = true;
@@ -193,17 +231,40 @@ public class NavigationUI : MonoBehaviour
         }
     }
 
-    public void startExpedition()
+    public void clickExpedition()
     {
-        foreach(GameObject crewMember in recruits)
+        if (!exploring)
+        {
+            startExpedition();
+        }
+        else
+        {
+            finishExpedition();
+        }
+    }
+
+
+    private void startExpedition()
+    {
+        changeExpeditionState("before");
+
+        foreach (GameObject crewMember in recruits)
         {
             GameAction newAction = actionManagerScript.createActionByName(ExploreAction.NAME, null, crewMember, true);
             crewMember.GetComponent<CMBehaviour>().updateActionList(newAction);
         }
         exitScript.startExpedition();
 
-        //change UI
+        exploring = true;
+    }
 
+    private void finishExpedition()
+    {
+        changeExpeditionState("explored");
+
+        exitScript.claimRewards();
+
+        exploring = false;
 
     }
 
