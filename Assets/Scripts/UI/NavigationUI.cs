@@ -184,7 +184,6 @@ public class NavigationUI : MonoBehaviour
         Image startButtonIcon = startButton.GetComponent<Image>();
         if (state == "not")
         {
-            startButton.GetComponent<Button>().interactable = true;
             Sprite startButtonSprite = Resources.Load<Sprite>("Sprites/UI/button6");
             startButtonIcon.sprite = startButtonSprite;
             startButtonText.text = "Start Expedition";
