@@ -14,7 +14,7 @@ public class LevelShipAction : GameAction
     }
     public override bool correctFacility(string facility)
     {
-        return NAME == facility;
+        return FACILITY == facility;
     }
 
     public override void doAction()

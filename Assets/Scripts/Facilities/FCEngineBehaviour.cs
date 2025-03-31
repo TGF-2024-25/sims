@@ -5,7 +5,7 @@ using UnityEngine;
 public class FCEngineBehaviour : FCBehaviour
 {
     public const string NAME = "Engine";
-    private const int MAX_FUEL_LEVEL = 100;
+    private const int MAX_FUEL_LEVEL = 1000;
     private int fuelLevel;
     private int toInsert;
     private CMBehaviour crewScript;
@@ -48,6 +48,12 @@ public class FCEngineBehaviour : FCBehaviour
 
     }
 
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        colliding = false;
+    }
+
     void startRefill()
     {
         Debug.Log("started refill");
@@ -62,7 +68,6 @@ public class FCEngineBehaviour : FCBehaviour
     }
     void refillMotor()
     {
-        Debug.Log("finish refill");
         if (toInsert >= 0)
         {
             fuelLevel = toInsert;

@@ -50,11 +50,12 @@ public class FCLabBehaviour : FCBehaviour
 
     }
 
-    void unlockResearchLevel(int level)
+    public void unlockResearchLevel(int level)
     {
         for(int i = 0;i < researchList.Count; i++)
         {
-            researchList[i] = (researchList[i].Item1, "unlocked", researchList[i].Item3);
+            if(researchList[i].Item1.getLevel() == level)
+                researchList[i] = (researchList[i].Item1, "unlocked", researchList[i].Item3);
         }
     }
 
@@ -105,6 +106,12 @@ public class FCLabBehaviour : FCBehaviour
             currentResearch = researchList[i].Item1;
             InvokeRepeating("research", 1f, 1f);
         }
+        else
+        {
+            crewScript.orderDone();
+            crewScript.setDoingAction(false);
+            crewScript.setInFacility(true);
+        }
 
     }
 
@@ -139,18 +146,30 @@ public class FCLabBehaviour : FCBehaviour
 
     public string getContext()
     {
-        float prog = currentProgressGoal == 0 ? 0 :  progress * 1f / currentProgressGoal;
-        string context = "";
-        if (currentResearch != null)
+        string context = "Lab Research Status:\n";
+
+        foreach (var research in researchList)
         {
-            context += "In the lab, the current investigation is " + currentResearch.getMaterial().getName() + ", sitting at " + prog * 100 + " percent progress";
+            string status = research.Item2;
+            string researchName = research.Item1.getMaterial().getName();
+            int progress = research.Item3;
+            int duration = research.Item1.getDuration();
+
+            if (status == "unlocked")
+            {
+                context += $"- [Unlocked] {researchName}: {progress}/{duration} progress\n";
+            }
+            else if (status == "finished")
+            {
+                context += $"- [Finished] {researchName}\n";
+            }
+            else
+            {
+                context += $"- [Locked] {researchName}\n";
+            }
         }
-        else
-        {
-            context += "In the lab, there are not avaible investigations the ship needs to be a higher level for more to be avaible.";
-        }
-        Debug.Log(context);
-        return context;
+
+        return context + ".If all research are locked or finished the research action cant be made";
     }
 
     public override void OnClick()

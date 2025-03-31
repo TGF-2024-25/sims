@@ -15,8 +15,6 @@ public class CraftAction : GameAction
     {
         this.quantity =int.Parse(parameters["quantity"]);
         this.material = parameters["material"];
-
-
     }
     public static void loadParameterOptions(Dictionary<string, List<string>> parameters)
     {
@@ -61,7 +59,7 @@ public class CraftAction : GameAction
 
     public static string getContext()
     {
-        string context = "This actions is used to craft materials to upgrade the ship";
+        string context = "This actions is used to craft materials to upgrade the ship. Its not posible to do the craft action if no recipes are avaible.";
 
 
 
