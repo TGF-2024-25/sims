@@ -5,7 +5,7 @@ using UnityEngine;
 public class FCEngineBehaviour : FCBehaviour
 {
     public const string NAME = "Engine";
-    private const int MAX_FUEL_LEVEL = 1000;
+    private const int MAX_FUEL_LEVEL = 100;
     private int fuelLevel;
     private int toInsert;
     private CMBehaviour crewScript;
