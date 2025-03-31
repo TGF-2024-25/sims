@@ -50,8 +50,24 @@ public class Recipe
         this.resourcesNeeded = resourcesNeeded;
     }
 
-    internal bool canCraft(Func<Dictionary<Material, int>> getInventoryMaterials, Func<Dictionary<Resource, int>> getInventoryResources)
+    internal bool canCraft(Dictionary<Material, int> getInventoryMaterials, Dictionary<Resource, int> getInventoryResources)
     {
+        foreach (var material in materialsNeeded)
+        {
+            if (!getInventoryMaterials.ContainsKey(material) || getInventoryMaterials[material] <= 0)
+            {
+                return false;
+            }
+        }
+
+        foreach (var resource in resourcesNeeded)
+        {
+            if (!getInventoryResources.ContainsKey(resource) || getInventoryResources[resource] <= 0)
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 }

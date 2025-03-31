@@ -35,6 +35,7 @@ public class FCNavigation : FCBehaviour
 
     private void startLevelUp()
     {
+        crewScript.setInFacility(false);
         Invoke("levelUp",5f);
     }
 

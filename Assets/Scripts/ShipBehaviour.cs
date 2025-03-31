@@ -122,7 +122,7 @@ public class ShipBehaviour : MonoBehaviour
         string personality = crewPersonalityOptions[Random.Range(0, crewPersonalityOptions.Count())];
         string job = crewJobOptions[Random.Range(0, crewJobOptions.Count())];
         
-        crewScript.Initialize(name, personality, job, this, ActionManagerObject, CMInfoCanvas);
+        crewScript.Initialize(name, personality, "craft", this, ActionManagerObject, CMInfoCanvas);
         crewMembers.Add(newCrewMember);
         crewMembersNames.Add(name);
     }
@@ -182,6 +182,7 @@ public class ShipBehaviour : MonoBehaviour
     public void setLevel(int lvl)
     {
         level = lvl;
+        labScript.unlockResearchLevel(lvl);
     }
     // Getters
     public Dictionary<Resource, int> GetInventoryResources()

@@ -94,7 +94,7 @@ public class FCExit : FCBehaviour
         foreach(var crewMember in crewMembers)
         {
             //int rand = Random.Range(0, 100);
-            int rand = 0;
+            int rand = 100;
             int succes = timeInCurrentExpedition;
            
             if(rand < succes)

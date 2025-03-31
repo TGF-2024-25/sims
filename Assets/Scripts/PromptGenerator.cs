@@ -68,8 +68,11 @@ public class PromptGenerator : MonoBehaviour
         petition += "- **refill**: "+ RefillAction.getContext() + "\n";
         petition += "- **research**: " + ResearchAction.getContext() + "\n";
         petition += "- **craft**: " + CraftAction.getContext() + "\n";
-        petition += "- **levelShip**: " + LevelShipAction.getContext() + "\n";
-
+        if (isOrder)
+        {
+            petition += "- **levelShip**: " + LevelShipAction.getContext() + "\n";
+        }
+  
         petition += "List of posible actions: \n";
         foreach (string posAction in possibleActions)
         {
@@ -77,12 +80,11 @@ public class PromptGenerator : MonoBehaviour
         }
 
         petition += "Decision-making rules:\n";
-        petition += "1. If my hunger is dangerously low (below 25), prioritize **eating**.\n";
+        petition += "1. If my hunger is dangerously low (below 25), prioritize **eating** and if its above 50 dont eat.\n";
         petition += "2. If fuel is critical (below 50), prioritize **refill**.\n";
         petition += "3. If the order requires upgrading the ship, check if I have the necessary materials:\n";
         petition += "   - If I do, choose **levelShip**.\n";
         petition += "   - If I don’t, determine what’s missing and choose the best action (**craft** or **research**) to progress.\n";
-        petition += "4. If I cannot complete the order and no useful action remains, choose **refuse**.\n\n";
 
         petition += "Answer only with a JSON in this format:  {action: <actionName>}.\n";
         petition += "Action and action name must always be between quotation marks as a string.";

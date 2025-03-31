@@ -44,7 +44,7 @@ public class ResearchAction : GameAction
 
     public static string getContext()
     {
-        string context = "This actions is used to unlock new recipies in the workshop so that you can craft new materials to upgrade the ship to the next level.";
+        string context = "This actions is used to unlock new recipies in the workshop so that you can craft new materials to upgrade the ship to the next level. If all research are locked or finished the research action cant be made";
 
 
 

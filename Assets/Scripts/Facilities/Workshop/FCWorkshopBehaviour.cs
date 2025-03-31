@@ -84,6 +84,12 @@ public class FCWorkshopBehaviour : FCBehaviour
 
     }
 
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        colliding = false;
+    }
+
     private void startCraft()
     {
         CraftAction craftAction = (CraftAction)crewScript.getCurrentAction();
@@ -104,7 +110,7 @@ public class FCWorkshopBehaviour : FCBehaviour
         bool canCraft = false;
         if (currentRecipe != null)
         {
-            canCraft = currentRecipe.canCraft(shipScript.GetInventoryMaterials, shipScript.GetInventoryResources);
+            canCraft = currentRecipe.canCraft(shipScript.GetInventoryMaterials(), shipScript.GetInventoryResources());
         }
         
 
@@ -147,8 +153,31 @@ public class FCWorkshopBehaviour : FCBehaviour
 
     public string getContext()
     {
-        string context = "In the workshop i can craft all the recipes";
-        return context;
+        System.Text.StringBuilder context = new System.Text.StringBuilder();
+        context.Append("In the workshop, I can craft the following unlocked recipes:\n");
+
+        foreach (var recipeEntry in recipeList)
+        {
+            Recipe recipe = recipeEntry.Item1;
+            bool isUnlocked = recipeEntry.Item2;
+
+            if (isUnlocked)
+            {
+                context.Append("- " + recipe.GetCraftedMaterial().getName() + " requires:\n");
+
+                foreach (var material in recipe.GetMaterialsNeeded())
+                {
+                    context.Append("  * Material: " + material.getName() + "\n");
+                }
+
+                foreach (var resource in recipe.GetResourcesNeeded())
+                {
+                    context.Append("  * Resource: " + resource.getName() + "\n");
+                }
+            }
+        }
+
+        return context.ToString() + ". Its not posible to do the craft action if no recipes are avaible.";
     }
 
     public override void OnClick()
