@@ -1,7 +1,6 @@
 {
   "eat" : {
-    "quantity" : ["1","2","3","4"],
-    "fullness" : ["25", "50", "75", "100", "doesnt apply"]
+    "quantity" : ["1","2","3","4"]
   },
   "refill" : {
     "percentage" : ["25", "50", "75", "100"]

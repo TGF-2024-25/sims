@@ -55,7 +55,7 @@ public class PromptGenerator : MonoBehaviour
         if (isOrder)
         {
             petition += "I have received an order from my captain: '" + content + "'.\n";
-            petition += "I must prioritize fulfilling this order unless it is impossible or unsafe.\n\n";
+            petition += "I must prioritize fulfilling this order unless I lack the required materials.\n\n";
         }
         else
         {
@@ -63,12 +63,18 @@ public class PromptGenerator : MonoBehaviour
                         ", while also considering the ship’s needs and my own well-being.\n\n";
         }
 
-        petition += "Possible actions and their effects:\n";
-        petition += "- **eat**: Increases my fullness. If my hunger reaches 0, I will die.\n";
-        petition += "- **refill**: Increases the ship's fuel, allowing travel to new planets for resources.\n";
-        petition += "- **research**: Unlocks new recipes in the workshop, enabling ship upgrades.\n";
-        petition += "- **craft**: Crafts materials needed for ship upgrades.\n";
-        petition += "- **levelShip**: Upgrades the ship, unlocking new research and resources.\n\n";
+        petition += "Actions and their effects(not all are posible):\n";
+        petition += "- **eat**: " + EatAction.getContext() + "\n";
+        petition += "- **refill**: "+ RefillAction.getContext() + "\n";
+        petition += "- **research**: " + ResearchAction.getContext() + "\n";
+        petition += "- **craft**: " + CraftAction.getContext() + "\n";
+        petition += "- **levelShip**: " + LevelShipAction.getContext() + "\n";
+
+        petition += "List of posible actions: \n";
+        foreach (string posAction in possibleActions)
+        {
+            petition += " " + posAction + ",\n";
+        }
 
         petition += "Decision-making rules:\n";
         petition += "1. If my hunger is dangerously low (below 25), prioritize **eating**.\n";

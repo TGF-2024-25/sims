@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelShipAction : GameAction
 {
-    public const string NAME = "levelUp";
+    public const string NAME = "levelShip";
     public const string FACILITY = FCNavigation.NAME;
 
 
@@ -27,7 +27,7 @@ public class LevelShipAction : GameAction
 
     public static string getContext()
     {
-        string context = "This action upgrades the ship to unlock new researches and new resources";
+        string context = "This action upgrades the ship to unlock new researches and new resources. This action can only be done as an order";
 
 
 

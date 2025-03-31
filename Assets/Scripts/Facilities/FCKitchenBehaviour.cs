@@ -52,28 +52,16 @@ public class FCKitchenBehaviour : FCBehaviour
         crewScript.setInFacility(false);
         Debug.Log("started eating");
         EatAction eatAction = (EatAction)crewScript.getCurrentAction();
-        string fullness = eatAction.getFullness();
         int quantity = eatAction.getQuantity();
         foodEaten = 0;
-        if (fullness.Equals("doesnt apply"))
+        if (avaibleFood != 0)
         {
-            if (avaibleFood != 0)
+            if (avaibleFood >= quantity)
             {
-                if (avaibleFood >= quantity)
-                {
-                    foodEaten = quantity;
-                }
+                foodEaten = quantity;
             }
         }
-        else
-        {
-            int currentHunger = crewScript.getHunger();
-            while (currentHunger < int.Parse(fullness) && avaibleFood > 0)
-            {
-                foodEaten += 1;
-                currentHunger += FOOD_RESTAURATION;
-            }
-        }
+
         Invoke(nameof(eat), 5f);
     }
 

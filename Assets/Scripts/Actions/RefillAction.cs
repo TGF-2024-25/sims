@@ -42,7 +42,7 @@ public class RefillAction : GameAction
 
     public static string getContext()
     {
-        string context = "This actions is used to increaase the fuel of the ship so you can reach new planets to gain more resources to craft new materials.";
+        string context = "This actions is used to increase the fuel of the ship so you can reach new planets to gain more resources to craft new materials. The percentage is the fullnes of the tank you want to get to ";
 
 
 

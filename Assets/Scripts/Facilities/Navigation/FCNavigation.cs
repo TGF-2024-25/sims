@@ -38,10 +38,6 @@ public class FCNavigation : FCBehaviour
         Invoke("levelUp",5f);
     }
 
-
-
-   
-
     void LoadLevelUpRequirementsFromJson(string json)
     {
         Dictionary<string, Dictionary<string, int>> rawData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>>(json);
@@ -129,7 +125,7 @@ public class FCNavigation : FCBehaviour
     public string getContext()
     {
         System.Text.StringBuilder context = new System.Text.StringBuilder();
-        context.Append("Level Up Requirements:\n");
+        context.Append("Here are the current requirements to level up the ship:\n");
 
         foreach (var level in levelUpRequirements)
         {

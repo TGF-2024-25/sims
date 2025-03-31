@@ -48,6 +48,10 @@ public class FCExit : FCBehaviour
         if (exploring)
         {
             crewMembers.Add(crewMember);
+            timeInCurrentExpedition = 0;
+            InvokeRepeating("explore", 1f, 1f);
+
+            Invoke("claimRewards", 30f);
         }
         else
         {
@@ -83,16 +87,32 @@ public class FCExit : FCBehaviour
         }
         int foodReward = (int)(currentPlanet.GetFoodAvailable() * percentageOfReward);
         kitchenScript.addFood(foodReward);
+        List<bool> willDie = new List<bool>(crewMembers.Count);
+        int i = 0;
         foreach(var crewMember in crewMembers)
         {
             //int rand = Random.Range(0, 100);
             int rand = 0;
             int succes = timeInCurrentExpedition;
+           
             if(rand < succes)
             {
+                willDie[i] = true;
                 crewMembers.Remove(crewMember);
                 Destroy(crewMember);
             }
+            i++;
+        }
+        i = 0;
+        foreach(var die in willDie)
+        {
+            if (die)
+            {
+                var cM = crewMembers[i];
+                crewMembers.RemoveAt(i);
+                Destroy(cM);
+            }
+            i++;
         }
         CancelInvoke("explore");
     }
@@ -100,10 +120,7 @@ public class FCExit : FCBehaviour
     public void startExpedition()
     {
         exploring = true;
-        timeInCurrentExpedition = 0;
-        InvokeRepeating("explore", 1f, 1f);
-
-        Invoke("claimRewards", 30f);
+        
     }
 
     public string getContext()
