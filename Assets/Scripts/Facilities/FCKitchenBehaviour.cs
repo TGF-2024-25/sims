@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class FCKitchenBehaviour : FCBehaviour
 {
+    [SerializeField]
+    private GameObject kitchenPanel;
+
     private const int FOOD_RESTAURATION = 25;
     public const string NAME = "Kitchen";
     int avaibleFood;
@@ -81,6 +84,11 @@ public class FCKitchenBehaviour : FCBehaviour
         avaibleFood += foodReward;
     }
 
+    public int getAvailableFood()
+    {
+        return avaibleFood;
+    }
+
     public string getContext()
     {
         string context = "In the kitchen, there are " + avaibleFood + " rations available, each one give " + FOOD_RESTAURATION + " food points";
@@ -89,6 +97,6 @@ public class FCKitchenBehaviour : FCBehaviour
 
     public override void OnClick()
     {
-        Debug.Log("Click on Kitchen");
+        kitchenPanel.GetComponent<KitchenUI>().ShowKitchenUI();
     }
 }
