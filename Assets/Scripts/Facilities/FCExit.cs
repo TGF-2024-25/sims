@@ -11,6 +11,7 @@ public class FCExit : FCBehaviour
     private FCKitchenBehaviour kitchenScript;
     private FCNavigation navigationScript;
     private int timeInCurrentExpedition;
+    private CMBehaviour crewScript;
 
 
     // Start is called before the first frame update
@@ -43,13 +44,13 @@ public class FCExit : FCBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject crewMember = collision.gameObject;
-        CMBehaviour crewScript = crewMember.GetComponent<CMBehaviour>();
-        GameAction action = crewScript.getCurrentAction();
+        CMBehaviour crewScriptAux = crewMember.GetComponent<CMBehaviour>();
+        GameAction action = crewScriptAux.getCurrentAction();
         if (exploring)
         {
             crewMembers.Add(crewMember);
             timeInCurrentExpedition = 0;
-
+            crewScript = crewScriptAux;
             navigationScript.setExpeditionStarted();
 
             InvokeRepeating("explore", 1f, 1f);
@@ -57,8 +58,8 @@ public class FCExit : FCBehaviour
         }
         else
         {
-            crewScript.orderDone();
-            crewScript.setDoingAction(false);
+            crewScriptAux.orderDone();
+            crewScriptAux.setDoingAction(false);
         }
         
         
@@ -116,6 +117,8 @@ public class FCExit : FCBehaviour
             }
             i++;
         }
+        crewScript.orderDone();
+        crewScript.setDoingAction(false);
         CancelInvoke("explore");
     }
 
